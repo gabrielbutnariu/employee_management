@@ -1,5 +1,6 @@
 package com.boarding.employee_management.models;
 
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
