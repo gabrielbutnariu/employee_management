@@ -11,10 +11,11 @@ public class Employee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private String first_name;
     private String last_name;
     private String ssn;
+
 
     public Employee(){
 
