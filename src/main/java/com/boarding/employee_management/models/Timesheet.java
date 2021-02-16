@@ -7,13 +7,22 @@ import java.sql.Date;
 public class Timesheet {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne(fetch = FetchType.LAZY)
+    private Long emp_id;
+    @OneToOne
     @JoinColumn(name = "emp_id")
     private Employee employee;
     private Date checkin_date;
     private Date checkout_date;
 
     public Timesheet() {
+    }
+
+    public Long getEmp_id() {
+        return emp_id;
+    }
+
+    public void setEmp_id(Long emp_id) {
+        this.emp_id = emp_id;
     }
 
     public Long getId() {
