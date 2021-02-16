@@ -2,6 +2,7 @@ package com.boarding.employee_management.controller;
 
 import com.boarding.employee_management.models.Employee;
 import com.boarding.employee_management.repositories.EmployeeRepository;
+import com.boarding.employee_management.repositories.TimesheetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -12,6 +13,8 @@ public class EmployeeController {
 
     @Autowired
     private EmployeeRepository employeeRepository;
+    @Autowired
+    private TimesheetRepository timesheetRepository;
 
     @GetMapping("/employees")
     public List<Employee> getAllEmployees(){
