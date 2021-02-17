@@ -53,6 +53,7 @@ public class EmployeeController {
 
     @PutMapping("{id}")
     public Employee updateEmployee(@RequestBody Employee employee, @PathVariable Long id){
+        employeeRepository.findById(id).orElseThrow(() -> new EmployeeNotFoundException(id));
         Employee existingEmployee = employeeRepository.getOne(id);
         BeanUtils.copyProperties(employee, existingEmployee, "id");
         return employeeRepository.saveAndFlush(existingEmployee);
