@@ -42,8 +42,9 @@ public class TimesheetController {
 
     @RequestMapping(value = "{emp_id}/checkout",method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
+
     public Timesheet updateCheckoutDate(@PathVariable Long emp_id,@RequestBody Timesheet timesheet){
-        return timesheetService.addCheckout_date(emp_id,timesheet);
+        return timesheetService.addCheckoutDate(emp_id,timesheet);
     }
 
     //deleting all the entry for a specific employee
