@@ -1,5 +1,6 @@
 package com.boarding.employee_management.services;
 
+import com.boarding.employee_management.handler.TimesheetNotFoundException;
 import com.boarding.employee_management.models.Timesheet;
 import com.boarding.employee_management.repositories.TimesheetRepository;
 import org.springframework.beans.BeanUtils;
@@ -36,8 +37,9 @@ public class TimesheetService {
         return timesheetRepository.saveAndFlush(timesheet);
     }
 
-    public Timesheet addCheckout_date(@PathVariable Long emp_id,@RequestBody Timesheet timesheet){
+    public Timesheet addCheckoutDate(@PathVariable Long emp_id,@RequestBody Timesheet timesheet){
         Timesheet timesheetToUpdate = timesheetRepository.findByEmployeeIdAndCheckoutDateNull(emp_id);
+        if(timesheetToUpdate == null) throw new TimesheetNotFoundException(emp_id);
         copyNonNullProperties(timesheetToUpdate,timesheet);
         return timesheetRepository.saveAndFlush(timesheetToUpdate);
     }
