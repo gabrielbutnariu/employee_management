@@ -20,11 +20,11 @@ public class EmployeeController {
         return employeeRepository.findAll();
     }
 
-    @GetMapping("{id}")
-    public Employee getEmployee(@PathVariable long id){
-        return employeeRepository.findById(id).orElseThrow(() -> new EmployeeNotFoundException(id));
-    }
 
+    @GetMapping("{first}")
+    public List<Employee> getEmployeeByName(@PathVariable String first){
+        return employeeRepository.findAllByFirstName(first);
+    }
     @PostMapping
     public void createEmployee(@RequestBody Employee employee) {
         employeeRepository.saveAndFlush(employee);

@@ -2,35 +2,22 @@ package com.boarding.employee_management.models;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.Objects;
 
 @Entity(name="timesheet")
 public class Timesheet {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long emp_id;
-    @OneToOne
-    @JoinColumn(name = "emp_id")
+    private Date checkinDate;
+    private Date checkoutDate;
+    @ManyToOne
+    @JoinColumn(name="emp_id",referencedColumnName="id",nullable=false,unique=true)
     private Employee employee;
-    private Date checkin_date;
-    private Date checkout_date;
-
     public Timesheet() {
-    }
-
-    public Long getEmp_id() {
-        return emp_id;
-    }
-
-    public void setEmp_id(Long emp_id) {
-        this.emp_id = emp_id;
     }
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public Employee getEmployee() {
@@ -41,19 +28,24 @@ public class Timesheet {
         this.employee = employee;
     }
 
-    public Date getCheckin_date() {
-        return checkin_date;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public void setCheckin_date(Date checkin_date) {
-        this.checkin_date = checkin_date;
+    public Date getCheckinDate() {
+        return checkinDate;
     }
 
-    public Date getCheckout_date() {
-        return checkout_date;
+    public void setCheckinDate(Date checkinDate) {
+        this.checkinDate = checkinDate;
     }
 
-    public void setCheckout_date(Date checkout_date) {
-        this.checkout_date = checkout_date;
+    public Date getCheckoutDate() {
+        return checkoutDate;
+    }
+
+    public void setCheckoutDate(Date checkoutDate) {
+        this.checkoutDate = checkoutDate;
     }
 }
+
