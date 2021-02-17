@@ -20,11 +20,26 @@ public class EmployeeController {
         return employeeRepository.findAll();
     }
 
+    @GetMapping("{id}")
+    public Employee getEmployee(@PathVariable long id){
+        return employeeRepository.findById(id).orElseThrow(() -> new EmployeeNotFoundException(id));
+    }
 
-    @GetMapping("{first}")
-    public List<Employee> getEmployeeByName(@PathVariable String first){
+    @GetMapping("firstname/{first}") // TODO Employee not found return
+    public List<Employee> getEmployeeByFirstName(@PathVariable String first){
         return employeeRepository.findAllByFirstName(first);
     }
+
+    @GetMapping("lastname/{last}")
+    public List<Employee> getEmployeeByLastName(@PathVariable String last){
+        return employeeRepository.findAllByLastName(last);
+    }
+
+    @GetMapping("ssn/{ssn}")
+    public List<Employee> getEmployeeBySsn(@PathVariable String ssn){
+        return employeeRepository.findAllBySsn(ssn);
+    }
+
     @PostMapping
     public void createEmployee(@RequestBody Employee employee) {
         employeeRepository.saveAndFlush(employee);
@@ -32,6 +47,7 @@ public class EmployeeController {
 
     @DeleteMapping("{id}")
     public void deleteEmployee(@PathVariable long id){
+        employeeRepository.findById(id).orElseThrow(() -> new EmployeeNotFoundException(id));
         employeeRepository.deleteById(id);
     }
 
@@ -42,5 +58,9 @@ public class EmployeeController {
         return employeeRepository.saveAndFlush(existingEmployee);
     }
 
+    /*@RequestMapping(value = "name/{firstName}", method = RequestMethod.GET)
+    public List<Employee> getEmployeesByName(@PathVariable String firstName){
+        return employeeRepository.findAllBySsn(firstName);
+    }*/
 }
 
