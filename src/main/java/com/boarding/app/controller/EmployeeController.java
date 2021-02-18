@@ -1,5 +1,6 @@
 package com.boarding.app.controller;
 
+import com.boarding.app.models.EmployeeDTO;
 import com.boarding.app.services.EmployeeService;
 import com.boarding.app.models.Employee;
 import org.springframework.beans.BeanUtils;
@@ -15,27 +16,27 @@ public class EmployeeController {
     private EmployeeService employeeService;
 
     @GetMapping
-    public List<Employee> getAllEmployees(){
+    public List<EmployeeDTO> getAllEmployees(){
         return employeeService.list();
     }
 
     @GetMapping("{id}")
-    public Employee getEmployee(@PathVariable long id){
-        return employeeService.findById(id);
+    public EmployeeDTO getEmployee(@PathVariable long id){
+        return employeeService.toEmployeeDTO(employeeService.findById(id));
     }
 
     @GetMapping("firstname/{firstName}") // TODO Employee not found return
-    public List<Employee> getEmployeeByFirstName(@PathVariable String firstName){
+    public List<EmployeeDTO> getEmployeeByFirstName(@PathVariable String firstName){
         return employeeService.findByFirstName(firstName);
     }
 
     @GetMapping("lastname/{lastName}")
-    public List<Employee> getEmployeeByLastName(@PathVariable String lastName){
+    public List<EmployeeDTO> getEmployeeByLastName(@PathVariable String lastName){
         return employeeService.findByLastName(lastName);
     }
 
     @GetMapping("ssn/{ssn}")
-    public List<Employee> getEmployeeBySsn(@PathVariable String ssn){
+    public List<EmployeeDTO> getEmployeeBySsn(@PathVariable String ssn){
         return employeeService.findBySsn(ssn);
     }
 
@@ -51,7 +52,7 @@ public class EmployeeController {
     }
 
     @PutMapping("{id}")
-    public Employee updateEmployee(@RequestBody Employee employee, @PathVariable Long id){
+    public EmployeeDTO updateEmployee(@RequestBody Employee employee, @PathVariable Long id){
         Employee existingEmployee = employeeService.findById(id);
         BeanUtils.copyProperties(employee, existingEmployee, "id");
         return employeeService.addOrUpdateEmployee(existingEmployee);
