@@ -1,5 +1,6 @@
 package com.boarding.app.repositories;
 
+import com.boarding.app.models.Employee;
 import com.boarding.app.models.Timesheet;
 import org.springframework.data.jpa.repository.JpaRepository;
 
