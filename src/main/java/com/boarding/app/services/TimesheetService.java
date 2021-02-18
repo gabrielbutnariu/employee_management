@@ -1,6 +1,8 @@
 package com.boarding.app.services;
 
 import com.boarding.app.handler.TimesheetNotFoundException;
+import com.boarding.app.models.Employee;
+import com.boarding.app.models.EmployeeDTO;
 import com.boarding.app.models.Timesheet;
 import com.boarding.app.models.TimesheetDTO;
 import com.boarding.app.repositories.TimesheetRepository;
@@ -21,25 +23,22 @@ import java.util.stream.Collectors;
 public class TimesheetService implements ITimesheetService{
 
     private TimesheetRepository timesheetRepository;
+    private EntityToDTOService entityToDTOService;
 
     @Autowired
-    public TimesheetService(TimesheetRepository timesheetRepository) {
+    public TimesheetService(TimesheetRepository timesheetRepository, EntityToDTOService entityToDTOService) {
         this.timesheetRepository = timesheetRepository;
+        this.entityToDTOService = entityToDTOService;
     }
-    //TODO
-//    private TimesheetDTO toTimesheetDTO(Timesheet timesheet){
-//        TimesheetDTO timesheetDTO= new TimesheetDTO();
-//        timesheetDTO.setEmployeeDTO(timesheet.getEmployee());
-//        timesheetDTO.setCheckinDate(timesheet.getCheckinDate());
-//        timesheetDTO.setCheckoutDate(timesheet.getCheckoutDate());
-//        return timesheetDTO;
-//    }
-    public List<Timesheet> list() {
-        return timesheetRepository.findAll();
+    public TimesheetDTO mapEntityToDTO(Timesheet timesheet){
+        return entityToDTOService.toTimesheetDTO(timesheet);
+    }
+    public List<TimesheetDTO> list() {
+        return timesheetRepository.findAll().stream().map(this::mapEntityToDTO).collect(Collectors.toList());
     }
 
-    public List<Timesheet> getByEmpId(@PathVariable Long emp_id){
-        return timesheetRepository.findAllByEmployeeId(emp_id);
+    public List<TimesheetDTO> getByEmpId(@PathVariable Long emp_id){
+        return timesheetRepository.findAllByEmployeeId(emp_id).stream().map(this::mapEntityToDTO).collect(Collectors.toList());
     }
 
     public Timesheet addCheckinDate(@RequestBody final Timesheet timesheet){

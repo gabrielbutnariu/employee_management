@@ -9,9 +9,9 @@ import java.util.List;
 
 public interface ITimesheetService {
     //list all the timesheet
-    List<Timesheet> list();
+    List<TimesheetDTO> list();
     //list all the timesheet for a specified employee
-    List<Timesheet> getByEmpId(@PathVariable Long emp_id);
+    List<TimesheetDTO> getByEmpId(@PathVariable Long emp_id);
     //adding one entry in timesheet table, can be use to add checking or checking and checkout
     Timesheet addCheckinDate(@RequestBody final Timesheet timesheet);
     //modifying a specific entry in table by adding a checkout date

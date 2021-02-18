@@ -22,7 +22,7 @@ public class EmployeeController {
 
     @GetMapping("{id}")
     public EmployeeDTO getEmployee(@PathVariable long id){
-        return employeeService.toEmployeeDTO(employeeService.findById(id));
+        return employeeService.mapEntityToDTO(employeeService.findById(id));
     }
 
     @GetMapping("firstname/{firstName}") // TODO Employee not found return

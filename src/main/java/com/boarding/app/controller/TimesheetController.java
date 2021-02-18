@@ -17,13 +17,13 @@ public class TimesheetController {
     private TimesheetService timesheetService;
 
     @GetMapping
-    public List<Timesheet> listAll(){
+    public List<TimesheetDTO> listAll(){
         return timesheetService.list();
     }
 
     @GetMapping
     @RequestMapping("{emp_id}")
-    public List<Timesheet> listByEmployeeId(@PathVariable Long emp_id){
+    public List<TimesheetDTO> listByEmployeeId(@PathVariable Long emp_id){
         return timesheetService.getByEmpId(emp_id);
     }
 

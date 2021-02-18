@@ -14,21 +14,20 @@ import java.util.stream.Collectors;
 public class EmployeeService implements IEmployeeService {
 
     EmployeeRepository employeeRepository;
+    EntityToDTOService entityToDTOService;
 
     @Autowired
-    public EmployeeService(EmployeeRepository employeeRepository) {
+    public EmployeeService(EmployeeRepository employeeRepository,EntityToDTOService entityToDTOService) {
         this.employeeRepository = employeeRepository;
+        this.entityToDTOService = entityToDTOService;
     }
 
-    public EmployeeDTO toEmployeeDTO(Employee employee){
-        EmployeeDTO employeeDTO = new EmployeeDTO();
-        employeeDTO.setFirstName(employee.getFirstName());
-        employeeDTO.setLastName(employee.getLastName());
-        return employeeDTO;
+    public EmployeeDTO mapEntityToDTO(Employee employee){
+        return entityToDTOService.toEmployeeDTO(employee);
     }
 
     public List<EmployeeDTO> list(){
-       return employeeRepository.findAll().stream().map(this::toEmployeeDTO).collect(Collectors.toList());
+       return employeeRepository.findAll().stream().map(this::mapEntityToDTO).collect(Collectors.toList());
     }
 
     public Employee findById(Long id){
@@ -36,20 +35,20 @@ public class EmployeeService implements IEmployeeService {
     }
 
     public List<EmployeeDTO> findByFirstName(String firstName){
-        return employeeRepository.findAllByFirstName(firstName).stream().map(this::toEmployeeDTO).collect(Collectors.toList());
+        return employeeRepository.findAllByFirstName(firstName).stream().map(this::mapEntityToDTO).collect(Collectors.toList());
     }
 
     public List<EmployeeDTO> findByLastName(String lastName){
-        return employeeRepository.findAllByLastName(lastName).stream().map(this::toEmployeeDTO).collect(Collectors.toList());
+        return employeeRepository.findAllByLastName(lastName).stream().map(this::mapEntityToDTO).collect(Collectors.toList());
     }
 
     public List<EmployeeDTO> findBySsn(String Ssn){
-        return employeeRepository.findAllBySsn(Ssn).stream().map(this::toEmployeeDTO).collect(Collectors.toList());
+        return employeeRepository.findAllBySsn(Ssn).stream().map(this::mapEntityToDTO).collect(Collectors.toList());
     }
 
     public EmployeeDTO addOrUpdateEmployee(Employee employee){
         Employee savedEmployee = employeeRepository.saveAndFlush(employee);
-        return toEmployeeDTO(savedEmployee);
+        return mapEntityToDTO(savedEmployee);
     }
 
     public void deleteById(Long id){
