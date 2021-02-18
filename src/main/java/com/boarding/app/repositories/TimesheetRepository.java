@@ -1,7 +1,7 @@
-package com.boarding.employee_management.repositories;
+package com.boarding.app.repositories;
 
-import com.boarding.employee_management.models.Employee;
-import com.boarding.employee_management.models.Timesheet;
+import com.boarding.app.models.Employee;
+import com.boarding.app.models.Timesheet;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

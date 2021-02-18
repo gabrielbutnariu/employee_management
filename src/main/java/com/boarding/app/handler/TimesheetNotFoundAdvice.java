@@ -1,4 +1,4 @@
-package com.boarding.employee_management.handler;
+package com.boarding.app.handler;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -7,12 +7,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ControllerAdvice
-public class EmployeeNotFoundAdvice {
+public class TimesheetNotFoundAdvice {
 
     @ResponseBody
-    @ExceptionHandler(EmployeeNotFoundException.class)
+    @ExceptionHandler(TimesheetNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    String employeeNotFoundHandler(EmployeeNotFoundException e){
-        return e.getMessage();
+    String employeeNotFoundHandler(TimesheetNotFoundException ex) {
+        return ex.getMessage();
     }
 }

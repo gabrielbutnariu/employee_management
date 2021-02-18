@@ -1,8 +1,9 @@
-package com.boarding.employee_management.services;
+package com.boarding.app.services;
 
-import com.boarding.employee_management.handler.TimesheetNotFoundException;
-import com.boarding.employee_management.models.Timesheet;
-import com.boarding.employee_management.repositories.TimesheetRepository;
+import com.boarding.app.handler.TimesheetNotFoundException;
+import com.boarding.app.models.Timesheet;
+import com.boarding.app.models.TimesheetDTO;
+import com.boarding.app.repositories.TimesheetRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
@@ -14,9 +15,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
-public class TimesheetService {
+public class TimesheetService implements ITimesheetService{
 
     private TimesheetRepository timesheetRepository;
 
@@ -24,12 +26,19 @@ public class TimesheetService {
     public TimesheetService(TimesheetRepository timesheetRepository) {
         this.timesheetRepository = timesheetRepository;
     }
-
+    //TODO
+//    private TimesheetDTO toTimesheetDTO(Timesheet timesheet){
+//        TimesheetDTO timesheetDTO= new TimesheetDTO();
+//        timesheetDTO.setEmployeeDTO(timesheet.getEmployee());
+//        timesheetDTO.setCheckinDate(timesheet.getCheckinDate());
+//        timesheetDTO.setCheckoutDate(timesheet.getCheckoutDate());
+//        return timesheetDTO;
+//    }
     public List<Timesheet> list() {
         return timesheetRepository.findAll();
     }
 
-    public List<Timesheet> getByEmp_id(@PathVariable Long emp_id){
+    public List<Timesheet> getByEmpId(@PathVariable Long emp_id){
         return timesheetRepository.findAllByEmployeeId(emp_id);
     }
 

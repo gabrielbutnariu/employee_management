@@ -1,4 +1,4 @@
-package com.boarding.employee_management.models;
+package com.boarding.app.models;
 
 
 import javax.persistence.*;
