@@ -1,6 +1,6 @@
-package com.boarding.employee_management.repositories;
+package com.boarding.app.repositories;
 
-import com.boarding.employee_management.models.Employee;
+import com.boarding.app.models.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

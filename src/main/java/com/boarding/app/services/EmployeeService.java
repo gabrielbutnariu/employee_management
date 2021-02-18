@@ -1,9 +1,8 @@
-package com.boarding.employee_management.services;
+package com.boarding.app.services;
 
-import com.boarding.employee_management.handler.EmployeeNotFoundException;
-import com.boarding.employee_management.models.Employee;
-import com.boarding.employee_management.repositories.EmployeeRepository;
-import com.boarding.employee_management.repositories.TimesheetRepository;
+import com.boarding.app.handler.EmployeeNotFoundException;
+import com.boarding.app.models.Employee;
+import com.boarding.app.repositories.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

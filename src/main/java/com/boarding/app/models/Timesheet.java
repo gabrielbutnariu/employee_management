@@ -1,8 +1,7 @@
-package com.boarding.employee_management.models;
+package com.boarding.app.models;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.util.Objects;
 
 @Entity(name="timesheet")
 public class Timesheet {
@@ -10,6 +9,7 @@ public class Timesheet {
     private Long id;
     private Date checkinDate;
     private Date checkoutDate;
+
     @ManyToOne
     @JoinColumn(name="emp_id",referencedColumnName="id",nullable=false,unique=true)
     private Employee employee;

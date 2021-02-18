@@ -1,8 +1,8 @@
-package com.boarding.employee_management.services;
+package com.boarding.app.services;
 
-import com.boarding.employee_management.handler.TimesheetNotFoundException;
-import com.boarding.employee_management.models.Timesheet;
-import com.boarding.employee_management.repositories.TimesheetRepository;
+import com.boarding.app.handler.TimesheetNotFoundException;
+import com.boarding.app.models.Timesheet;
+import com.boarding.app.repositories.TimesheetRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;

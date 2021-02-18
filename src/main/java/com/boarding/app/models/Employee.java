@@ -1,4 +1,4 @@
-package com.boarding.employee_management.models;
+package com.boarding.app.models;
 
 
 import javax.persistence.*;
@@ -15,9 +15,7 @@ public class Employee {
     private String lastName;
     private String ssn;
 
-    public Employee(){
-
-    }
+    public Employee(){ }
 
     public long getId() {
         return id;

@@ -1,9 +1,7 @@
-package com.boarding.employee_management.controller;
+package com.boarding.app.controller;
 
-import com.boarding.employee_management.handler.EmployeeNotFoundException;
-import com.boarding.employee_management.models.Employee;
-import com.boarding.employee_management.repositories.EmployeeRepository;
-import com.boarding.employee_management.services.EmployeeService;
+import com.boarding.app.services.EmployeeService;
+import com.boarding.app.models.Employee;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

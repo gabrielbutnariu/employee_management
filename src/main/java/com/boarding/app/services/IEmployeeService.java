@@ -1,6 +1,6 @@
-package com.boarding.employee_management.services;
+package com.boarding.app.services;
 
-import com.boarding.employee_management.models.Employee;
+import com.boarding.app.models.Employee;
 
 import java.util.List;
 

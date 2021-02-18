@@ -1,4 +1,4 @@
-package com.boarding.employee_management.handler;
+package com.boarding.app.handler;
 
 public class EmployeeNotFoundException extends RuntimeException {
     public EmployeeNotFoundException(Long id) {

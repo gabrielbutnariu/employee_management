@@ -1,4 +1,4 @@
-package com.boarding.employee_management;
+package com.boarding.app;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
