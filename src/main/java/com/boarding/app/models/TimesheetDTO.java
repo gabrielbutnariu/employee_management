@@ -12,4 +12,5 @@ public class TimesheetDTO {
     private Date checkinDate;
     private Date checkoutDate;
     private EmployeeDTO employeeDTO;
+    private String workType;
 }

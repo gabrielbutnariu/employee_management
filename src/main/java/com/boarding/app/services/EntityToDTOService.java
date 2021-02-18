@@ -14,6 +14,7 @@ public class EntityToDTOService {
         employeeDTO.setId(employee.getId());
         employeeDTO.setFirstName(employee.getFirstName());
         employeeDTO.setLastName(employee.getLastName());
+        employeeDTO.setAddress(employee.getAddress());
         return employeeDTO;
     }
     public TimesheetDTO toTimesheetDTO(Timesheet timesheet){
@@ -22,6 +23,7 @@ public class EntityToDTOService {
         timesheetDTO.setCheckinDate(timesheet.getCheckinDate());
         timesheetDTO.setCheckoutDate(timesheet.getCheckoutDate());
         timesheetDTO.setEmployeeDTO(toEmployeeDTO(timesheet.getEmployee()));
+        timesheetDTO.setWorkType(timesheet.getWorkType());
         return timesheetDTO;
     }
 }

@@ -13,6 +13,7 @@ public class Timesheet {
     private Long id;
     private Date checkinDate;
     private Date checkoutDate;
+    private String workType;
 
     @ManyToOne
     @JoinColumn(name="emp_id",referencedColumnName="id",nullable=false,unique=true)

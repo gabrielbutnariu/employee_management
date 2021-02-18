@@ -3,5 +3,17 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    
+    <changeSet id="1" author="Rares">
+        <addColumn tableName="employees">
+            <column name="address" type="varchar(100)"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="2" author="Rares">
+        <addColumn tableName="timesheet">
+            <column name="work_type" type="varchar(10)"/>
+        </addColumn>
+    </changeSet>
 
 </databaseChangeLog>
