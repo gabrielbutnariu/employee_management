@@ -11,13 +11,14 @@ public class EntityToDTOService {
 
     public EmployeeDTO toEmployeeDTO(Employee employee){
         EmployeeDTO employeeDTO = new EmployeeDTO();
+        employeeDTO.setId(employee.getId());
         employeeDTO.setFirstName(employee.getFirstName());
         employeeDTO.setLastName(employee.getLastName());
         return employeeDTO;
     }
     public TimesheetDTO toTimesheetDTO(Timesheet timesheet){
-
         TimesheetDTO timesheetDTO= new TimesheetDTO();
+        timesheetDTO.setId(timesheet.getId());
         timesheetDTO.setCheckinDate(timesheet.getCheckinDate());
         timesheetDTO.setCheckoutDate(timesheet.getCheckoutDate());
         timesheetDTO.setEmployeeDTO(toEmployeeDTO(timesheet.getEmployee()));
