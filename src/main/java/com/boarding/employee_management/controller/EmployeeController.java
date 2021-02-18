@@ -3,6 +3,7 @@ package com.boarding.employee_management.controller;
 import com.boarding.employee_management.handler.EmployeeNotFoundException;
 import com.boarding.employee_management.models.Employee;
 import com.boarding.employee_management.repositories.EmployeeRepository;
+import com.boarding.employee_management.services.EmployeeService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,50 +14,49 @@ import java.util.List;
 public class EmployeeController {
 
     @Autowired
-    private EmployeeRepository employeeRepository;
+    private EmployeeService employeeService;
 
     @GetMapping
     public List<Employee> getAllEmployees(){
-        return employeeRepository.findAll();
+        return employeeService.list();
     }
 
     @GetMapping("{id}")
     public Employee getEmployee(@PathVariable long id){
-        return employeeRepository.findById(id).orElseThrow(() -> new EmployeeNotFoundException(id));
+        return employeeService.findById(id);
     }
 
-    @GetMapping("firstname/{first}") // TODO Employee not found return
-    public List<Employee> getEmployeeByFirstName(@PathVariable String first){
-        return employeeRepository.findAllByFirstName(first);
+    @GetMapping("firstname/{firstName}") // TODO Employee not found return
+    public List<Employee> getEmployeeByFirstName(@PathVariable String firstName){
+        return employeeService.findByFirstName(firstName);
     }
 
-    @GetMapping("lastname/{last}")
-    public List<Employee> getEmployeeByLastName(@PathVariable String last){
-        return employeeRepository.findAllByLastName(last);
+    @GetMapping("lastname/{lastName}")
+    public List<Employee> getEmployeeByLastName(@PathVariable String lastName){
+        return employeeService.findByLastName(lastName);
     }
 
     @GetMapping("ssn/{ssn}")
     public List<Employee> getEmployeeBySsn(@PathVariable String ssn){
-        return employeeRepository.findAllBySsn(ssn);
+        return employeeService.findBySsn(ssn);
     }
 
     @PostMapping
     public void createEmployee(@RequestBody Employee employee) {
-        employeeRepository.saveAndFlush(employee);
+        employeeService.addOrUpdateEmployee(employee);
     }
 
     @DeleteMapping("{id}")
     public void deleteEmployee(@PathVariable long id){
-        employeeRepository.findById(id).orElseThrow(() -> new EmployeeNotFoundException(id));
-        employeeRepository.deleteById(id);
+        employeeService.findById(id);
+        employeeService.deleteById(id);
     }
 
     @PutMapping("{id}")
     public Employee updateEmployee(@RequestBody Employee employee, @PathVariable Long id){
-        employeeRepository.findById(id).orElseThrow(() -> new EmployeeNotFoundException(id));
-        Employee existingEmployee = employeeRepository.getOne(id);
+        Employee existingEmployee = employeeService.findById(id);
         BeanUtils.copyProperties(employee, existingEmployee, "id");
-        return employeeRepository.saveAndFlush(existingEmployee);
+        return employeeService.addOrUpdateEmployee(existingEmployee);
     }
 
     /*@RequestMapping(value = "name/{firstName}", method = RequestMethod.GET)
