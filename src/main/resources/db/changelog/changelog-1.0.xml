@@ -4,16 +4,24 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
-    <changeSet id="1" author="Rares">
-        <addColumn tableName="employees">
-            <column name="address" type="varchar(100)"/>
-        </addColumn>
-    </changeSet>
-
-    <changeSet id="2" author="Rares">
-        <addColumn tableName="timesheet">
-            <column name="work_type" type="varchar(10)"/>
-        </addColumn>
+    <changeSet id="changes-1.0" author="ralic">
+        <createTable tableName="employees">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="first_name" type="VARCHAR(20)">
+                <constraints nullable="false" unique="false"/>
+            </column>
+            <column name="last_name" type="VARCHAR(20)">
+                <constraints nullable="false" unique="false"/>
+            </column>
+            <column name="ssn" type="VARCHAR(13)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="address" type="VARCHAR(100)">
+                <constraints nullable="true" unique="false"/>
+            </column>
+        </createTable>
     </changeSet>
 
 </databaseChangeLog>
