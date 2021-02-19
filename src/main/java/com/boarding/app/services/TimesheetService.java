@@ -41,7 +41,10 @@ public class TimesheetService implements ITimesheetService{
         return timesheetRepository.findAllByEmployeeId(emp_id).stream().map(this::mapEntityToDTO).collect(Collectors.toList());
     }
 
-    public Timesheet addCheckinDate(@RequestBody final Timesheet timesheet){
+    public Timesheet addCheckinDate(@RequestBody final Timesheet timesheet,@PathVariable Long emp_id){
+        //Timesheet timesheetToUpdate = timesheetRepository.findByEmployeeIdAndEmployeeIsNull(emp_id);
+        //if(timesheetToUpdate == null) throw new TimesheetNotFoundException(emp_id);
+        timesheet.getEmployee().setId(emp_id);
         return timesheetRepository.saveAndFlush(timesheet);
     }
 

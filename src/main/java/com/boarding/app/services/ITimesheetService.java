@@ -13,7 +13,7 @@ public interface ITimesheetService {
     //list all the timesheet for a specified employee
     List<TimesheetDTO> getByEmpId(@PathVariable Long emp_id);
     //adding one entry in timesheet table, can be use to add checking or checking and checkout
-    Timesheet addCheckinDate(@RequestBody final Timesheet timesheet);
+    Timesheet addCheckinDate(@RequestBody final Timesheet timesheet,@PathVariable Long emp_id);
     //modifying a specific entry in table by adding a checkout date
     Timesheet addCheckoutDate(@PathVariable Long emp_id,@RequestBody Timesheet timesheet);
     //deleting all entry for a specified employee

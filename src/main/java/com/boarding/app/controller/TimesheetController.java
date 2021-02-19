@@ -30,8 +30,8 @@ public class TimesheetController {
     //this one can be used to add checkin and checkout or just checkin
     @PostMapping("{emp_id}/checkin")
     @ResponseStatus(HttpStatus.CREATED)
-    public Timesheet addEntry(@RequestBody final Timesheet timesheet){
-        return timesheetService.addCheckinDate(timesheet);
+    public Timesheet addEntry(@RequestBody final Timesheet timesheet,@PathVariable Long emp_id){
+        return timesheetService.addCheckinDate(timesheet,emp_id);
     }
 
     @RequestMapping(value = "{emp_id}/checkout",method = RequestMethod.PUT)

@@ -10,5 +10,6 @@ public interface TimesheetRepository extends JpaRepository<Timesheet,Long> {
     //custom queries
     List<Timesheet> findAllByEmployeeId(Long emp_id);
     Timesheet findByEmployeeIdAndCheckoutDateNull(Long id);
+    //Timesheet findByEmployeeIdAndEmployeeIsNull(Long id);
     void deleteByEmployeeId(Long id);
 }
