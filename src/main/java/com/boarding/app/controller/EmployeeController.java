@@ -25,7 +25,7 @@ public class EmployeeController {
         return employeeService.mapEntityToDTO(employeeService.findById(id));
     }
 
-    @GetMapping("firstname/{firstName}") // TODO Employee not found return
+    @GetMapping("firstname/{firstName}")
     public List<EmployeeDTO> getEmployeeByFirstName(@PathVariable String firstName){
         return employeeService.findByFirstName(firstName);
     }
