@@ -20,5 +20,14 @@ public class Employee {
     private String ssn;
     private String address;
 
+    public Employee() {
+    }
 
+    public Employee(long id, String firstName, String lastName, String ssn, String address) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.ssn = ssn;
+        this.address = address;
+    }
 }
