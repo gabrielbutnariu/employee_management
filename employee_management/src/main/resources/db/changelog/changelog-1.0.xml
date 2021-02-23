@@ -1,0 +1,64 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="changes-1.0" author="ralic">
+        <createTable tableName="employees">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="first_name" type="VARCHAR(20)">
+                <constraints nullable="false" unique="false"/>
+            </column>
+            <column name="last_name" type="VARCHAR(20)">
+                <constraints nullable="false" unique="false"/>
+            </column>
+            <column name="ssn" type="VARCHAR(13)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="address" type="VARCHAR(100)">
+                <constraints nullable="true" unique="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="changes-1.0-inserts"  author="ralic" >
+        <insert tableName="employees">
+            <column name="first_name" value="Elena"/>
+            <column name="last_name" value="Aciliu"/>
+            <column name="ssn" value="1920327205541"/>
+            <column name="address" value="2726  Timber Oak Drive"/>
+        </insert>
+
+        <insert tableName="employees">
+            <column name="first_name" value="Lauren"/>
+            <column name="last_name" value="Johnson"/>
+            <column name="ssn" value="2870224266689"/>
+            <column name="address" value="4166  Grant View Drive"/>
+        </insert>
+
+        <insert tableName="employees">
+            <column name="first_name" value="Mary"/>
+            <column name="last_name" value="Grant"/>
+            <column name="ssn" value="5011010442662"/>
+            <column name="address" value="2638  Rosebud Avenue"/>
+        </insert>
+
+        <insert tableName="employees">
+            <column name="first_name" value="Jeanne"/>
+            <column name="last_name" value="Gonzalez"/>
+            <column name="ssn" value="1900304443872"/>
+            <column name="address" value="4869  Whiteman Street"/>
+        </insert>
+
+        <insert tableName="employees">
+            <column name="first_name" value="Ashley"/>
+            <column name="last_name" value="Trautman"/>
+            <column name="ssn" value="1880811297513"/>
+            <column name="address" value="4917  Station Street"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>
