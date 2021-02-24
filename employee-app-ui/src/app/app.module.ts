@@ -8,13 +8,15 @@ import {HomeComponent} from './components/home/home.component';
 import {LoginService} from './services/login.service';
 import { RegisterComponent } from './components/register/register.component';
 import {FormsModule} from '@angular/forms';
+import { EmployeesListComponent } from './components/employees-list/employees-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     HomeComponent,
-    RegisterComponent
+    RegisterComponent,
+    EmployeesListComponent
   ],
   imports: [
     BrowserModule,

@@ -13,22 +13,21 @@
 
     <!-- Login Form -->
     <form #form='ngForm' (ngSubmit)=onRegister(form)>
-      <input type="text" id="registerId"
-             #registerId="ngModel" ngModel required
-             class="fadeIn second" name="registerId"
-             placeholder="Enter Id">
+<!--      <input type="text" id="registerId"-->
+<!--             #registerId="ngModel" ngModel required-->
+<!--             class="fadeIn second" name="registerId"-->
+<!--             placeholder="Enter Id">-->
       <input type="text" id="registerFirstName"
-             #registerFirstName="ngModel" ngModel required
-             class="fadeIn second" name="registerFirstName"
+             #firstName="ngModel" ngModel required
+             class="fadeIn second" name="firstName"
              placeholder="Enter First Name">
       <input type="text" id="registerLastName"
-             #registerLastName="ngModel" ngModel required
-             class="fadeIn third" name="registerLastName"
+             #lastName="ngModel" ngModel required
+             class="fadeIn third" name="lastName"
              placeholder="Enter Last Name">
-      <input type="number" id="registerSsn"
-             #registerSsn="ngModel" ngModel required
-             class="fadeIn fourth" name="registerSsn"
-             maxlength="13" minlength="9"
+      <input type="text" id="registerSsn"
+             #ssn="ngModel" ngModel required
+             class="fadeIn fourth" name="ssn"
              placeholder="Enter Ssn">
       <input [disabled]="form.invalid" type="submit" class="fadeIn fifth" value="Register">
     </form>
