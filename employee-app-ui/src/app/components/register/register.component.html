@@ -1,0 +1,36 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+    <!-- Tabs Titles -->
+
+    <!-- Icon -->
+    <div class="fadeIn first">
+      <img src="../assets/images/time_icon.svg" id="icon" alt="User Icon" />
+    </div>
+
+    <!-- Login Form -->
+    <form #form='ngForm' (ngSubmit)=onRegister(form)>
+      <input type="text" id="registerId"
+             #registerId="ngModel" ngModel required
+             class="fadeIn second" name="registerId"
+             placeholder="Enter Id">
+      <input type="text" id="registerFirstName"
+             #registerFirstName="ngModel" ngModel required
+             class="fadeIn second" name="registerFirstName"
+             placeholder="Enter First Name">
+      <input type="text" id="registerLastName"
+             #registerLastName="ngModel" ngModel required
+             class="fadeIn third" name="registerLastName"
+             placeholder="Enter Last Name">
+      <input type="number" id="registerSsn"
+             #registerSsn="ngModel" ngModel required
+             class="fadeIn fourth" name="registerSsn"
+             maxlength="13" minlength="9"
+             placeholder="Enter Ssn">
+      <input [disabled]="form.invalid" type="submit" class="fadeIn fifth" value="Register">
+    </form>
+  </div>
+</div>

@@ -1,0 +1,33 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" id="bootstrap-css" rel="stylesheet">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+    <!-- Tabs Titles -->
+
+    <!-- Icon -->
+    <div class="fadeIn first">
+      <img alt="User Icon" id="icon" src="../assets/images/time_icon.svg"/>
+    </div>
+
+    <!-- Login Form -->
+    <form #form='ngForm' (ngSubmit)=onLogin(form)>
+      <input #loginId="ngModel" class="fadeIn second" id="login"
+             name="loginId" ngModel
+             placeholder="login"
+             required type="text">
+      <input #loginPass="ngModel" class="fadeIn third" id="password"
+             name="loginPass" ngModel
+             placeholder="password" required
+             type="password">
+      <!--        it will valid after the required field are valid-->
+      <input [disabled]="form.invalid" class="fadeIn fourth" type="submit" value="Log In">
+    </form>
+
+    <!-- Remind Passowrd -->
+    <div id="formFooter">
+      <a class="underlineHover" href="#">Forgot Password?</a>
+    </div>
+
+  </div>
+</div>
