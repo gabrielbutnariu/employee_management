@@ -1,39 +1,23 @@
-<nav class = 'navbar navbar-expand navbar-ligth bg-ligth'>
-  <a class='navbar-brand'>{{pageTitle}}</a>
-  <ul class='nav nav-pills'>
-<!--    <li><a class='nav-link' [routerLink]="['/welcome']">Home</a></li>-->
-<!--    <li><a class='nav-link' [routerLink]="['/products']">Product List</a></li>-->
-  </ul>
-</nav>
-<div>
-
-</div>
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<!------ Include the above in your HEAD tag ---------->
-
-<div class="wrapper fadeInDown">
-  <div id="formContent">
-    <!-- Tabs Titles -->
-
-    <!-- Icon -->
-    <div class="fadeIn first">
-      <img src="../assets/images/time_icon.svg" id="icon" alt="User Icon" />
+<!--<nav class = 'navbar navbar-expand navbar-ligth bg-ligth'>-->
+<!--  <a class='navbar-brand'>{{pageTitle}}</a>-->
+<!--  <ul class='nav justify-content-end'>-->
+<!--    <li><a class='nav-link' [routerLink]="['/home']">Home</a></li>-->
+<!--    <li><a class='nav-link' [routerLink]="['/login']">Login</a></li>-->
+<!--  </ul>-->
+<!--</nav>-->
+<nav class="navbar navbar-expand-lg navbar-ligth bg-ligth">
+  <div class="container">
+    <a class='navbar-brand'>{{pageTitle}}</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active">
+        <li><a class='nav-link' [routerLink]="['/home']">Home</a></li>
+        <li><a class='nav-link' [routerLink]="['/login']">Login</a></li>
+      </ul>
     </div>
-
-    <!-- Login Form -->
-    <form>
-      <input type="text" id="login" class="fadeIn second" name="login" placeholder="login">
-      <input type="text" id="password" class="fadeIn third" name="login" placeholder="password">
-      <input type="submit" class="fadeIn fourth" value="Log In">
-    </form>
-
-    <!-- Remind Passowrd -->
-    <div id="formFooter">
-      <a class="underlineHover" href="#">Forgot Password?</a>
-    </div>
-
   </div>
-</div>
+</nav>
 <router-outlet></router-outlet>
