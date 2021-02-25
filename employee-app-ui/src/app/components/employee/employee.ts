@@ -4,8 +4,8 @@ export interface ITimesheet {
 }
 
 export interface IEmployee{
-  employeeId: number;
-  employeeFirstName: string;
-  employeeLastName: string;
-  employeeAddress: string;
+  id: number;
+  firstName: string;
+  lastName: string;
+  address: string;
 }

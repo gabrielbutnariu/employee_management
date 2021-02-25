@@ -4,3 +4,8 @@ thead{
 tbody{
   color: #0d0d0d;
 }
+input[type=text] {
+  background-color: #fff;
+  border-bottom: 2px solid #5fbae9;
+  width: 50%;
+}

@@ -29,7 +29,11 @@
              #ssn="ngModel" ngModel required
              class="fadeIn fourth" name="ssn"
              placeholder="Enter Ssn">
-      <input [disabled]="form.invalid" type="submit" class="fadeIn fifth" value="Register">
+      <input type="text" id="registerAddress"
+             #address="ngModel" ngModel required
+             class="fadeIn fifth" name="address"
+             placeholder="Enter Address">
+      <input [disabled]="form.invalid" type="submit" class="fadeIn sixth" value="Register">
     </form>
   </div>
 </div>

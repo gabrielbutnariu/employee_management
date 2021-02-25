@@ -21,7 +21,7 @@ export class EmployeeService {
 
   getEmployee(id: number): Observable<IEmployee | undefined>{
     return this.getEmployees().pipe(map(
-      (employees: IEmployee[]) => employees.find(emp => emp.employeeId === id)
+      (employees: IEmployee[]) => employees.find(emp => emp.id === id)
     ));
   }
 

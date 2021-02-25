@@ -1,46 +1,43 @@
-<div class="card">
+<div class="wrapper fadeInDown">
   <div class="card-header">
     {{pageTitle}}
   </div>
   <div class="card-body">
     <div class="row">
-      <div class="col-md-2">Filter by:</div>
-      <div class="col-md-4">
-        <input type="text"
+      <div class="row-item">
+        <input type="text" placeholder="Filter by:"
         [(ngModel)]= 'listFilter'/>
       </div>
     </div>
     <div class="row">
-      <div class="col-md-6">
+      <div class="row-item">
         <h4>Filtered by:  {{listFilter}}</h4>
       </div>
     </div>
-    <div class="table-responsive">
+    <div class="fadeIn second">
       <table class="table"
              *ngIf='employees && employees.length'>
         <thead>
         <tr>
-          <th>Id</th>
-          <th>First name</th>
-          <th>Last name</th>
-          <th>Address</th>
+          <th *ngFor="let column of tableHeader">{{column}}</th>
         </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let employee of employees">
+          <tr *ngFor="let employee of filteredEmployees">
             <td>
-<!--              <a [routerLink]="['/employees',employee.employeeId]">-->
-                {{employee.employeeId}}
-<!--              </a>-->
+              <a [routerLink]="['/employees',employee.id]">
+                {{employee.id}}
+              </a>
             </td>
-            <td>{{employee.employeeFirstName}}
+            <td>{{employee.firstName}}
             </td>
-            <td>{{employee.employeeLastName}}</td>
-            <td>{{employee.employeeAddress}}</td>
-
+            <td>{{employee.lastName}}</td>
+            <td>{{employee.address}}</td>
           </tr>
         </tbody>
       </table>
     </div>
+    <input [routerLink]="['/register']" type="submit" class="fadeIn third" value="Add user">
+    <input type="button" class="fadeIn fourth" value="Delete user">
   </div>
 </div>

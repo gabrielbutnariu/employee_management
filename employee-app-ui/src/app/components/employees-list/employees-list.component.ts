@@ -13,7 +13,7 @@ export class EmployeesListComponent implements OnInit {
   listFilterKey = '';
   employees: IEmployee[] = [];
   filteredEmployees: IEmployee[] = [];
-
+  tableHeader = ['Id', 'First Name', 'Last Name', 'Address'];
   constructor(private employeeService: EmployeeService) {
     this.listFilter = '';
   }
@@ -40,6 +40,6 @@ export class EmployeesListComponent implements OnInit {
   private perfomFilter(filterBy: string): IEmployee[] {
     filterBy = filterBy.toLocaleLowerCase();
     return this.employees.filter((employee: IEmployee) =>
-    employee.employeeFirstName.toLocaleLowerCase().indexOf(filterBy) !== -1);
+    employee.firstName.toLocaleLowerCase().indexOf(filterBy) !== -1);
   }
 }
