@@ -10,6 +10,7 @@ import java.sql.Date;
 @Getter @Setter
 public class Timesheet {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
     private Date checkinDate;
     private Date checkoutDate;
     @ManyToOne

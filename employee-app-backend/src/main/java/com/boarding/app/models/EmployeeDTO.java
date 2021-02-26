@@ -8,5 +8,5 @@ public class EmployeeDTO {
     private String firstName;
     private String lastName;
     private String address;
-
+    private String UUID;
 }
