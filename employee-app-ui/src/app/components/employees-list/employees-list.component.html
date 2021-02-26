@@ -19,25 +19,36 @@
              *ngIf='employees && employees.length'>
         <thead>
         <tr>
-          <th *ngFor="let column of tableHeader">{{column}}</th>
+          <th *ngFor="let column of tableHeader ">{{column}}
+          </th>
         </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let employee of filteredEmployees">
+<!--        TODO: delete | slice:0:7; later -->
+          <tr *ngFor="let employee of filteredEmployees | slice:0:7;">
             <td>
-              <a [routerLink]="['/employees',employee.id]">
-                {{employee.id}}
-              </a>
+              {{employee.firstName}} {{employee.lastName}}
             </td>
-            <td>{{employee.firstName}}
-            </td>
-            <td>{{employee.lastName}}</td>
             <td>{{employee.address}}</td>
+            <td>
+              <div class="btn-group" role="group" aria-label="...">
+                <button [routerLink]="['/employees',employee.uuid] "type="button" class="btn btn-primary" title="Timesheet">
+                  <i class="fa fa-calendar" aria-hidden="true"></i>
+                </button>
+                <button type="button" class="btn btn-default" title="Edit">
+                  <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                </button>
+                <button type="button" class="btn btn-danger" title="Delete">
+                  <i class="fa fa-trash-o" aria-hidden="true"></i>
+                </button>
+              </div>
+            </td>
           </tr>
         </tbody>
       </table>
+    </div >
+    <div class="card-footer">
+      <input [routerLink]="['/register']" type="submit" class="fadeIn third" value="Add user">
     </div>
-    <input [routerLink]="['/register']" type="submit" class="fadeIn third" value="Add user">
-    <input type="button" class="fadeIn fourth" value="Delete user">
   </div>
 </div>

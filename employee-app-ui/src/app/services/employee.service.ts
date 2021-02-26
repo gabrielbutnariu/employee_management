@@ -9,7 +9,7 @@ import {catchError, map, tap} from 'rxjs/operators';
 })
 export class EmployeeService {
   // instead of search the employee in the list, adding a get request for a specific employee
-  private employeesUrl = '/server/employees';
+  private employeesUrl = '/server/employees/asc';
   constructor(private http: HttpClient) { }
 
   getEmployees(): Observable<IEmployee[]>{
@@ -19,9 +19,9 @@ export class EmployeeService {
     );
   }
 
-  getEmployee(id: number): Observable<IEmployee | undefined>{
+  getEmployee(id: string): Observable<IEmployee | undefined>{
     return this.getEmployees().pipe(map(
-      (employees: IEmployee[]) => employees.find(emp => emp.id === id)
+      (employees: IEmployee[]) => employees.find(emp => emp.uuid === id)
     ));
   }
 

@@ -4,7 +4,7 @@ export interface ITimesheet {
 }
 
 export interface IEmployee{
-  id: number;
+  uuid: string;
   firstName: string;
   lastName: string;
   address: string;

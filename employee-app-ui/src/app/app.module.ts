@@ -10,6 +10,7 @@ import { RegisterComponent } from './components/register/register.component';
 import {FormsModule} from '@angular/forms';
 import { EmployeesListComponent } from './components/employees-list/employees-list.component';
 import { EmployeeComponent } from './components/employee/employee.component';
+import { ConcatPipe } from './shared/concat.pipe';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { EmployeeComponent } from './components/employee/employee.component';
     HomeComponent,
     RegisterComponent,
     EmployeesListComponent,
-    EmployeeComponent
+    EmployeeComponent,
+    ConcatPipe
   ],
   imports: [
     BrowserModule,
