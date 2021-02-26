@@ -27,13 +27,4 @@ class EmployeeControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @Test
-    void getAllEmployees() throws Exception {
-
-        mockMvc.perform(get("/employees"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(content().json("[]"));
-        verify(employeeService,times(1)).list();
-    }
 }

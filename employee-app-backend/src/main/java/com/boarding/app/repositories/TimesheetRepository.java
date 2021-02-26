@@ -8,8 +8,7 @@ import java.util.List;
 
 public interface TimesheetRepository extends JpaRepository<Timesheet,Long> {
     //custom queries
-    List<Timesheet> findAllByEmployeeId(Long emp_id);
-    Timesheet findByEmployeeIdAndCheckoutDateNull(Long id);
-    //Timesheet findByEmployeeIdAndEmployeeIsNull(Long id);
-    void deleteByEmployeeId(Long id);
+    List<Timesheet> findAllByEmployeeUUID(String UUID);
+    Timesheet findByEmployeeUUIDAndCheckoutDateNull(String UUID);
+    void deleteByEmployeeUUID(String UUID);
 }

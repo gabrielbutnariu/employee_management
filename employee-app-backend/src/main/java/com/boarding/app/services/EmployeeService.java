@@ -26,33 +26,47 @@ public class EmployeeService implements IEmployeeService {
         return entityToDTOService.toEmployeeDTO(employee);
     }
 
-    public List<EmployeeDTO> list(){
-       return employeeRepository.findAll().stream().map(this::mapEntityToDTO).collect(Collectors.toList());
+    public List<EmployeeDTO> listAsc(){
+       return employeeRepository.findAllByOrderByLastNameAsc().stream().map(this::mapEntityToDTO).collect(Collectors.toList());
     }
 
-    public Employee findById(Long id){
-        return employeeRepository.findById(id).orElseThrow(() -> new EmployeeNotFoundException(id));
+    public List<EmployeeDTO> listDesc(){
+        return employeeRepository.findAllByOrderByLastNameDesc().stream().map(this::mapEntityToDTO).collect(Collectors.toList());
     }
 
-    public List<EmployeeDTO> findByFirstName(String firstName){
-        return employeeRepository.findAllByFirstName(firstName).stream().map(this::mapEntityToDTO).collect(Collectors.toList());
+    public List<EmployeeDTO> listFilterAsc(String matchingPattern) {
+        return employeeRepository.findByFilterAsc(matchingPattern).stream().map(this::mapEntityToDTO).collect(Collectors.toList());
     }
 
-    public List<EmployeeDTO> findByLastName(String lastName){
-        return employeeRepository.findAllByLastName(lastName).stream().map(this::mapEntityToDTO).collect(Collectors.toList());
+    public List<EmployeeDTO> listFilterDesc(String matchingPattern) {
+        return employeeRepository.findByFilterDesc(matchingPattern).stream().map(this::mapEntityToDTO).collect(Collectors.toList());
     }
 
-    public List<EmployeeDTO> findBySsn(String Ssn){
-        return employeeRepository.findAllBySsn(Ssn).stream().map(this::mapEntityToDTO).collect(Collectors.toList());
+    public Employee findByUUID(String UUID){
+        Employee employee = employeeRepository.findByUUID(UUID);
+        if(employee == null){
+            throw new EmployeeNotFoundException();
+        }
+        return employee;
     }
 
-    public EmployeeDTO addOrUpdateEmployee(Employee employee){
+    public EmployeeDTO addEmployee(Employee employee){
         Employee savedEmployee = employeeRepository.saveAndFlush(employee);
         return mapEntityToDTO(savedEmployee);
     }
 
-    public void deleteById(Long id){
-        employeeRepository.deleteById(id);
+    public EmployeeDTO updateEmployee(Employee existingEmployee, Employee employee){
+        EntityToDTOService.copyNonNullProperties(existingEmployee,employee);
+        employeeRepository.saveAndFlush(existingEmployee);
+        return mapEntityToDTO(existingEmployee);
+    }
+
+    public void deleteByUUID(String UUID){
+        Employee employee = employeeRepository.findByUUID(UUID);
+        if(employee == null){
+            throw new EmployeeNotFoundException();
+        }
+        else employeeRepository.deleteByUUID(UUID);
     }
 
 }

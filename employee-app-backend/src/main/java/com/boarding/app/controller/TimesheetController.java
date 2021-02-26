@@ -22,31 +22,31 @@ public class TimesheetController {
     }
 
     @GetMapping
-    @RequestMapping("{emp_id}")
-    public List<TimesheetDTO> listByEmployeeId(@PathVariable Long emp_id){
-        return timesheetService.getByEmpId(emp_id);
+    @RequestMapping("{UUID}")
+    public List<TimesheetDTO> listByEmployeeId(@PathVariable String UUID){
+        return timesheetService.getByEmpUUID(UUID);
     }
 
     //this one can be used to add checkin and checkout or just checkin
-    @PostMapping("{emp_id}/checkin")
+    @PostMapping("{UUID}/checkin")
     @ResponseStatus(HttpStatus.CREATED)
-    public Timesheet addEntry(@RequestBody final Timesheet timesheet,@PathVariable Long emp_id){
-        return timesheetService.addCheckinDate(timesheet,emp_id);
+    public Timesheet addEntry(@RequestBody final Timesheet timesheet,@PathVariable String UUID){
+        return timesheetService.addCheckinDate(timesheet,UUID);
     }
 
-    @RequestMapping(value = "{emp_id}/checkout",method = RequestMethod.PUT)
+    @RequestMapping(value = "{UUID}/checkout",method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
 
-    public Timesheet updateCheckoutDate(@PathVariable Long emp_id,@RequestBody Timesheet timesheet){
-        return timesheetService.addCheckoutDate(emp_id,timesheet);
+    public Timesheet updateCheckoutDate(@PathVariable String UUID,@RequestBody Timesheet timesheet){
+        return timesheetService.addCheckoutDate(UUID,timesheet);
     }
 
     //deleting all the entry for a specific employee
     @Transactional
-    @RequestMapping(value = "{emp_id}/all",method = RequestMethod.DELETE)
+    @RequestMapping(value = "{UUID}/all",method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.OK)
-    public void deleteByEmployeeId(@PathVariable Long emp_id){
-        timesheetService.deleteTimesheetByEmpId(emp_id);
+    public void deleteByEmployeeId(@PathVariable String UUID){
+        timesheetService.deleteTimesheetByEmpUUID(UUID);
     }
 
     //deleting one entry for a employee

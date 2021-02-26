@@ -44,14 +44,4 @@ private TimesheetService timesheetService;
         verify(timesheetService,times(1)).list();
     }
 
-    @Test
-    @DisplayName("GET /timesheet/2 - Found")
-    void listByEmployeeId() throws Exception {
-        mockMvc.perform(get("/timesheet/2"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(content().json("[]"));
-        verify(timesheetService,times(1)).getByEmpId(2L);
-
-    }
 }

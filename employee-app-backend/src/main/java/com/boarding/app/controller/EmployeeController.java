@@ -7,6 +7,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("employees")
@@ -15,47 +16,47 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
-    @GetMapping
-    public List<EmployeeDTO> getAllEmployees(){
-        return employeeService.list();
+    @GetMapping("/asc")
+    public List<EmployeeDTO> getAllEmployeesAsc(){
+        return employeeService.listAsc();
     }
 
-    @GetMapping("{id}")
-    public EmployeeDTO getEmployee(@PathVariable long id){
-        return employeeService.mapEntityToDTO(employeeService.findById(id));
+    @GetMapping("/desc")
+    public List<EmployeeDTO> getAllEmployeesDesc(){
+        return employeeService.listDesc();
     }
 
-    @GetMapping("firstname/{firstName}")
-    public List<EmployeeDTO> getEmployeeByFirstName(@PathVariable String firstName){
-        return employeeService.findByFirstName(firstName);
+    @GetMapping("/filter/asc/{matchingPatttern}")
+    public List<EmployeeDTO> getAllEmployeesByFilterAsc(@PathVariable String matchingPatttern){
+        return employeeService.listFilterAsc(matchingPatttern);
     }
 
-    @GetMapping("lastname/{lastName}")
-    public List<EmployeeDTO> getEmployeeByLastName(@PathVariable String lastName){
-        return employeeService.findByLastName(lastName);
+    @GetMapping("/filter/desc/{matchingPatttern}")
+    public List<EmployeeDTO> getAllEmployeesByFilterDesc(@PathVariable String matchingPatttern){
+        return employeeService.listFilterDesc(matchingPatttern);
     }
 
-    @GetMapping("ssn/{ssn}")
-    public List<EmployeeDTO> getEmployeeBySsn(@PathVariable String ssn){
-        return employeeService.findBySsn(ssn);
+    @GetMapping("/uuid/{UUID}")
+    public EmployeeDTO getEmployee(@PathVariable String UUID){
+        return employeeService.mapEntityToDTO(employeeService.findByUUID(UUID));
     }
 
     @PostMapping
-    public void createEmployee(@RequestBody Employee employee) {
-        employeeService.addOrUpdateEmployee(employee);
+    public EmployeeDTO createEmployee(@RequestBody Employee employee) {
+        UUID uuid = UUID.randomUUID();
+        employee.setUUID(uuid.toString());
+        return employeeService.addEmployee(employee);
     }
 
-    @DeleteMapping("{id}")
-    public void deleteEmployee(@PathVariable long id){
-        employeeService.findById(id);
-        employeeService.deleteById(id);
+    @DeleteMapping("{UUID}")
+    public void deleteEmployee(@PathVariable String UUID){
+        employeeService.deleteByUUID(UUID);
     }
 
-    @PutMapping("{id}")
-    public EmployeeDTO updateEmployee(@RequestBody Employee employee, @PathVariable Long id){
-        Employee existingEmployee = employeeService.findById(id);
-        BeanUtils.copyProperties(employee, existingEmployee, "id");
-        return employeeService.addOrUpdateEmployee(existingEmployee);
+    @PutMapping("{UUID}")
+    public EmployeeDTO updateEmployee(@RequestBody Employee employee, @PathVariable String UUID){
+        Employee existingEmployee = employeeService.findByUUID(UUID);
+        return employeeService.updateEmployee(existingEmployee, employee);
     }
 
     /*@RequestMapping(value = "name/{firstName}", method = RequestMethod.GET)

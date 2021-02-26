@@ -37,43 +37,27 @@ public class TimesheetService implements ITimesheetService{
         return timesheetRepository.findAll().stream().map(this::mapEntityToDTO).collect(Collectors.toList());
     }
 
-    public List<TimesheetDTO> getByEmpId(@PathVariable Long emp_id){
-        return timesheetRepository.findAllByEmployeeId(emp_id).stream().map(this::mapEntityToDTO).collect(Collectors.toList());
+    public List<TimesheetDTO> getByEmpUUID(@PathVariable String UUID){
+        return timesheetRepository.findAllByEmployeeUUID(UUID).stream().map(this::mapEntityToDTO).collect(Collectors.toList());
     }
 
-    public Timesheet addCheckinDate(@RequestBody final Timesheet timesheet,@PathVariable Long emp_id){
+    public Timesheet addCheckinDate(@RequestBody final Timesheet timesheet,@PathVariable String UUID){
         //Timesheet timesheetToUpdate = timesheetRepository.findByEmployeeIdAndEmployeeIsNull(emp_id);
         //if(timesheetToUpdate == null) throw new TimesheetNotFoundException(emp_id);
-        timesheet.getEmployee().setId(emp_id);
+        timesheet.getEmployee().setUUID(UUID);
         return timesheetRepository.saveAndFlush(timesheet);
     }
 
-    public Timesheet addCheckoutDate(@PathVariable Long emp_id,@RequestBody Timesheet timesheet){
-        Timesheet timesheetToUpdate = timesheetRepository.findByEmployeeIdAndCheckoutDateNull(emp_id);
-        if(timesheetToUpdate == null) throw new TimesheetNotFoundException(emp_id);
-        copyNonNullProperties(timesheetToUpdate,timesheet);
+    public Timesheet addCheckoutDate(@PathVariable String UUID,@RequestBody Timesheet timesheet){
+        Timesheet timesheetToUpdate = timesheetRepository.findByEmployeeUUIDAndCheckoutDateNull(UUID);
+        if(timesheetToUpdate == null) throw new TimesheetNotFoundException();
+        entityToDTOService.copyNonNullProperties(timesheetToUpdate,timesheet);
         return timesheetRepository.saveAndFlush(timesheetToUpdate);
     }
 
-    public static void copyNonNullProperties(Object target,Object src) {
-        BeanUtils.copyProperties(src, target, getNullPropertyNames(src));
-    }
 
-    public static String[] getNullPropertyNames (Object source) {
-        final BeanWrapper src = new BeanWrapperImpl(source);
-        java.beans.PropertyDescriptor[] pds = src.getPropertyDescriptors();
-
-        Set<String> emptyNames = new HashSet<String>();
-        for(java.beans.PropertyDescriptor pd : pds) {
-            Object srcValue = src.getPropertyValue(pd.getName());
-            if (srcValue == null) emptyNames.add(pd.getName());
-        }
-        String[] result = new String[emptyNames.size()];
-        return emptyNames.toArray(result);
-    }
-
-    public void deleteTimesheetByEmpId(@PathVariable Long emp_id){
-        timesheetRepository.deleteByEmployeeId(emp_id);
+    public void deleteTimesheetByEmpUUID(@PathVariable String UUID){
+        timesheetRepository.deleteByEmployeeUUID(UUID);
     }
 
     public void deleteTimesheetById(@PathVariable Long id){

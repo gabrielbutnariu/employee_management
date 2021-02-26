@@ -2,6 +2,8 @@ package com.boarding.app.repositories;
 
 import com.boarding.app.models.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -9,11 +11,19 @@ import java.util.List;
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
-    List<Employee> findAllByFirstName(String first);
-    List<Employee> findAllByLastName(String last);
-    List<Employee> findAllBySsn(String ssn);
+    List<Employee> findAllByOrderByLastNameAsc();
+    List<Employee> findAllByOrderByLastNameDesc();
 
-    /*@Query("select e from employees e where e.first_name = :firstName")
-    List<Employee> findByFirstName(@Param("firstName") String firstName);
-*/
+    @Query(
+            value = "SELECT *FROM employees emp WHERE emp.first_name ILIKE %:matchingPattern% OR emp.last_name ILIKE %:matchingPattern% ORDER BY emp.last_name ASC",
+            nativeQuery = true)
+    List<Employee> findByFilterAsc(@Param("matchingPattern") String matchingPattern);
+
+    @Query(
+            value = "SELECT *FROM employees emp WHERE emp.first_name ILIKE %:matchingPattern% OR emp.last_name ILIKE %:matchingPattern% ORDER BY emp.last_name DESC",
+            nativeQuery = true)
+    List<Employee> findByFilterDesc(@Param("matchingPattern") String matchingPattern);
+
+    Employee findByUUID(String UUID);
+    Employee deleteByUUID(String UUID);
 }

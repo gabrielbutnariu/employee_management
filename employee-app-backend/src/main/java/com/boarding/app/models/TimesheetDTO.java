@@ -8,9 +8,7 @@ import java.sql.Date;
 
 @Getter @Setter
 public class TimesheetDTO {
-    private Long id;
     private Date checkinDate;
     private Date checkoutDate;
     private EmployeeDTO employeeDTO;
-    private String workType;
 }

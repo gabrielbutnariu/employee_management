@@ -19,15 +19,8 @@ public class Employee {
     private String lastName;
     private String ssn;
     private String address;
+    private String UUID;
 
     public Employee() {
-    }
-
-    public Employee(long id, String firstName, String lastName, String ssn, String address) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.ssn = ssn;
-        this.address = address;
     }
 }

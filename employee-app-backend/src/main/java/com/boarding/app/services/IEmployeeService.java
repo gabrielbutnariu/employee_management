@@ -7,26 +7,22 @@ import java.util.List;
 
 public interface IEmployeeService {
 
-    List<EmployeeDTO> list();
-    //List all employees from database
-
-    Employee findById(Long id);
-    //Locate employee with provided id or throw EmployeeNotFoundException
-
-    List<EmployeeDTO> findByFirstName(String firstName);
-    //List all employee with provided first name or return an empty list
-
-    List<EmployeeDTO> findByLastName(String lastName);
-    //List all employee with provided first name or return an empty list
-
-    List<EmployeeDTO> findBySsn(String Ssn);
-    //List all employee with provided first name or return an empty list
-
-    EmployeeDTO addOrUpdateEmployee(Employee employee);
-    //Insert a new employee or update an already existing one from database
-
-    void deleteById(Long id);
-    //Delete employee with provided id or return EmployeeNotFoundException
+    List<EmployeeDTO> listAsc();
+    //List all employees from database ordered by last name alphabetically
+    List<EmployeeDTO> listDesc();
+    //List all employees from database reverse ordered by last name alphabetically
+    List<EmployeeDTO> listFilterAsc(String matchingPattern);
+    //List all employees from database that match a filter ordered by last name alphabetically
+    List<EmployeeDTO> listFilterDesc(String matchingPattern);
+    //List all employees from database that match a filter reverse ordered by last name alphabetically
+    Employee findByUUID(String UUID);
+    //Locate employee with provided UUID or throw EmployeeNotFoundException
+    EmployeeDTO addEmployee(Employee employee);
+    //Insert a new employee into database
+    EmployeeDTO updateEmployee(Employee employeeEmployee ,Employee employee);
+    //Update an employee from database
+    void deleteByUUID(String UUID);
+    //Delete employee with provided UUID or return EmployeeNotFoundException
 
 
 }
