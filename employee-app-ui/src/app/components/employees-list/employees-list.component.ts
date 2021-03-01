@@ -13,12 +13,29 @@ export class EmployeesListComponent implements AfterViewInit  {
   errorMessage = '';
   listFilterKey = '';
   employees: IEmployee[] = [];
-  dataSource = new MatTableDataSource<IEmployee>();
+  dataSource: MatTableDataSource<IEmployee>;
   filteredEmployees: IEmployee[] = [];
-  tableHeader = ['Name', 'Address', 'Actions'];
-  @ViewChild(MatPaginator) paginator?: MatPaginator ;
+  tableHeader = ['Name', 'Address', 'Timesheet', 'Edit', 'Delete'];
+  @ViewChild(MatPaginator) paginator?: MatPaginator;
+
   constructor(private employeeService: EmployeeService) {
+    this.dataSource = new MatTableDataSource<IEmployee>([]);
+    this.employeeService.getEmployees().subscribe({
+      next: employees => {
+        console.log('inainte this.' + JSON.stringify(employees));
+        this.dataSource = new MatTableDataSource<IEmployee>(employees);
+        // @ts-ignore
+        this.dataSource.paginator = this.paginator;
+        console.log('dupa this.' + JSON.stringify(employees));
+        this.filteredEmployees = this.employees;
+      },
+      error: err => this.errorMessage = err
+    });
     this.listFilter = '';
+  }
+  ngAfterViewInit(): void {
+    // @ts-ignore
+    console.log(this.dataSource);
   }
 
   get listFilter(): string{
@@ -28,17 +45,6 @@ export class EmployeesListComponent implements AfterViewInit  {
     this.listFilterKey = value;
     this.filteredEmployees = this.listFilter ? this.perfomFilter(this.listFilter) : this.employees;
   }
-  ngOnInit(): void {
-    this.employeeService.getEmployees().subscribe({
-      next: employees => {
-        console.log('inainte this.' + JSON.stringify(employees));
-        this.employees = employees;
-        console.log('dupa this.' + JSON.stringify(employees));
-        this.filteredEmployees = this.employees;
-    },
-      error: err => this.errorMessage = err
-    });
-  }
 
   private perfomFilter(filterBy: string): IEmployee[] {
     filterBy = filterBy.toLocaleLowerCase();
@@ -46,17 +52,9 @@ export class EmployeesListComponent implements AfterViewInit  {
     employee.firstName.concat(' ' + employee.lastName).toLocaleLowerCase().indexOf(filterBy) !== -1);
   }
 
-  ngAfterViewInit(): void {
-    this.employeeService.getEmployees().subscribe({
-      next: employees => {
-        console.log('inainte this.' + JSON.stringify(employees));
-        this.employees = employees;
-        console.log('dupa this.' + JSON.stringify(employees));
-        this.filteredEmployees = this.employees;
-      },
-      error: err => this.errorMessage = err
-    });
-    // @ts-ignore
-    this.dataSource.paginator = this.paginator;
-  }
+
+  public doFilter = (value: EventTarget) => {
+    console.log('value: ' + value);
+    // this.dataSource.filter = value.trim().toLocaleLowerCase();
+    }
 }

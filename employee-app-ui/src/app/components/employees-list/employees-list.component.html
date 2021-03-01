@@ -1,23 +1,9 @@
 <div class="container">
-  <div class="card-header">
-    {{pageTitle}}
-  </div>
   <div class="card-body">
-    <div class="row">
-      <div class="row-item">
-        <input type="text" placeholder="Filter by:"
-        [(ngModel)]= 'listFilter'/>
-      </div>
-    </div>
-    <div class="row">
-      <div class="row-item">
-        <h4>Filtered by:  {{listFilter}}</h4>
-      </div>
-    </div>
     <div class="mat-elevation-z8">
-      <table class="table" mat-table [dataSource]="employees"  *ngIf='employees && employees.length'>
+      <table class="table" mat-table [dataSource]="dataSource" >-->
         <ng-container matColumnDef="Name">
-          <th mat-header-cell *matHeaderCellDef>Name</th>
+          <th mat-header-cell *matHeaderCellDef >Name</th>
           <td mat-cell *matCellDef="let employee"> {{employee.firstName}} {{employee.lastName}} </td>
         </ng-container>
 
@@ -25,64 +11,47 @@
           <th mat-header-cell *matHeaderCellDef>Address</th>
           <td mat-cell *matCellDef="let employee"> {{ employee.address }} </td>
         </ng-container>
-        <ng-container matColumnDef="Actions">
-          <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <ng-container matColumnDef="Timesheet">
+          <th mat-header-cell *matHeaderCellDef>Timesheet</th>
           <td mat-cell *matCellDef="let employee">
             <div class="btn-group" role="group" aria-label="...">
               <button [routerLink]="['/employees',employee.uuid] "type="button" class="btn btn-primary" title="Timesheet">
                 <i class="fa fa-calendar" aria-hidden="true"></i>
               </button>
+            </div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="Edit">
+          <th mat-header-cell *matHeaderCellDef>Edit</th>
+          <td mat-cell *matCellDef="let employee">
+            <div class="btn-group" role="group" aria-label="...">
               <button type="button" class="btn btn-default" title="Edit">
                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
               </button>
+            </div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="Delete">
+          <th mat-header-cell *matHeaderCellDef>Delete</th>
+          <td mat-cell *matCellDef="let employee">
+            <div class="btn-group" role="group" aria-label="...">
               <button type="button" class="btn btn-danger" title="Delete">
                 <i class="fa fa-trash-o" aria-hidden="true"></i>
               </button>
             </div>
           </td>
-
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="tableHeader"></tr>
         <tr mat-row *matRowDef="let row; columns: tableHeader;"></tr>
-
       </table>
-      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
-<!--      <table class="table"-->
-<!--             *ngIf='employees && employees.length'>-->
-<!--        <thead>-->
-<!--        <tr>-->
-<!--          <th *ngFor="let column of tableHeader ">{{column}}-->
-<!--          </th>-->
-<!--        </tr>-->
-<!--        </thead>-->
 
-<!--        <tbody>-->
-
-<!--&lt;!&ndash;        TODO: delete | slice:0:7; later &ndash;&gt;-->
-<!--          <tr *ngFor="let employee of filteredEmployees | slice:0:7;">-->
-
-<!--            <td>-->
-<!--              {{employee.firstName}} {{employee.lastName}}-->
-<!--            </td>-->
-<!--            <td>{{employee.address}}</td>-->
-<!--            <td>-->
-<!--              <div class="btn-group" role="group" aria-label="...">-->
-<!--                <button [routerLink]="['/employees',employee.uuid] "type="button" class="btn btn-primary" title="Timesheet">-->
-<!--                  <i class="fa fa-calendar" aria-hidden="true"></i>-->
-<!--                </button>-->
-<!--                <button type="button" class="btn btn-default" title="Edit">-->
-<!--                  <i class="fa fa-pencil-square-o" aria-hidden="true"></i>-->
-<!--                </button>-->
-<!--                <button type="button" class="btn btn-danger" title="Delete">-->
-<!--                  <i class="fa fa-trash-o" aria-hidden="true"></i>-->
-<!--                </button>-->
-<!--              </div>-->
-<!--            </td>-->
-<!--          </tr>-->
-<!--        </tbody>-->
-<!--      </table>-->
+      <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
       <input [routerLink]="['/register']" type="submit" class="fadeIn third" value="Add user">
-    </div >
+
+    </div>
+
+
   </div>
 </div>
+

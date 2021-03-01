@@ -15,6 +15,8 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { DeleteComponent } from './components/delete/delete.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     RegisterComponent,
     EmployeesListComponent,
     EmployeeComponent,
-    ConcatPipe
+    ConcatPipe,
+    DeleteComponent
   ],
   imports: [
     BrowserModule,
@@ -34,7 +37,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatPaginatorModule,
     MatTableModule,
     MatSortModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatFormFieldModule
   ],
   providers: [LoginService],
   bootstrap: [AppComponent]

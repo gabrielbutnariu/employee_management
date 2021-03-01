@@ -11,7 +11,7 @@ html {
 
 body {
   font-family: "Poppins", sans-serif;
-  /*height: 100vh;*/
+  height: 100vh;
 }
 
 a {
@@ -55,13 +55,25 @@ div.card {
 }
 
 .table {
-  margin-top: 10px
+  width: 100%;
+  margin-top: 10px;
+  vertical-align: middle;
 }
 .ng-valid[required] , .ng-valid.required {
   border-left: 5px solid #5fbae9;
 }
 .ng-invalid:not(form){
   border-left: 5px solid #a94442;
+}
+tr.mat-row{
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -ms-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+}
+tr.mat-row:hover{
+  background-color: #9dd0e9;
 }
 input[type=text], input[type=number],input[type=password] {
   background-color: #f6f6f6;
@@ -105,11 +117,11 @@ input[type=button], input[type=submit], input[type=reset]  {
   transition: all 0.3s ease-in-out;
 }
 
-input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover  {
+input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover {
   background-color: #39ace7;
 }
 
-input[type=button]:active, input[type=submit]:active, input[type=reset]:active  {
+input[type=button]:active, input[type=submit]:active, input[type=reset]:active {
   -moz-transform: scale(0.95);
   -webkit-transform: scale(0.95);
   -o-transform: scale(0.95);

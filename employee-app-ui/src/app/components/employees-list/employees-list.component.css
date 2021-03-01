@@ -1,5 +1,11 @@
-thead{
+th{
   color: #337AB7;
+}
+.table thead th{
+  border-bottom: 2px solid #2e72b7 !important;
+}
+.table td{
+  vertical-align: middle !important;
 }
 tbody{
   color: #0d0d0d;
@@ -11,4 +17,7 @@ input[type=text] {
 }
 table {
   width: 100%;
+}
+mat-paginator {
+  width:auto !important;
 }
