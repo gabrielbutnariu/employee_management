@@ -11,6 +11,10 @@ import {FormsModule} from '@angular/forms';
 import { EmployeesListComponent } from './components/employees-list/employees-list.component';
 import { EmployeeComponent } from './components/employee/employee.component';
 import { ConcatPipe } from './shared/concat.pipe';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatTableModule} from '@angular/material/table';
+import {MatSortModule} from '@angular/material/sort';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -26,7 +30,11 @@ import { ConcatPipe } from './shared/concat.pipe';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    MatPaginatorModule,
+    MatTableModule,
+    MatSortModule,
+    BrowserAnimationsModule
   ],
   providers: [LoginService],
   bootstrap: [AppComponent]
