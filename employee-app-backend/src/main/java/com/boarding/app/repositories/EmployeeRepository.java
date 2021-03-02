@@ -17,14 +17,10 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     List<Employee> findAllByOrderByLastNameDesc();
 
     @Query(
-            value = "SELECT *FROM employees emp WHERE emp.first_name ILIKE %:matchingPattern% OR emp.last_name ILIKE %:matchingPattern% ORDER BY emp.last_name ASC",
+            value = "SELECT *FROM employees emp WHERE emp.first_name ILIKE %?1% OR emp.last_name ILIKE %?1%",
+            countQuery = "SELECT COUNT(*) FROM employees e WHERE e.first_name ILIKE %?1% OR e.last_name ILIKE %?1%",
             nativeQuery = true)
-    Page<Employee> findByFilterAsc(@Param("matchingPattern") String matchingPattern, Pageable pageable);
-
-    @Query(
-            value = "SELECT *FROM employees emp WHERE emp.first_name ILIKE %:matchingPattern% OR emp.last_name ILIKE %:matchingPattern% ORDER BY emp.last_name DESC",
-            nativeQuery = true)
-    List<Employee> findByFilterDesc(@Param("matchingPattern") String matchingPattern);
+    Page<Employee> findByFilter(@Param("filter") String filter, Pageable pageable);
 
     Employee findByUUID(String UUID);
     Employee deleteByUUID(String UUID);

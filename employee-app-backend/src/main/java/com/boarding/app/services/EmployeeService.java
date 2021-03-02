@@ -28,9 +28,13 @@ public class EmployeeService implements IEmployeeService {
         return entityToDTOService.toEmployeeDTO(employee);
     }
 
-    public List<EmployeeDTO> employeesPageable(Pageable pageable) {
-        return employeeRepository.findAll(pageable).map(EmployeeDTO::new).getContent();
+    public Page<EmployeeDTO> employeesPageable(Pageable pageable) {
+        return employeeRepository.findAll(pageable).map(EmployeeDTO::new);
 
+    }
+
+    public Page<EmployeeDTO> employeesPageableFilter(String filter, Pageable pageable) {
+        return employeeRepository.findByFilter(filter,pageable).map(EmployeeDTO::new);
     }
 
     public List<EmployeeDTO> listAsc(){
@@ -41,13 +45,6 @@ public class EmployeeService implements IEmployeeService {
         return employeeRepository.findAllByOrderByLastNameDesc().stream().map(this::mapEntityToDTO).collect(Collectors.toList());
     }
 
-    public Page<EmployeeDTO> listFilterAsc(String matchingPattern, Pageable pageable) {
-        return employeeRepository.findByFilterAsc(matchingPattern,pageable).map(EmployeeDTO::new);
-    }
-
-    public List<EmployeeDTO> listFilterDesc(String matchingPattern) {
-        return employeeRepository.findByFilterDesc(matchingPattern).stream().map(this::mapEntityToDTO).collect(Collectors.toList());
-    }
 
     public Employee findByUUID(String UUID){
         Employee employee = employeeRepository.findByUUID(UUID);

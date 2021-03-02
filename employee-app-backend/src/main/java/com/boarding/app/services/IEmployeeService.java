@@ -13,10 +13,10 @@ public interface IEmployeeService {
     //List all employees from database ordered by last name alphabetically
     List<EmployeeDTO> listDesc();
     //List all employees from database reverse ordered by last name alphabetically
-    Page<EmployeeDTO> listFilterAsc(String matchingPattern, Pageable pageable);
-    //List all employees from database that match a filter ordered by last name alphabetically
-    List<EmployeeDTO> listFilterDesc(String matchingPattern);
-    //List all employees from database that match a filter reverse ordered by last name alphabetically
+    Page<EmployeeDTO> employeesPageable(Pageable pageable);
+    //List all employees from database using Pages
+    Page<EmployeeDTO> employeesPageableFilter(String filter, Pageable pageable);
+    //List all employees from database that match a filter using Pages
     Employee findByUUID(String UUID);
     //Locate employee with provided UUID or throw EmployeeNotFoundException
     EmployeeDTO addEmployee(Employee employee);

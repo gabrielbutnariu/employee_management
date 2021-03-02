@@ -9,7 +9,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -19,34 +21,31 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
+    @GetMapping()
+    Map<String, Object> getPageable(@RequestParam(required = false) String filter, Pageable pageable) {
+        Page<EmployeeDTO> pagedEmployees;
+        if(filter == null){
+            pagedEmployees = employeeService.employeesPageable(pageable);
+        }
+        else pagedEmployees = employeeService.employeesPageableFilter(filter, pageable);
+
+        List<EmployeeDTO> listedEmployees = pagedEmployees.getContent();
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("employees", listedEmployees);
+        response.put("totalPages", pagedEmployees.getTotalPages());
+
+        return response;
+    }
+
     @GetMapping("/asc")
     public List<EmployeeDTO> getAllEmployeesAsc(){
         return employeeService.listAsc();
     }
 
-    @GetMapping()
-    List<EmployeeDTO> getPageable(Pageable pageable) {
-        return employeeService.employeesPageable(pageable);
-    }
-
-    @GetMapping("/filter/{matchingPatttern}/page")
-    public List<EmployeeDTO> getAllEmployeesByFilterAsc(@PathVariable String matchingPatttern, Pageable pageable){
-        return employeeService.listFilterAsc(matchingPatttern, pageable).getContent();
-    }
-
     @GetMapping("/desc")
     public List<EmployeeDTO> getAllEmployeesDesc(){
         return employeeService.listDesc();
-    }
-
-//    @GetMapping("/filter/asc/{matchingPatttern}")
-//    public List<EmployeeDTO> getAllEmployeesByFilterAsc(@PathVariable String matchingPatttern){
-//        return employeeService.listFilterAsc(matchingPatttern);
-//    }
-
-    @GetMapping("/filter/desc/{matchingPatttern}")
-    public List<EmployeeDTO> getAllEmployeesByFilterDesc(@PathVariable String matchingPatttern){
-        return employeeService.listFilterDesc(matchingPatttern);
     }
 
     @GetMapping("/uuid/{UUID}")
