@@ -34,7 +34,11 @@ h2 {
 
 
 /* STRUCTURE */
-
+mat-dialog-container#modal-component {
+  border: 3px solid #262626;
+  border-radius: 11px;
+  background-color: #1a1a1a;
+}
 .row{
   display: table; width:100%;
 }
@@ -48,7 +52,6 @@ h2 {
   justify-content: center;
   width: 100%;
   min-height: 100%;
-  padding: 20px;
 }
 div.card {
   margin-top: 10px

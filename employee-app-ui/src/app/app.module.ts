@@ -14,9 +14,12 @@ import { ConcatPipe } from './shared/concat.pipe';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { DeleteComponent } from './components/delete/delete.component';
+import {NgbModalOptions, NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { ModalComponent } from './components/modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +30,8 @@ import { DeleteComponent } from './components/delete/delete.component';
     EmployeesListComponent,
     EmployeeComponent,
     ConcatPipe,
-    DeleteComponent
+    DeleteComponent,
+    ModalComponent
   ],
   imports: [
     BrowserModule,
@@ -38,9 +42,12 @@ import { DeleteComponent } from './components/delete/delete.component';
     MatTableModule,
     MatSortModule,
     BrowserAnimationsModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    NgbModule,
+    MatProgressSpinnerModule
   ],
   providers: [LoginService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [ModalComponent]
 })
 export class AppModule { }

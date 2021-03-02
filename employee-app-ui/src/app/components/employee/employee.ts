@@ -8,4 +8,5 @@ export interface IEmployee{
   firstName: string;
   lastName: string;
   address: string;
+  totalElements: number;
 }
