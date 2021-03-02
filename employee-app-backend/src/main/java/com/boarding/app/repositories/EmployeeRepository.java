@@ -1,6 +1,8 @@
 package com.boarding.app.repositories;
 
 import com.boarding.app.models.Employee;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -17,7 +19,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     @Query(
             value = "SELECT *FROM employees emp WHERE emp.first_name ILIKE %:matchingPattern% OR emp.last_name ILIKE %:matchingPattern% ORDER BY emp.last_name ASC",
             nativeQuery = true)
-    List<Employee> findByFilterAsc(@Param("matchingPattern") String matchingPattern);
+    Page<Employee> findByFilterAsc(@Param("matchingPattern") String matchingPattern, Pageable pageable);
 
     @Query(
             value = "SELECT *FROM employees emp WHERE emp.first_name ILIKE %:matchingPattern% OR emp.last_name ILIKE %:matchingPattern% ORDER BY emp.last_name DESC",

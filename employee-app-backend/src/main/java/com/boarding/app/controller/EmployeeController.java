@@ -1,11 +1,14 @@
 package com.boarding.app.controller;
 
 import com.boarding.app.models.EmployeeDTO;
+import com.boarding.app.repositories.EmployeeRepository;
 import com.boarding.app.services.EmployeeService;
 import com.boarding.app.models.Employee;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -21,15 +24,25 @@ public class EmployeeController {
         return employeeService.listAsc();
     }
 
+    @GetMapping()
+    List<EmployeeDTO> getPageable(Pageable pageable) {
+        return employeeService.employeesPageable(pageable);
+    }
+
+    @GetMapping("/filter/{matchingPatttern}/page")
+    public List<EmployeeDTO> getAllEmployeesByFilterAsc(@PathVariable String matchingPatttern, Pageable pageable){
+        return employeeService.listFilterAsc(matchingPatttern, pageable).getContent();
+    }
+
     @GetMapping("/desc")
     public List<EmployeeDTO> getAllEmployeesDesc(){
         return employeeService.listDesc();
     }
 
-    @GetMapping("/filter/asc/{matchingPatttern}")
-    public List<EmployeeDTO> getAllEmployeesByFilterAsc(@PathVariable String matchingPatttern){
-        return employeeService.listFilterAsc(matchingPatttern);
-    }
+//    @GetMapping("/filter/asc/{matchingPatttern}")
+//    public List<EmployeeDTO> getAllEmployeesByFilterAsc(@PathVariable String matchingPatttern){
+//        return employeeService.listFilterAsc(matchingPatttern);
+//    }
 
     @GetMapping("/filter/desc/{matchingPatttern}")
     public List<EmployeeDTO> getAllEmployeesByFilterDesc(@PathVariable String matchingPatttern){

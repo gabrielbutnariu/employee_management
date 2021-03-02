@@ -16,21 +16,11 @@ import java.util.Set;
 public class EntityToDTOService {
 
     public EmployeeDTO toEmployeeDTO(Employee employee){
-        EmployeeDTO employeeDTO = new EmployeeDTO();
-        employeeDTO.setFirstName(employee.getFirstName());
-        employeeDTO.setLastName(employee.getLastName());
-        employeeDTO.setAddress(employee.getAddress());
-        employeeDTO.setUUID(employee.getUUID());
-        return employeeDTO;
+        return new EmployeeDTO(employee);
     }
 
     public TimesheetDTO toTimesheetDTO(Timesheet timesheet){
-        TimesheetDTO timesheetDTO= new TimesheetDTO();
-        timesheetDTO.setId(timesheet.getId());
-        timesheetDTO.setCheckinDate(timesheet.getCheckinDate());
-        timesheetDTO.setCheckoutDate(timesheet.getCheckoutDate());
-        timesheetDTO.setEmployeeDTO(toEmployeeDTO(timesheet.getEmployee()));
-        return timesheetDTO;
+        return new TimesheetDTO(timesheet);
     }
 
 
@@ -42,7 +32,7 @@ public class EntityToDTOService {
         final BeanWrapper src = new BeanWrapperImpl(source);
         java.beans.PropertyDescriptor[] pds = src.getPropertyDescriptors();
 
-        Set<String> emptyNames = new HashSet<String>();
+        Set<String> emptyNames = new HashSet<>();
         for(java.beans.PropertyDescriptor pd : pds) {
             Object srcValue = src.getPropertyValue(pd.getName());
             if (srcValue == null) emptyNames.add(pd.getName());

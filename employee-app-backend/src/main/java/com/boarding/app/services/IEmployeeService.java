@@ -2,6 +2,8 @@ package com.boarding.app.services;
 
 import com.boarding.app.models.Employee;
 import com.boarding.app.models.EmployeeDTO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -11,7 +13,7 @@ public interface IEmployeeService {
     //List all employees from database ordered by last name alphabetically
     List<EmployeeDTO> listDesc();
     //List all employees from database reverse ordered by last name alphabetically
-    List<EmployeeDTO> listFilterAsc(String matchingPattern);
+    Page<EmployeeDTO> listFilterAsc(String matchingPattern, Pageable pageable);
     //List all employees from database that match a filter ordered by last name alphabetically
     List<EmployeeDTO> listFilterDesc(String matchingPattern);
     //List all employees from database that match a filter reverse ordered by last name alphabetically

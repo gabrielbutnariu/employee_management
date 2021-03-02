@@ -9,4 +9,11 @@ public class EmployeeDTO {
     private String lastName;
     private String address;
     private String UUID;
+
+    public EmployeeDTO(Employee employee){
+        firstName = employee.getFirstName();
+        lastName = employee.getLastName();
+        address = employee.getAddress();
+        UUID = employee.getUUID();
+    }
 }

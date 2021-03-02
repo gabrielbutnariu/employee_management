@@ -5,6 +5,8 @@ import com.boarding.app.models.Employee;
 import com.boarding.app.models.EmployeeDTO;
 import com.boarding.app.repositories.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,6 +28,11 @@ public class EmployeeService implements IEmployeeService {
         return entityToDTOService.toEmployeeDTO(employee);
     }
 
+    public List<EmployeeDTO> employeesPageable(Pageable pageable) {
+        return employeeRepository.findAll(pageable).map(EmployeeDTO::new).getContent();
+
+    }
+
     public List<EmployeeDTO> listAsc(){
        return employeeRepository.findAllByOrderByLastNameAsc().stream().map(this::mapEntityToDTO).collect(Collectors.toList());
     }
@@ -34,8 +41,8 @@ public class EmployeeService implements IEmployeeService {
         return employeeRepository.findAllByOrderByLastNameDesc().stream().map(this::mapEntityToDTO).collect(Collectors.toList());
     }
 
-    public List<EmployeeDTO> listFilterAsc(String matchingPattern) {
-        return employeeRepository.findByFilterAsc(matchingPattern).stream().map(this::mapEntityToDTO).collect(Collectors.toList());
+    public Page<EmployeeDTO> listFilterAsc(String matchingPattern, Pageable pageable) {
+        return employeeRepository.findByFilterAsc(matchingPattern,pageable).map(EmployeeDTO::new);
     }
 
     public List<EmployeeDTO> listFilterDesc(String matchingPattern) {
