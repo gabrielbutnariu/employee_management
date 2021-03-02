@@ -33,7 +33,7 @@ public class EmployeeController {
 
         Map<String, Object> response = new HashMap<>();
         response.put("employees", listedEmployees);
-        response.put("totalPages", pagedEmployees.getTotalPages());
+        response.put("totalElements", pagedEmployees.getTotalElements());
 
         return response;
     }

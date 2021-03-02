@@ -15,12 +15,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
     List<Employee> findAllByOrderByLastNameAsc();
     List<Employee> findAllByOrderByLastNameDesc();
-
-    @Query(
-            value = "SELECT *FROM employees emp WHERE emp.first_name ILIKE %?1% OR emp.last_name ILIKE %?1%",
-            countQuery = "SELECT COUNT(*) FROM employees e WHERE e.first_name ILIKE %?1% OR e.last_name ILIKE %?1%",
-            nativeQuery = true)
-    Page<Employee> findByFilter(@Param("filter") String filter, Pageable pageable);
+    Page<Employee> findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(String filter1, String filter2, Pageable pageable);
 
     Employee findByUUID(String UUID);
     Employee deleteByUUID(String UUID);

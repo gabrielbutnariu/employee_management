@@ -34,7 +34,7 @@ public class EmployeeService implements IEmployeeService {
     }
 
     public Page<EmployeeDTO> employeesPageableFilter(String filter, Pageable pageable) {
-        return employeeRepository.findByFilter(filter,pageable).map(EmployeeDTO::new);
+        return employeeRepository.findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(filter,filter,pageable).map(EmployeeDTO::new);
     }
 
     public List<EmployeeDTO> listAsc(){
