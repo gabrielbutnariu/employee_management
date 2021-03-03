@@ -227,3 +227,10 @@ input[type=text]::placeholder, input[type=number]::placeholder,input[type=passwo
   -moz-animation-delay: 1.4s;
   animation-delay: 1.4s;
 }
+ /*MODALS*/
+
+mat-dialog-container#modal-component {
+  border: 3px solid #262626;
+  border-radius: 11px;
+  background-color: #1a1a1a;
+}

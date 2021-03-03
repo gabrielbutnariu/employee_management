@@ -20,7 +20,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import { DeleteComponent } from './components/delete/delete.component';
 import {NgbModalOptions, NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { ModalComponent } from './components/modal/modal.component';
-
+import {MatButtonModule} from '@angular/material/button';
+import {MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,6 +35,7 @@ import { ModalComponent } from './components/modal/modal.component';
     ModalComponent
   ],
   imports: [
+    MatDialogModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
@@ -44,9 +46,15 @@ import { ModalComponent } from './components/modal/modal.component';
     BrowserAnimationsModule,
     MatFormFieldModule,
     NgbModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatButtonModule
   ],
-  providers: [LoginService],
+  providers: [
+    LoginService,
+    {
+      provide: MatDialogRef,
+      useValue: []
+    }],
   bootstrap: [AppComponent],
   entryComponents: [ModalComponent]
 })
