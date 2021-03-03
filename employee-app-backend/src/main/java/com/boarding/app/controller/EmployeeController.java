@@ -70,10 +70,5 @@ public class EmployeeController {
         Employee existingEmployee = employeeService.findByUUID(UUID);
         return employeeService.updateEmployee(existingEmployee, employee);
     }
-
-    /*@RequestMapping(value = "name/{firstName}", method = RequestMethod.GET)
-    public List<Employee> getEmployeesByName(@PathVariable String firstName){
-        return employeeRepository.findAllBySsn(firstName);
-    }*/
 }
 

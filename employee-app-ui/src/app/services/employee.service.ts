@@ -10,14 +10,17 @@ import {catchError, map, tap} from 'rxjs/operators';
 export class EmployeeService {
   // instead of search the employee in the list, adding a get request for a specific employee
   private employeesUrl = '/server/employees';
-  constructor(private http: HttpClient) { }
+
+  constructor(private http: HttpClient) {}
 
   getEmployees(pageNumber: number,
                pageSize: number,
                filterBy: string,
                sortBy: string,
                sortOrder: string): Observable<IEmployee[]>{
+
     const sortParam = [sortBy, sortOrder];
+
     const options = {
       params: new HttpParams()
         .set('page', pageNumber.toString())
@@ -25,8 +28,9 @@ export class EmployeeService {
         .append('sort', sortParam.join(','))};
        // .set('filter', filterBy)};
     console.log(options);
+
     return this.http.get<IEmployee[]>(this.employeesUrl, options).pipe(
-      tap(data => console.log('All: ' + JSON.stringify(data))),
+      tap(data => console.log('All: ' + JSON.stringify(data)))
     );
   }
 

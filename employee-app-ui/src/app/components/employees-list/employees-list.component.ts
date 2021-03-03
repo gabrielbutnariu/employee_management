@@ -15,28 +15,28 @@ export class EmployeesListComponent implements OnInit, AfterViewInit  {
   employee?: IEmployee;
   dataSource: EmployeesDatasource;
   // pageTitle = 'Employees List';
-  // errorMessage = '';
+  errorMessage = '';
   // listFilterKey = '';
   // employees: IEmployee[] = [];
   // dataSource: MatTableDataSource<IEmployee>;
   // filteredEmployees: IEmployee[] = [];
-   tableHeader = ['Name', 'Address', 'Actions'];
-   @ViewChild(MatPaginator) paginator?: MatPaginator;
+  tableHeader = ['Name', 'Address', 'Actions'];
+  @ViewChild(MatPaginator) paginator?: MatPaginator;
   @ViewChild(MatSort) sort?: MatSort;
 
   constructor(private employeeService: EmployeeService) {
      this.dataSource = new EmployeesDatasource(this.employeeService);
-    // this.employeeService.getEmployees(0, 5, 'firstName', 'firstName', 'asc').subscribe({
-    //   next: employees => {
-    //     console.log('inainte this.' + JSON.stringify(employees));
-    //     this.dataSource = new MatTableDataSource<IEmployee>(employees);
-    //     // @ts-ignore
-    //     this.dataSource.paginator = this.paginator;
-    //     console.log('dupa this.' + JSON.stringify(employees));
-    //     this.filteredEmployees = this.employees;
-    //   },
-    //   error: err => this.errorMessage = err
-    // });
+     this.employeeService.getEmployees(0, 5, 'firstName', 'firstName', 'asc').subscribe({
+      next: employees => {
+        console.log('inainte this.' + JSON.stringify(employees));
+        // this.dataSource = new MatTableDataSource<IEmployee>(employees);
+        // @ts-ignore
+        this.dataSource.paginator = this.paginator;
+        console.log('dupa this.' + JSON.stringify(employees));
+        // this.filteredEmployees = this.employee;
+      },
+      error: err => this.errorMessage = err
+    });
     // this.listFilter = '';
   }
 

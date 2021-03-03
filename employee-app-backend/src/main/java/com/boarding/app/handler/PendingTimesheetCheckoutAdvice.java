@@ -7,12 +7,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ControllerAdvice
-public class TimesheetNotFoundAdvice {
+
+public class PendingTimesheetCheckoutAdvice {
 
     @ResponseBody
-    @ExceptionHandler(TimesheetNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    String timesheetNotFoundHandler(TimesheetNotFoundException ex) {
+    @ExceptionHandler(PendingTimesheetCheckoutException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    String timesheetNotFoundHandler(PendingTimesheetCheckoutException ex) {
         return ex.getMessage();
     }
 }

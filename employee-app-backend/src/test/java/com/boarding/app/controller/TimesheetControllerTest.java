@@ -35,13 +35,4 @@ private MockMvc mockMvc;
 private TimesheetService timesheetService;
 
 
-    @Test
-    void listAll() throws Exception {
-        mockMvc.perform(get("/timesheet"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(content().json("[]"));
-        verify(timesheetService,times(1)).list();
-    }
-
 }

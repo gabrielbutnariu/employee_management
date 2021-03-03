@@ -7,52 +7,26 @@
       <mat-table class="table mat-elevation-z8"
                  matSort matSortActive="Name" matSortDirection="asc" matSortDisableClear
                  [dataSource]="dataSource">
+
         <ng-container matColumnDef="Name">-->
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
-          <mat-cell></mat-cell>
-<!--          <td mat-cell *matCellDef="let employee"> {{employee.firstName}} {{employee.lastName}} </td>-->
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+          <mat-cell *matCellDef="let employee"> {{employee.firstName}} {{employee.lastName}} </mat-cell>
         </ng-container>
+
         <ng-container matColumnDef="Address">-->
-          <th mat-header-cell *matHeaderCellDef>Address</th>
-          <mat-cell></mat-cell>
-<!--          <td mat-cell *matCellDef="let employee"> {{employee.firstName}} {{employee.lastName}} </td>-->
+          <mat-header-cell *matHeaderCellDef>Address</mat-header-cell>
+          <mat-cell *matCellDef="let employee"> {{employee.address}} </mat-cell>
         </ng-container>
+
         <ng-container matColumnDef="Actions">-->
-          <th mat-header-cell  *matHeaderCellDef >Actions</th>
-          <mat-cell></mat-cell>
-          <!--          <td mat-cell *matCellDef="let employee"> {{employee.firstName}} {{employee.lastName}} </td>-->
+          <mat-header-cell  *matHeaderCellDef >Actions</mat-header-cell>
+          <mat-cell *matCellDef="let employee"> {{employee.actions}} </mat-cell>-->
         </ng-container>
 
         <mat-header-row *matHeaderRowDef="tableHeader"></mat-header-row>
         <mat-row *matRowDef="let row; columns: tableHeader"></mat-row>
-      </mat-table>
-<!--      <table class="table" mat-table [dataSource]="dataSource" >&ndash;&gt;-->
-<!--        <ng-container matColumnDef="Name">-->
-<!--          <th mat-header-cell *matHeaderCellDef >Name</th>-->
-<!--          <td mat-cell *matCellDef="let employee"> {{employee.firstName}} {{employee.lastName}} </td>-->
-<!--        </ng-container>-->
 
-<!--        <ng-container matColumnDef="Address">-->
-<!--          <th mat-header-cell *matHeaderCellDef>Address</th>-->
-<!--          <td mat-cell *matCellDef="let employee"> {{ employee.address }} </td>-->
-<!--        </ng-container>-->
-<!--        <ng-container matColumnDef="Actions">-->
-<!--          <th mat-header-cell *matHeaderCellDef>Actions</th>-->
-<!--          <td mat-cell *matCellDef="let employee">-->
-<!--            <div class="btn-group" role="group" aria-label="...">-->
-<!--              <button [routerLink]="['/employees',employee.uuid] "type="button" class="btn btn-primary" title="Timesheet">-->
-<!--                <i class="fa fa-calendar" aria-hidden="true"></i>-->
-<!--              </button>-->
-<!--                <button type="button" class="btn btn-default" title="Edit">-->
-<!--                  <i class="fa fa-pencil-square-o" aria-hidden="true"></i>-->
-<!--                </button>-->
-<!--                <button type="button" class="btn btn-danger" title="Delete" >-->
-<!--                  <i class="fa fa-trash-o" aria-hidden="true"></i>-->
-<!--                </button>-->
-<!--            </div>-->
-<!--          </td>-->
-<!--        </ng-container>-->
-<!--      </table>-->
+      </mat-table>
 
       <mat-paginator [length]="employee?.totalElements" [pageSize]="10" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
       <app-modal></app-modal>
