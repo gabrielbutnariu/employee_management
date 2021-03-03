@@ -13,9 +13,9 @@
       <!--      <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>-->
       <!--    </mat-form-field>-->
 
-      <button [routerLink]="['/register']" mat-raised-button class="btn btn-primary" (click)="addColumn()">
-        <i class="fa fa-plus" aria-hidden="true"></i>
-      </button>
+        <button (click)="openRegister()" mat-raised-button class="btn btn-primary">
+          <i class="fa fa-plus" aria-hidden="true"></i>
+        </button>
       <!--    <input mat-raised-button [routerLink]="['/register']" type="submit" class="fadeIn third" value="Add user">-->
       <table mat-table [dataSource]="employees" class="example-table"
              matSort matSortActive="Name" matSortDisableClear matSortDirection="asc">
@@ -39,8 +39,7 @@
               <button type="button" class="btn btn-default" title="Edit">
                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
               </button>
-              <button type="button" class="btn btn-danger" title="Delete"
-                      (click)="onDelete(row.uuid)">
+              <button (click)="openDelete(row.uuid)" type="button" class="btn btn-danger" title="Delete">
                 <i class="fa fa-trash-o" aria-hidden="true"></i>
               </button>
             </div>
@@ -54,11 +53,6 @@
     <mat-paginator [length]="totalElements" [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
   </div>
 </div>
-<main id="logout-button-holder">
-  <button mat-raised-button id="logout-button" (click)="openLogoutModal()">Logout</button>
-  <button mat-raised-button id="delete-product-button" (click)="openDeleteProductModal()">Delete Product</button>
-</main>
-
 
 
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
 import {RegisterService} from '../../services/register.service';
@@ -10,7 +10,7 @@ import {Router} from '@angular/router';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-
+  @Input() name: any;
   constructor(private registerService: RegisterService, private router: Router) { }
 
   ngOnInit(): void {

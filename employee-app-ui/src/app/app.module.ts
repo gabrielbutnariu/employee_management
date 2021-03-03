@@ -19,7 +19,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { DeleteComponent } from './components/delete/delete.component';
 import {NgbModalOptions, NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import { ModalComponent } from './components/modal/modal.component';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 @NgModule({
@@ -32,7 +31,6 @@ import {MatDialogModule, MatDialogRef} from '@angular/material/dialog';
     EmployeeComponent,
     ConcatPipe,
     DeleteComponent,
-    ModalComponent
   ],
   imports: [
     MatDialogModule,
@@ -56,6 +54,6 @@ import {MatDialogModule, MatDialogRef} from '@angular/material/dialog';
       useValue: []
     }],
   bootstrap: [AppComponent],
-  entryComponents: [ModalComponent]
+  entryComponents: [RegisterComponent, DeleteComponent]
 })
 export class AppModule { }
