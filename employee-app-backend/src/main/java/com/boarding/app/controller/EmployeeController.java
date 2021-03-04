@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,6 +61,7 @@ public class EmployeeController {
         return employeeService.addEmployee(employee);
     }
 
+    @Transactional
     @DeleteMapping("{UUID}")
     public void deleteEmployee(@PathVariable String UUID){
         employeeService.deleteByUUID(UUID);
