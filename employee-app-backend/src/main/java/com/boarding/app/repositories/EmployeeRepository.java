@@ -15,6 +15,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     List<Employee> findAllByOrderByLastNameDesc();
     Page<Employee> findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(String filter1, String filter2, Pageable pageable);
 
+    Employee findBySsn(String ssn);
     Employee findByUUID(String UUID);
     void deleteByUUID(String UUID);
 }
