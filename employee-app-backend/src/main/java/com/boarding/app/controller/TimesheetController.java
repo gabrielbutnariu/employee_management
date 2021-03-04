@@ -11,7 +11,9 @@ package com.boarding.app.controller;
         import org.springframework.web.bind.annotation.*;
 
         import javax.transaction.Transactional;
+        import java.util.HashMap;
         import java.util.List;
+        import java.util.Map;
 
 @RestController
 @RequestMapping("/timesheet")
@@ -21,14 +23,31 @@ public class TimesheetController {
     private TimesheetService timesheetService;
 
     @GetMapping
-    public List<TimesheetDTO> listAll(){
-        return timesheetService.list();
+    public Map<String, Object> listAll(Pageable pageable){
+        Page<TimesheetDTO> pagedTimesheet;
+        pagedTimesheet = timesheetService.list(pageable);
+        List<TimesheetDTO> listedTimesheet = pagedTimesheet.getContent();
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("timesheet", listedTimesheet);
+        response.put("totalElements", pagedTimesheet.getTotalElements());
+
+        return response;
     }
 
     @GetMapping
     @RequestMapping("{UUID}")
-    public List<TimesheetDTO> listByEmployeeId(@PathVariable String UUID){
-        return timesheetService.getByEmpUUID(UUID);
+    public Map<String, Object> listByEmployeeId(@PathVariable String UUID, @RequestParam(required = false) String filter, Pageable pageable){
+        Page<TimesheetDTO> pagedTimesheet;
+        pagedTimesheet = timesheetService.getByEmpUUID(UUID, pageable);
+        List<TimesheetDTO> listedTimesheet = pagedTimesheet.getContent();
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("timesheet", listedTimesheet);
+        response.put("totalElements", pagedTimesheet.getTotalElements());
+
+
+        return response;
     }
 
     //this one can be used to add checkin and checkout or just checkin
@@ -40,14 +59,13 @@ public class TimesheetController {
 
     @RequestMapping(value = "{UUID}/checkout",method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
-
     public Timesheet updateCheckoutDate(@PathVariable String UUID,@RequestBody Timesheet timesheet){
         return timesheetService.addCheckoutDate(UUID,timesheet);
     }
 
     //deleting all the entry for a specific employee
     @Transactional
-    @RequestMapping(value = "{UUID}/all",method = RequestMethod.DELETE)
+    @RequestMapping(value = "all/{UUID}",method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.OK)
     public void deleteByEmployeeId(@PathVariable String UUID){
         timesheetService.deleteTimesheetByEmpUUID(UUID);

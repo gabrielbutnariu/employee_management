@@ -7,10 +7,9 @@ import com.boarding.app.models.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -63,8 +62,7 @@ public class EmployeeController {
     }
 
     @Transactional
-    @RequestMapping(value = "{UUID}",method = RequestMethod.DELETE)
-    @ResponseStatus(HttpStatus.OK)
+    @DeleteMapping("{UUID}")
     public void deleteEmployee(@PathVariable String UUID){
         employeeService.deleteByUUID(UUID);
     }
@@ -74,10 +72,5 @@ public class EmployeeController {
         Employee existingEmployee = employeeService.findByUUID(UUID);
         return employeeService.updateEmployee(existingEmployee, employee);
     }
-
-    /*@RequestMapping(value = "name/{firstName}", method = RequestMethod.GET)
-    public List<Employee> getEmployeesByName(@PathVariable String firstName){
-        return employeeRepository.findAllBySsn(firstName);
-    }*/
 }
 
