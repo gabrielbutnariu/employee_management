@@ -7,6 +7,6 @@ export class MockServ1Service {
 
   constructor() { }
   alertLogout(modalData: any): void {
-    alert('User with ID ' + modalData.userId + ' has logged out.');
+    alert('User with ID  ' + modalData.userId + ' has logged out.');
   }
 }

@@ -40,7 +40,7 @@ export class ModalActionsService {
 
   private register(modalData: any): void {
     // Call an authentication service method to logout the user
-    console.log('merge!');
+    console.log('merge !');
   }
 
   private delete(modalData: any): void {

@@ -4,11 +4,9 @@
   display: grid;
   color: white;
 }
-
 #modal-title {
   font-size: 22px;
 }
-
 #modal-footer {
   justify-self: right;
   align-self: center;

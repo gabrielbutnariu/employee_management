@@ -8,6 +8,7 @@ export class DeleteService {
 
   constructor(private http: HttpClient) { }
 
+
   onDelete(uuid: string): void{
     console.log('On delete !!!' + uuid);
   }

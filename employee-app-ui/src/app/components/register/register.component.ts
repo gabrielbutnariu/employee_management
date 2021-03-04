@@ -14,6 +14,7 @@ import {ModalActionsService} from '../../services/modal-actions.service';
 })
 export class RegisterComponent implements OnInit {
 
+
   constructor(
     private registerService: RegisterService,
     private router: Router,

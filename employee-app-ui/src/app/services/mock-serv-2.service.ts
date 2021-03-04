@@ -7,6 +7,6 @@ export class MockServ2Service {
 
   constructor() { }
   alertDelete(modalData: any): void {
-    alert('Product with ID ' + modalData.productId + ' has been deleted.');
+    alert('Product with ID  ' + modalData.productId + ' has been deleted.');
   }
 }
