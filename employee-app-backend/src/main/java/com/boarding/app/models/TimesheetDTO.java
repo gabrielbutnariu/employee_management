@@ -4,13 +4,13 @@ package com.boarding.app.models;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 @Getter @Setter
 public class TimesheetDTO {
     private long id;
-    private Date checkinDate;
-    private Date checkoutDate;
+    private Timestamp checkinDate;
+    private Timestamp checkoutDate;
     private EmployeeDTO employeeDTO;
 
     public TimesheetDTO(Timesheet timesheet){

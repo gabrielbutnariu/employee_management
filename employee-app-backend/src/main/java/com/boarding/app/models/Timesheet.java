@@ -4,15 +4,15 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.sql.Timestamp;
 
 @Entity(name="timesheet")
 @Getter @Setter
 public class Timesheet {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private Date checkinDate;
-    private Date checkoutDate;
+    private Timestamp checkinDate;
+    private Timestamp checkoutDate;
     @ManyToOne
     @JoinColumn(name="emp_id",referencedColumnName="id",nullable=false,unique=true)
     private Employee employee;

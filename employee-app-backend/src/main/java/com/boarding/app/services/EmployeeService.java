@@ -1,6 +1,7 @@
 package com.boarding.app.services;
 
 import com.boarding.app.handler.EmployeeNotFoundException;
+import com.boarding.app.handler.EmployeeSameSSNException;
 import com.boarding.app.models.Employee;
 import com.boarding.app.models.EmployeeDTO;
 import com.boarding.app.repositories.EmployeeRepository;
@@ -51,12 +52,17 @@ public class EmployeeService implements IEmployeeService {
         if(employee == null){
             throw new EmployeeNotFoundException();
         }
-        return employee;
+        else return employee;
     }
 
     public EmployeeDTO addEmployee(Employee employee){
-        Employee savedEmployee = employeeRepository.saveAndFlush(employee);
-        return mapEntityToDTO(savedEmployee);
+        Employee savedEmployee = employeeRepository.findBySsn(employee.getSsn());
+        if (savedEmployee == null) {
+            savedEmployee = employeeRepository.saveAndFlush(employee);
+            return mapEntityToDTO(savedEmployee);
+        } else {
+            throw new EmployeeSameSSNException();
+        }
     }
 
     public EmployeeDTO updateEmployee(Employee existingEmployee, Employee employee){
