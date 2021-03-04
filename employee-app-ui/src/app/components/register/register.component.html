@@ -2,38 +2,38 @@
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-<div class="wrapper" >
-  <div id="formContent">
-    <!-- Tabs Titles -->
+<div class="modal-dialog modal-confirm">
+  <div class="modal-content">
+    <h2>Register</h2>
+    <div class="modal-body">
+      <div class="wrapper" >
+        <div id="formContent">
+          <form #form='ngForm' (ngSubmit)=onRegister(form)>
 
-    <!-- Icon -->
-    <div class="fadeIn first">
-      <img src="../assets/images/time_icon.svg" id="icon" alt="User Icon" />
+            <input type="text" id="registerFirstName"
+                   #firstName="ngModel" ngModel required
+                   class="fadeIn second" name="firstName"
+                   placeholder="Enter First Name">
+            <input type="text" id="registerLastName"
+                   #lastName="ngModel" ngModel required
+                   class="fadeIn third" name="lastName"
+                   placeholder="Enter Last Name">
+            <input type="text" id="registerSsn"
+                   #ssn="ngModel" ngModel required
+                   class="fadeIn fourth" name="ssn"
+                   placeholder="Enter Ssn">
+            <input type="text" id="registerAddress"
+                   #address="ngModel" ngModel required
+                   class="fadeIn fifth" name="address"
+                   placeholder="Enter Address">
+            <div class="modal-footer justify-content-center">
+              <button type="button" class="btn btn-secondary fadeIn sixth" (click)="closeModal()">Cancel</button>
+              <button [disabled]="form.invalid" type="submit" class="btn btn-primary fadeIn sixth">{{modalData.actionButtonText}}</button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
 
-    <!-- Login Form -->
-    <form #form='ngForm' (ngSubmit)=onRegister(form)>
-<!--      <input type="text" id="registerId"-->
-<!--             #registerId="ngModel" ngModel required-->
-<!--             class="fadeIn second" name="registerId"-->
-<!--             placeholder="Enter Id">-->
-      <input type="text" id="registerFirstName"
-             #firstName="ngModel" ngModel required
-             class="fadeIn second" name="firstName"
-             placeholder="Enter First Name">
-      <input type="text" id="registerLastName"
-             #lastName="ngModel" ngModel required
-             class="fadeIn third" name="lastName"
-             placeholder="Enter Last Name">
-      <input type="text" id="registerSsn"
-             #ssn="ngModel" ngModel required
-             class="fadeIn fourth" name="ssn"
-             placeholder="Enter Ssn">
-      <input type="text" id="registerAddress"
-             #address="ngModel" ngModel required
-             class="fadeIn fifth" name="address"
-             placeholder="Enter Address">
-      <input [disabled]="form.invalid" type="submit" class="fadeIn sixth" value="Register">
-    </form>
   </div>
 </div>

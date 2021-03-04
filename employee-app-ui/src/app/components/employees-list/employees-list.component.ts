@@ -11,6 +11,8 @@ import {MatFormField} from '@angular/material/form-field';
 import {DeleteService} from '../../services/delete.service';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {ModalComponent} from '../modal/modal.component';
+import {DeleteComponent} from '../delete/delete.component';
+import {RegisterComponent} from '../register/register.component';
 @Component({
   selector: 'app-employees-list',
   templateUrl: './employees-list.component.html',
@@ -78,41 +80,26 @@ export class EmployeesListComponent implements AfterViewInit  {
   onDelete(uuid: string): void{
     this.deleteService.onDelete(uuid);
   }
-  openLogoutModal(): void {
-    const userId = 'user01';
+  openRegisterModal(): void {
     const dialogConfig = new MatDialogConfig();
-    // The user can't close the dialog by clicking outside its body
-    dialogConfig.disableClose = true;
-    dialogConfig.id = 'modal-component';
-    dialogConfig.height = '350px';
-    dialogConfig.width = '600px';
     dialogConfig.data = {
-      name: 'logout',
-      title: 'Are you sure you want to logout?',
-      description: 'Pretend this is a convincing argument on why you shouldn\'t logout :)',
-      actionButtonText: 'Logout',
-      userId
+      name: 'register',
+      actionButtonText: 'Add'
     };
     // https://material.angular.io/components/dialog/overview
-    const modalDialog = this.matDialog.open(ModalComponent, dialogConfig);
+    const modalDialog = this.matDialog.open(RegisterComponent, dialogConfig);
   }
 
-  openDeleteProductModal(): void {
-    const productId = 'prod01';
+  openDeleteModal(row: any): void {
     const dialogConfig = new MatDialogConfig();
-    // The user can't close the dialog by clicking outside its body
-    dialogConfig.disableClose = true;
-    dialogConfig.id = 'modal-component';
-    dialogConfig.height = '350px';
-    dialogConfig.width = '600px';
     dialogConfig.data = {
-      name: 'deleteProduct',
-      title: 'Are you sure you want to delete this product?',
-      description: 'If you continue, the product with ID ' + productId + ' will be deleted.',
-      actionButtonText: 'Delete',
-      productId
+      name: 'delete',
+      firstName: row.firstName,
+      lastName: row.lastName,
+      uuid: row.uuid,
+      actionButtonText: 'Delete'
     };
     // https://material.angular.io/components/dialog/overview
-    const modalDialog = this.matDialog.open(ModalComponent, dialogConfig);
+    const modalDialog = this.matDialog.open(DeleteComponent, dialogConfig);
   }
 }

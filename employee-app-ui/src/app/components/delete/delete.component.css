@@ -1,6 +1,9 @@
 body {
   font-family: 'Varela Round', sans-serif;
 }
+strong{
+  color: #a94442;
+}
 .modal-confirm {
   color: #636363;
   width: 400px;
