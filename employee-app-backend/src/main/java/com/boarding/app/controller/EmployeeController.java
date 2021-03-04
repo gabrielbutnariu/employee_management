@@ -7,6 +7,8 @@ import com.boarding.app.models.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -60,7 +62,9 @@ public class EmployeeController {
         return employeeService.addEmployee(employee);
     }
 
-    @DeleteMapping("{UUID}")
+    @Transactional
+    @RequestMapping(value = "{UUID}",method = RequestMethod.DELETE)
+    @ResponseStatus(HttpStatus.OK)
     public void deleteEmployee(@PathVariable String UUID){
         employeeService.deleteByUUID(UUID);
     }
