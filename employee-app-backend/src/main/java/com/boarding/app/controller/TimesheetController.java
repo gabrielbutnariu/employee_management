@@ -1,19 +1,18 @@
 package com.boarding.app.controller;
 
-        import com.boarding.app.models.EmployeeDTO;
-        import com.boarding.app.models.Timesheet;
-        import com.boarding.app.models.TimesheetDTO;
-        import com.boarding.app.services.TimesheetService;
-        import org.springframework.beans.factory.annotation.Autowired;
-        import org.springframework.data.domain.Page;
-        import org.springframework.data.domain.Pageable;
-        import org.springframework.http.HttpStatus;
-        import org.springframework.web.bind.annotation.*;
+import com.boarding.app.models.Timesheet;
+import com.boarding.app.models.TimesheetDTO;
+import com.boarding.app.services.TimesheetService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
-        import javax.transaction.Transactional;
-        import java.util.HashMap;
-        import java.util.List;
-        import java.util.Map;
+import javax.transaction.Transactional;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/timesheet")
@@ -37,7 +36,7 @@ public class TimesheetController {
 
     @GetMapping
     @RequestMapping("{UUID}")
-    public Map<String, Object> listByEmployeeId(@PathVariable String UUID, @RequestParam(required = false) String filter, Pageable pageable){
+    public Map<String, Object> listByEmployeeId(@PathVariable String UUID, Pageable pageable){
         Page<TimesheetDTO> pagedTimesheet;
         pagedTimesheet = timesheetService.getByEmpUUID(UUID, pageable);
         List<TimesheetDTO> listedTimesheet = pagedTimesheet.getContent();

@@ -1,4 +1,4 @@
-import {IEmployee} from '../components/employee/employee';
+import {IEmployee} from './employee';
 
 export interface IMessage{
   employees: IEmployee[];

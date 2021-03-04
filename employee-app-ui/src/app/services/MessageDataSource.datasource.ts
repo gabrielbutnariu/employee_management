@@ -1,9 +1,9 @@
 import {CollectionViewer, DataSource} from '@angular/cdk/collections';
-import {IMessage} from '../models/message';
+import {IMessage} from '../models/employeeMessage';
 import {BehaviorSubject, Observable, of} from 'rxjs';
 import {EmployeeService} from './employee.service';
 import {catchError, finalize} from 'rxjs/operators';
-import {IEmployee} from '../components/employee/employee';
+import {IEmployee} from '../models/employee';
 
 export class MessageDataSource implements DataSource<IEmployee>{
   private messagesSubject = new BehaviorSubject<IEmployee[]>([]);

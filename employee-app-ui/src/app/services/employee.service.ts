@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
-import {IEmployee} from '../components/employee/employee';
 import {catchError, map, tap} from 'rxjs/operators';
-import {IMessage} from '../models/message';
+import {IMessage} from '../models/employeeMessage';
+import {ITimesheetMessage} from '../models/timesheetMessage';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +11,7 @@ import {IMessage} from '../models/message';
 export class EmployeeService {
   // instead of search the employee in the list, adding a get request for a specific employee
   private employeesUrl = '/server/employees';
+  private timesheetUrl = '/server/timesheet/';
 
   constructor(private http: HttpClient) {}
 
@@ -35,21 +36,24 @@ export class EmployeeService {
     );
   }
 
-  // getEmployee(id: string): Observable<IEmployee | undefined>{
-  //   return this.getEmployees().pipe(map(
-  //     (employees: IEmployee[]) => employees.find(emp => emp.uuid === id)
-  //   ));
-  // }
+  getEmployeeTimesheet(uuid: string,
+                       pageNumber: number,
+                       pageSize: number,
+                       sortOrder: string): Observable<ITimesheetMessage>{
 
-  private handleError(err: HttpErrorResponse): Observable<never> {
-    let errorMessage = '';
-    if (err.error instanceof ErrorEvent){
-      errorMessage = `An error occurred: ${err.error.message}`;
-    }else{
-      errorMessage = `Server returned code: ${err.status}, error message is: ${err.message}`;
-    }
-    console.error(errorMessage);
-    return throwError(errorMessage);
+    const sortParam = ['checkinDate', sortOrder];
 
+    const options = {
+      params: new HttpParams()
+        .set('page', pageNumber.toString())
+        .set('size', pageSize.toString())
+        .append('sort', sortParam.join(','))
+        .set('uuid', uuid)};
+    console.log(options);
+
+    return this.http.get<ITimesheetMessage>(this.timesheetUrl + uuid, options).pipe(
+      tap(data => console.log('All timesheets: ' + this.timesheetUrl + uuid))
+    );
   }
+
 }

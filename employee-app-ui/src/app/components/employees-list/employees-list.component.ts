@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {EmployeeService} from '../../services/employee.service';
-import {IEmployee} from '../employee/employee';
+import {IEmployee} from '../../models/employee';
 import {MatPaginator} from '@angular/material/paginator';
 
 import {MatSort} from '@angular/material/sort';
@@ -10,9 +10,9 @@ import {HttpClient} from '@angular/common/http';
 import {MatFormField} from '@angular/material/form-field';
 import {DeleteService} from '../../services/delete.service';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
-import {ModalComponent} from '../modal/modal.component';
 import {DeleteComponent} from '../delete/delete.component';
 import {RegisterComponent} from '../register/register.component';
+
 @Component({
   selector: 'app-employees-list',
   templateUrl: './employees-list.component.html',

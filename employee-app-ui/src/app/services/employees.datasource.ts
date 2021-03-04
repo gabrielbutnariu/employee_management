@@ -1,5 +1,5 @@
 import {CollectionViewer, DataSource} from '@angular/cdk/collections';
-import {IEmployee} from '../components/employee/employee';
+import {IEmployee} from '../models/employee';
 import {BehaviorSubject, Observable, of} from 'rxjs';
 import {EmployeeService} from './employee.service';
 import {catchError, finalize} from 'rxjs/operators';
@@ -20,23 +20,4 @@ export class EmployeesDatasource implements DataSource<IEmployee>{
     this.employeesSubject.complete();
     this.loadingSubject.complete();
   }
-
-  loadEmployees(pageNumber: number,
-                pageSize: number,
-                filterBy: string,
-                sortBy: string,
-                sortOrder: string): void{
-    this.loadingSubject.next(true);
-    this.employeeService.getEmployees(
-      pageNumber,
-      pageSize,
-      filterBy,
-      sortBy,
-      sortOrder).pipe(
-      catchError(() => of([])),
-      finalize(() => this.loadingSubject.next(false))
-    )
-      .subscribe(employees => this.employeesSubject.next(employees));
-  }
-
 }
