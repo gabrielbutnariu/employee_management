@@ -2,81 +2,78 @@ import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {EmployeeService} from '../../services/employee.service';
 import {IEmployee} from '../employee/employee';
 import {MatPaginator} from '@angular/material/paginator';
-import {MatTableDataSource} from '@angular/material/table';
-import {EmployeesDatasource} from '../../services/employees.datasource';
-import {tap} from 'rxjs/operators';
+
 import {MatSort} from '@angular/material/sort';
+import {merge, Observable, of as observableOf} from 'rxjs';
+import {catchError, map, startWith, switchMap} from 'rxjs/operators';
+import {HttpClient} from '@angular/common/http';
+import {MatFormField} from '@angular/material/form-field';
+import {DeleteService} from '../../services/delete.service';
+import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {RegisterComponent} from '../register/register.component';
+import {DeleteComponent} from '../delete/delete.component';
 @Component({
   selector: 'app-employees-list',
   templateUrl: './employees-list.component.html',
   styleUrls: ['./employees-list.component.css']
 })
-export class EmployeesListComponent implements OnInit, AfterViewInit  {
-  employee?: IEmployee;
-  dataSource: EmployeesDatasource;
-  // pageTitle = 'Employees List';
-  errorMessage = '';
-  // listFilterKey = '';
-  // employees: IEmployee[] = [];
-  // dataSource: MatTableDataSource<IEmployee>;
-  // filteredEmployees: IEmployee[] = [];
+export class EmployeesListComponent implements AfterViewInit  {
+  dataSource: EmployeeService;
+  employees: IEmployee[] = [];
+  totalElements = 0;
+  isLoadingResults = true;
+  isRateLimitReached = false;
   tableHeader = ['Name', 'Address', 'Actions'];
-  @ViewChild(MatPaginator) paginator?: MatPaginator;
-  @ViewChild(MatSort) sort?: MatSort;
 
-  constructor(private employeeService: EmployeeService) {
-     this.dataSource = new EmployeesDatasource(this.employeeService);
-     this.employeeService.getEmployees(0, 5, 'firstName', 'firstName', 'asc').subscribe({
-      next: employees => {
-        console.log('inainte this.' + JSON.stringify(employees));
-        // this.dataSource = new MatTableDataSource<IEmployee>(employees);
-        // @ts-ignore
-        this.dataSource.paginator = this.paginator;
-        console.log('dupa this.' + JSON.stringify(employees));
-        // this.filteredEmployees = this.employee;
-      },
-      error: err => this.errorMessage = err
-    });
-    // this.listFilter = '';
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatFormField) filter!: MatFormField;
+
+  constructor(
+    private modalService: NgbModal,
+    private httpClient: HttpClient,
+    private deleteService: DeleteService,
+    private matDialog: MatDialog) {
+    this.dataSource = new EmployeeService(this.httpClient);
   }
-
   ngAfterViewInit(): void {
-    // @ts-ignore
-    this.paginator.page
+    this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+    merge(this.sort.sortChange, this.paginator.page)
       .pipe(
-        tap(() => this.loadLessonsPage())
-      )
-      .subscribe();
-    }
+        startWith({}),
+        switchMap(() => {
+          this.isLoadingResults = true;
+          return this.dataSource.getEmployees(
+            this.paginator.pageIndex,
+            this.paginator.pageSize,
+            '',
+            this.sort.direction
+          );
+        }),
+        map(data => {
+          // Flip flag to show that loading has finished.
+          this.isLoadingResults = false;
+          this.isRateLimitReached = false;
+          this.totalElements = data.totalElements;
 
-  ngOnInit(): void {
-    this.dataSource.loadEmployees(
-      0,
-      5,
-      'firstName',
-      'firstName',
-      'asc');
+          return data.employees;
+        }),
+        catchError(() => {
+          this.isLoadingResults = false;
+          // Catch if the GitHub API has reached its rate limit. Return empty data.
+          this.isRateLimitReached = true;
+          return observableOf([]);
+        })
+      ).subscribe(data => this.employees = data);
   }
-  loadLessonsPage(): void {
-    this.dataSource.loadEmployees(0, 5, 'firstName', 'firstName', 'asc');
+
+  openRegister(): void {
+    const modalRef = this.modalService.open(RegisterComponent);
+    modalRef.componentInstance.name = 'register';
   }
-  // get listFilter(): string{
-  //   return this.listFilterKey;
-  // }
-  // set listFilter(value: string){
-  //   this.listFilterKey = value;
-  //   this.filteredEmployees = this.listFilter ? this.perfomFilter(this.listFilter) : this.employees;
-  // }
-  //
-  // private perfomFilter(filterBy: string): IEmployee[] {
-  //   filterBy = filterBy.toLocaleLowerCase();
-  //   return this.employees.filter((employee: IEmployee) =>
-  //   employee.firstName.concat(' ' + employee.lastName).toLocaleLowerCase().indexOf(filterBy) !== -1);
-  // }
-  //
-  //
-  // public doFilter = (value: EventTarget) => {
-  //   console.log('value: ' + value);
-  //   // this.dataSource.filter = value.trim().toLocaleLowerCase();
-  //   }
+  openDelete(uuid: string): void {
+    const modalRef = this.modalService.open(DeleteComponent);
+    modalRef.componentInstance.name = 'delete';
+  }
 }
