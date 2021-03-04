@@ -23,7 +23,7 @@
 // }
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import {ModalActionsService} from '../../services/modal-actions.service';
+import {ModalActionsService} from 'src/app/services/modal-actions.service';
 // import { ModalActionsService } from 'src/app/services/modal-actions.service';
 
 @Component({
