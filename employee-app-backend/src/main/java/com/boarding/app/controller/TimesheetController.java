@@ -46,7 +46,6 @@ public class TimesheetController {
         response.put("timesheet", listedTimesheet);
         response.put("totalElements", pagedTimesheet.getTotalElements());
 
-
         return response;
     }
 

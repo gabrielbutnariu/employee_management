@@ -3,6 +3,7 @@ import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import {IEmployee} from '../components/employee/employee';
 import {catchError, map, tap} from 'rxjs/operators';
+import {IMessage} from '../models/message';
 
 @Injectable({
   providedIn: 'root'
@@ -17,10 +18,9 @@ export class EmployeeService {
   getEmployees(pageNumber: number,
                pageSize: number,
                filterBy: string,
-               sortBy: string,
-               sortOrder: string): Observable<IEmployee[]>{
+               sortOrder: string): Observable<IMessage>{
 
-    const sortParam = [sortBy, sortOrder];
+    const sortParam = ['lastName', sortOrder];
 
     const options = {
       params: new HttpParams()
@@ -30,7 +30,7 @@ export class EmployeeService {
        // .set('filter', filterBy)};
     console.log(options);
 
-    return this.http.get<IEmployee[]>(this.employeesUrl, options).pipe(
+    return this.http.get<IMessage>(this.employeesUrl, options).pipe(
       tap(data => console.log('All: ' + JSON.stringify(data)))
     );
   }
