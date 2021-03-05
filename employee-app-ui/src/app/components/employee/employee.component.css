@@ -21,7 +21,7 @@ table {
 mat-paginator {
   width:auto !important;
 }
-.example-loading-shade{
+.loading-shade{
   position: absolute;
   top: 0;
   left: 0;
@@ -34,12 +34,12 @@ mat-paginator {
   justify-content: center;
 }
 /* Structure */
-.example-container {
+.container {
   position: relative;
   min-height: 200px;
 }
 
-.example-table-container {
+.table-container {
   position: relative;
   max-height: 400px;
   overflow: auto;
@@ -140,4 +140,9 @@ table {
   color: white;
   background-color: #145214;
   border: 1px solid black;
+}
+.header-align-right{
+  display: flex;
+  padding: 21px 0;
+  justify-content: flex-end;
 }

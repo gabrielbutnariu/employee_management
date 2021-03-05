@@ -27,6 +27,7 @@ import { LOCALE_ID } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/en';
 import {ModalComponent} from './components/modal/modal.component';
+import { MatCardModule } from '@angular/material/card';
 registerLocaleData(localeFr);
 
 @NgModule({
@@ -56,7 +57,8 @@ registerLocaleData(localeFr);
     MatFormFieldModule,
     NgbModule,
     MatProgressSpinnerModule,
-    MatButtonModule
+    MatButtonModule,
+    MatCardModule
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'en-US'},

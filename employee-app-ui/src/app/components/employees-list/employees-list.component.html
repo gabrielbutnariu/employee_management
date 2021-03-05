@@ -1,15 +1,15 @@
 <div class="container">
-  <div class="example-container mat-elevation-z8">
-    <div class="example-loading-shade"
+  <div class="container mat-elevation-z8">
+    <div class="loading-shade"
          *ngIf="isLoadingResults || isRateLimitReached">
       <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
-      <div class="example-rate-limit-reached" *ngIf="isRateLimitReached">
+      <div class="rate-limit-reached" *ngIf="isRateLimitReached">
       </div>
     </div>
-    <button  mat-raised-button class="btn btn-primary" (click)="openRegisterModal()">
+    <button  mat-raised-button class="btn btn-primary mr-2" (click)="openRegisterModal()">
       <i class="fa fa-plus" aria-hidden="true"></i>
     </button>
-    <div class="example-table-container">
+    <div class="table-container">
       <!--    <mat-form-field>-->
       <!--      <mat-label>Filter</mat-label>-->
       <!--      <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>-->
@@ -17,7 +17,7 @@
 
 
       <!--    <input mat-raised-button [routerLink]="['/register']" type="submit" class="fadeIn third" value="Add user">-->
-      <table mat-table [dataSource]="employees" class="example-table"
+      <table mat-table [dataSource]="employees" class="table"
              matSort matSortActive="Name" matSortDisableClear matSortDirection="asc">
         <ng-container matColumnDef="Name">
           <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>Name</th>
@@ -30,7 +30,7 @@
         </ng-container>
 
         <ng-container matColumnDef="Actions">
-          <th mat-header-cell *matHeaderCellDef></th>
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
           <td mat-cell *matCellDef="let row">
             <div class="btn-group mr-2" role="group" aria-label="First group">
               <button [routerLink]="['/employees',row.uuid]" type="button" class="btn btn-primary" title="Timesheet">
