@@ -25,7 +25,7 @@ export class MessageDataSource implements DataSource<IEmployee>{
   loadMessage(pageNumber: number, pageSize: number, filterBy: string, sortBy: string, sortOrder: string): void{
     this.loadingSubject.next(true);
 
-    this.employeeService.getEmployees(pageNumber, pageSize, filterBy, sortBy, sortOrder)
+    this.employeeService.getEmployees(pageNumber, pageSize, filterBy, sortOrder)
       .pipe(
         catchError(() => of([])),
         finalize(() => this.loadingSubject.next(false))

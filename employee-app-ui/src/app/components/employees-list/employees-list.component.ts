@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {EmployeeService} from '../../services/employee.service';
 import {IEmployee} from '../../models/employee';
 import {MatPaginator} from '@angular/material/paginator';
@@ -12,6 +12,7 @@ import {DeleteService} from '../../services/delete.service';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {DeleteComponent} from '../delete/delete.component';
 import {RegisterComponent} from '../register/register.component';
+import { MatTable } from '@angular/material/table';
 
 @Component({
   selector: 'app-employees-list',
@@ -30,44 +31,21 @@ export class EmployeesListComponent implements AfterViewInit  {
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatFormField) filter!: MatFormField;
   @ViewChild('input') input!: ElementRef;
+  @ViewChild(MatTable) table!: MatTable<any>;
   constructor(
     private httpClient: HttpClient,
     private deleteService: DeleteService,
     private matDialog: MatDialog) {
     this.dataSource = new EmployeeService(this.httpClient);
   }
-  ngAfterViewInit(): void {
-    this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
-    fromEvent(this.input.nativeElement, 'keyup')
-      .pipe(
-        debounceTime(150),
-        distinctUntilChanged(),
-        switchMap(() => {
-          this.isLoadingResults = true;
-          this.paginator.pageIndex = 0;
-          return this.dataSource.getEmployees(
-            this.paginator.pageIndex,
-            this.paginator.pageSize,
-            this.input.nativeElement.value,
-            this.sort.direction
-          );
-        }),
-        map(data => {
-          // Flip flag to show that loading has finished.
-          this.isLoadingResults = false;
-          this.isRateLimitReached = false;
-          this.totalElements = data.totalElements;
 
-          return data.employees;
-        }),
-        catchError(() => {
-          this.isLoadingResults = false;
-          // Catch if the GitHub API has reached its rate limit. Return empty data.
-          this.isRateLimitReached = true;
-          return observableOf([]);
-        })
-      ).subscribe(data => this.employees = data);
-    merge(this.sort.sortChange, this.paginator.page)
+  ngAfterViewInit(): void {
+    this.populateTable();
+  }
+
+  populateTable(): void{
+    this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+    merge(this.sort.sortChange, this.paginator.page, fromEvent(this.input.nativeElement, 'keyup'))
       .pipe(
         startWith({}),
         switchMap(() => {
@@ -93,21 +71,8 @@ export class EmployeesListComponent implements AfterViewInit  {
           this.isRateLimitReached = true;
           return observableOf([]);
         })
-      ).subscribe();
-  }
-  // applyFilter(event: Event) {
-  //   const filterValue = (event.target as HTMLInputElement).value;
-  //   this.filter = filterValue.trim().toLowerCase();
-  //
-  //   if (this.paginator) {
-  //     this.paginator.firstPage();
-  //   }
-  // }
-  addColumn(): void{
-
-  }
-  onDelete(uuid: string): void{
-    this.deleteService.onDelete(uuid);
+      ).subscribe(data => {this.employees = data;
+                           this.table.renderRows(); });
   }
   openRegisterModal(): void {
     const dialogConfig = new MatDialogConfig();
@@ -116,7 +81,7 @@ export class EmployeesListComponent implements AfterViewInit  {
       actionButtonText: 'Add'
     };
     // https://material.angular.io/components/dialog/overview
-    const modalDialog = this.matDialog.open(RegisterComponent, dialogConfig);
+    const modalDialog = this.matDialog.open(RegisterComponent, dialogConfig).afterClosed().subscribe(data => this.populateTable());
   }
 
   openDeleteModal(row: any): void {
@@ -129,6 +94,6 @@ export class EmployeesListComponent implements AfterViewInit  {
       actionButtonText: 'Delete'
     };
     // https://material.angular.io/components/dialog/overview
-    const modalDialog = this.matDialog.open(DeleteComponent, dialogConfig);
+    const modalDialog = this.matDialog.open(DeleteComponent, dialogConfig).afterClosed().subscribe(data => this.populateTable());
   }
 }

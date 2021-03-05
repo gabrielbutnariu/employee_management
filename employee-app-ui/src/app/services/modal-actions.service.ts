@@ -57,15 +57,11 @@ export class ModalActionsService {
 
   private checkIn(modalData: any, ngForm: NgForm): void {
     this.checkInService.onCheckIn(modalData, ngForm);
-    // this.http.post(this.urlTimesheet + modalData.uuid + '/checkin').subscribe(
-    //   data => console.log(data),
-    //   error => console.log(error)
-    // );
+
   }
 
   private checkOut(modalData: any, ngForm: NgForm): void {
     this.checkOutService.onCheckOut(modalData, ngForm);
-    console.log('merge checkOut!');
   }
 
   private deleteEmp(modalData: any): void {

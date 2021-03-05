@@ -13,6 +13,8 @@ import {DeleteComponent} from '../delete/delete.component';
 import {ITimesheet} from '../../models/timesheet';
 import { ActivatedRoute } from '@angular/router';
 import {CheckinModalComponent} from '../checkin-modal/checkin-modal.component';
+import {MatTable} from '@angular/material/table';
+
 
 @Component({
   selector: 'app-employee',
@@ -32,7 +34,7 @@ export class EmployeeComponent implements AfterViewInit, OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatFormField) filter!: MatFormField;
-
+  @ViewChild(MatTable) table!: MatTable<any>;
 
   constructor(
     private route: ActivatedRoute,
@@ -48,6 +50,50 @@ export class EmployeeComponent implements AfterViewInit, OnInit {
   }
 
   ngAfterViewInit(): void {
+    this.populateTable();
+  }
+
+  openCheckInModal(): void {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+        typeName: 'checkinDate',
+        name: 'check-in',
+        uuid: this.employeeUUID,
+        actionButtonText: 'Add'
+      };
+    // https://material.angular.io/components/dialog/overview
+    const modalDialog = this.matDialog.open(CheckinModalComponent, dialogConfig);
+    modalDialog.afterClosed().subscribe(data => this.populateTable());
+  }
+  openCheckOutModal(): void {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+        typeName: 'checkoutDate',
+        name: 'check-out',
+        uuid: this.employeeUUID,
+        actionButtonText: 'Add'
+      };
+    // https://material.angular.io/components/dialog/overview
+    const modalDialog = this.matDialog.open(CheckinModalComponent, dialogConfig);
+    modalDialog.afterClosed().subscribe(data => this.populateTable());
+  }
+
+  openDeleteModal(row: any): void {
+    console.log('delete row timesheet' + JSON.stringify(row));
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      name: 'deleteTimesheet',
+      timesheetId: row.id,
+      uuid: row.employeeDTO.uuid,
+      actionButtonText: 'Delete'
+    };
+    // https://material.angular.io/components/dialog/overview
+    const modalDialog = this.matDialog.open(DeleteComponent, dialogConfig);
+    modalDialog.afterClosed().subscribe(data => this.populateTable());
+  }
+
+
+  private populateTable(): void {
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
     merge(this.sort.sortChange, this.paginator.page)
       .pipe(
@@ -75,45 +121,7 @@ export class EmployeeComponent implements AfterViewInit, OnInit {
           this.isRateLimitReached = true;
           return observableOf([]);
         })
-      ).subscribe(data => this.employeeTimesheet = data);
-  }
-
-  openCheckInModal(): void {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.data = {
-        typeName: 'checkinDate',
-        name: 'check-in',
-        uuid: this.employeeUUID,
-        actionButtonText: 'Add'
-      };
-    // https://material.angular.io/components/dialog/overview
-    const modalDialog = this.matDialog.open(CheckinModalComponent, dialogConfig);
-  }
-  openCheckOutModal(): void {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.data = {
-        typeName: 'checkoutDate',
-        name: 'check-out',
-        uuid: this.employeeUUID,
-        actionButtonText: 'Add'
-      };
-    // https://material.angular.io/components/dialog/overview
-    const modalDialog = this.matDialog.open(CheckinModalComponent, dialogConfig);
-  }
-
-  openDeleteModal(row: any): void {
-    console.log('delete row timesheet' + JSON.stringify(row));
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.data = {
-      name: 'deleteTimesheet',
-      timesheetId: row.id,
-      uuid: row.employeeDTO.uuid,
-      actionButtonText: 'Delete'
-    };
-    // https://material.angular.io/components/dialog/overview
-    const modalDialog = this.matDialog.open(DeleteComponent, dialogConfig);
-  }
-  toggleButton(): void{
-    this.isCheckIn = !this.isCheckIn;
+      ).subscribe(data => {this.employeeTimesheet = data;
+                           this.table.renderRows(); });
   }
 }
