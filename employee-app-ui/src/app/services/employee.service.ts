@@ -27,8 +27,8 @@ export class EmployeeService {
       params: new HttpParams()
         .set('page', pageNumber.toString())
         .set('size', pageSize.toString())
-        .append('sort', sortParam.join(','))};
-       // .set('filter', filterBy)};
+        .append('sort', sortParam.join(','))
+        .set('filter', filterBy)};
     console.log(options);
 
     return this.http.get<IMessage>(this.employeesUrl, options).pipe(

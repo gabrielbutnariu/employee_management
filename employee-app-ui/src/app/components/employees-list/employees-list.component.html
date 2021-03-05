@@ -10,13 +10,11 @@
       <i class="fa fa-plus" aria-hidden="true"></i>
     </button>
     <div class="table-container">
-      <!--    <mat-form-field>-->
-      <!--      <mat-label>Filter</mat-label>-->
-      <!--      <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>-->
-      <!--    </mat-form-field>-->
+          <mat-form-field>
+            <mat-label>Filter</mat-label>
+            <input matInput #input>
+          </mat-form-field>
 
-
-      <!--    <input mat-raised-button [routerLink]="['/register']" type="submit" class="fadeIn third" value="Add user">-->
       <table mat-table [dataSource]="employees" class="table"
              matSort matSortActive="Name" matSortDisableClear matSortDirection="asc">
         <ng-container matColumnDef="Name">

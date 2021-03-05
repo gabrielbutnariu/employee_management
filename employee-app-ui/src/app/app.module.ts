@@ -23,13 +23,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import { CheckinModalComponent } from './components/checkin-modal/checkin-modal.component';
 import { TimestampToReadableTimePipe } from './shared/timestamp-to-readable-time.pipe';
-import { LOCALE_ID } from '@angular/core';
-import { registerLocaleData } from '@angular/common';
-import localeFr from '@angular/common/locales/en';
-import {ModalComponent} from './components/modal/modal.component';
-import { MatCardModule } from '@angular/material/card';
-registerLocaleData(localeFr);
-
+import {MatInputModule} from '@angular/material/input';
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,7 +36,6 @@ registerLocaleData(localeFr);
     DeleteComponent,
     CheckinModalComponent,
     TimestampToReadableTimePipe,
-    ModalComponent
   ],
   imports: [
     MatDialogModule,
@@ -58,10 +51,9 @@ registerLocaleData(localeFr);
     NgbModule,
     MatProgressSpinnerModule,
     MatButtonModule,
-    MatCardModule
+    MatInputModule
   ],
   providers: [
-    { provide: LOCALE_ID, useValue: 'en-US'},
     LoginService,
     {
       provide: MatDialogRef,

@@ -25,7 +25,7 @@ public class EmployeeController {
     @GetMapping()
     Map<String, Object> getPageable(@RequestParam(required = false) String filter, Pageable pageable) {
         Page<EmployeeDTO> pagedEmployees;
-        if(filter == null){
+        if(filter.equals("")){
             pagedEmployees = employeeService.employeesPageable(pageable);
         }
         else pagedEmployees = employeeService.employeesPageableFilter(filter, pageable);

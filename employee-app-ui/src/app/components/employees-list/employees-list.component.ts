@@ -1,11 +1,11 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {EmployeeService} from '../../services/employee.service';
 import {IEmployee} from '../../models/employee';
 import {MatPaginator} from '@angular/material/paginator';
 
 import {MatSort} from '@angular/material/sort';
-import {merge, Observable, of as observableOf} from 'rxjs';
-import {catchError, map, startWith, switchMap} from 'rxjs/operators';
+import {fromEvent, merge, Observable, of as observableOf} from 'rxjs';
+import {catchError, debounceTime, distinctUntilChanged, map, startWith, switchMap, tap} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
 import {MatFormField} from '@angular/material/form-field';
 import {DeleteService} from '../../services/delete.service';
@@ -29,7 +29,7 @@ export class EmployeesListComponent implements AfterViewInit  {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatFormField) filter!: MatFormField;
-
+  @ViewChild('input') input!: ElementRef;
   constructor(
     private httpClient: HttpClient,
     private deleteService: DeleteService,
@@ -38,15 +38,17 @@ export class EmployeesListComponent implements AfterViewInit  {
   }
   ngAfterViewInit(): void {
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
-    merge(this.sort.sortChange, this.paginator.page)
+    fromEvent(this.input.nativeElement, 'keyup')
       .pipe(
-        startWith({}),
+        debounceTime(150),
+        distinctUntilChanged(),
         switchMap(() => {
           this.isLoadingResults = true;
+          this.paginator.pageIndex = 0;
           return this.dataSource.getEmployees(
             this.paginator.pageIndex,
             this.paginator.pageSize,
-            '',
+            this.input.nativeElement.value,
             this.sort.direction
           );
         }),
@@ -65,6 +67,33 @@ export class EmployeesListComponent implements AfterViewInit  {
           return observableOf([]);
         })
       ).subscribe(data => this.employees = data);
+    merge(this.sort.sortChange, this.paginator.page)
+      .pipe(
+        startWith({}),
+        switchMap(() => {
+          this.isLoadingResults = true;
+          return this.dataSource.getEmployees(
+            this.paginator.pageIndex,
+            this.paginator.pageSize,
+            this.input.nativeElement.value,
+            this.sort.direction
+          );
+        }),
+        map(data => {
+          // Flip flag to show that loading has finished.
+          this.isLoadingResults = false;
+          this.isRateLimitReached = false;
+          this.totalElements = data.totalElements;
+
+          return data.employees;
+        }),
+        catchError(() => {
+          this.isLoadingResults = false;
+          // Catch if the GitHub API has reached its rate limit. Return empty data.
+          this.isRateLimitReached = true;
+          return observableOf([]);
+        })
+      ).subscribe();
   }
   // applyFilter(event: Event) {
   //   const filterValue = (event.target as HTMLInputElement).value;
