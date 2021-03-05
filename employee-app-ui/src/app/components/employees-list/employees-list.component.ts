@@ -93,7 +93,7 @@ export class EmployeesListComponent implements AfterViewInit  {
   openDeleteModal(row: any): void {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
-      name: 'delete',
+      name: 'deleteEmp',
       firstName: row.firstName,
       lastName: row.lastName,
       uuid: row.uuid,

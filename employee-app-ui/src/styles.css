@@ -78,7 +78,7 @@ tr.mat-row{
 tr.mat-row:hover{
   background-color: #9dd0e9;
 }
-input[type=text], input[type=number],input[type=password] {
+input[type=text], input[type=number],input[type=password],input[type=datetime-local] {
   background-color: #f6f6f6;
   color: #0d0d0d;
   padding: 15px 32px;
@@ -131,13 +131,17 @@ input[type=button]:active, input[type=submit]:active, input[type=reset]:active {
   -ms-transform: scale(0.95);
   transform: scale(0.95);
 }
-input[type=text]:focus, input[type=number]:focus, input[type=password]:focus {
+input[type=text]:focus, input[type=number]:focus, input[type=datetime-local]:focus {
   background-color: #fff;
   border-bottom: 2px solid #5fbae9;
 }
 
-input[type=text]::placeholder, input[type=number]::placeholder,input[type=password]::placeholder  {
+input[type=text]::placeholder, input[type=number]::placeholder,input[type=datetime-local]::placeholder {
   color: #cccccc;
+}
+
+button{
+  padding: 15px 15px;
 }
 .fadeInDown {
   -webkit-animation-name: fadeInDown;

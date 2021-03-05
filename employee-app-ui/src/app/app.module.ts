@@ -21,6 +21,14 @@ import { DeleteComponent } from './components/delete/delete.component';
 import {NgbModalOptions, NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDialogModule, MatDialogRef} from '@angular/material/dialog';
+import { CheckinModalComponent } from './components/checkin-modal/checkin-modal.component';
+import { TimestampToReadableTimePipe } from './shared/timestamp-to-readable-time.pipe';
+import { LOCALE_ID } from '@angular/core';
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/en';
+import {ModalComponent} from './components/modal/modal.component';
+registerLocaleData(localeFr);
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,6 +39,9 @@ import {MatDialogModule, MatDialogRef} from '@angular/material/dialog';
     EmployeeComponent,
     ConcatPipe,
     DeleteComponent,
+    CheckinModalComponent,
+    TimestampToReadableTimePipe,
+    ModalComponent
   ],
   imports: [
     MatDialogModule,
@@ -48,6 +59,7 @@ import {MatDialogModule, MatDialogRef} from '@angular/material/dialog';
     MatButtonModule
   ],
   providers: [
+    { provide: LOCALE_ID, useValue: 'en-US'},
     LoginService,
     {
       provide: MatDialogRef,

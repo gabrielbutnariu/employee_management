@@ -48,7 +48,7 @@ export class ModalComponent implements OnInit {
   // responsible for executing the action for this modal (depending on\
   // the name passed to `modalData`). After that, it closes the modal
   actionFunction(): void {
-    this.modalService.modalAction(this.modalData);
+    // this.modalService.modalAction(this.modalData);
     this.closeModal();
   }
 

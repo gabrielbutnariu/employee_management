@@ -11,7 +11,8 @@ import {catchError, map, startWith, switchMap} from 'rxjs/operators';
 import {RegisterComponent} from '../register/register.component';
 import {DeleteComponent} from '../delete/delete.component';
 import {ITimesheet} from '../../models/timesheet';
-import {ActivatedRoute} from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import {CheckinModalComponent} from '../checkin-modal/checkin-modal.component';
 
 @Component({
   selector: 'app-employee',
@@ -21,8 +22,9 @@ import {ActivatedRoute} from '@angular/router';
 export class EmployeeComponent implements AfterViewInit, OnInit {
   dataSource: EmployeeService;
   employeeTimesheet: ITimesheet[] = [];
-  employeeUUID = '';
+  employeeUUID: string;
   totalElements = 0;
+  isCheckIn = true;
   isLoadingResults = true;
   isRateLimitReached = false;
   tableHeader = ['Check-In Date', 'Check-Out Date', 'Actions'];
@@ -31,15 +33,18 @@ export class EmployeeComponent implements AfterViewInit, OnInit {
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatFormField) filter!: MatFormField;
 
+
   constructor(
     private route: ActivatedRoute,
     private httpClient: HttpClient,
     private deleteService: DeleteService,
     private matDialog: MatDialog) {
+    this.employeeUUID = '';
     this.dataSource = new EmployeeService(this.httpClient);
   }
+
   ngOnInit(): void{
-    this.employeeUUID = this.route.snapshot.params.uuid;
+    this.employeeUUID = this.route.snapshot.url[1].path;
   }
 
   ngAfterViewInit(): void {
@@ -72,40 +77,43 @@ export class EmployeeComponent implements AfterViewInit, OnInit {
         })
       ).subscribe(data => this.employeeTimesheet = data);
   }
-  // applyFilter(event: Event) {
-  //   const filterValue = (event.target as HTMLInputElement).value;
-  //   this.filter = filterValue.trim().toLowerCase();
-  //
-  //   if (this.paginator) {
-  //     this.paginator.firstPage();
-  //   }
-  // }
-  addColumn(): void{
 
-  }
-  onDelete(uuid: string): void{
-    this.deleteService.onDelete(uuid);
-  }
-  openRegisterModal(): void {
+  openCheckInModal(): void {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
-      name: 'register',
-      actionButtonText: 'Add'
-    };
+        typeName: 'checkinDate',
+        name: 'check-in',
+        uuid: this.employeeUUID,
+        actionButtonText: 'Add'
+      };
     // https://material.angular.io/components/dialog/overview
-    const modalDialog = this.matDialog.open(RegisterComponent, dialogConfig);
+    const modalDialog = this.matDialog.open(CheckinModalComponent, dialogConfig);
+  }
+  openCheckOutModal(): void {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+        typeName: 'checkoutDate',
+        name: 'check-out',
+        uuid: this.employeeUUID,
+        actionButtonText: 'Add'
+      };
+    // https://material.angular.io/components/dialog/overview
+    const modalDialog = this.matDialog.open(CheckinModalComponent, dialogConfig);
   }
 
   openDeleteModal(row: any): void {
+    console.log('delete row timesheet' + JSON.stringify(row));
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
-      name: 'delete',
-      firstName: row.firstName,
-      lastName: row.lastName,
-      uuid: row.uuid,
+      name: 'deleteTimesheet',
+      timesheetId: row.id,
+      uuid: row.employeeDTO.uuid,
       actionButtonText: 'Delete'
     };
     // https://material.angular.io/components/dialog/overview
     const modalDialog = this.matDialog.open(DeleteComponent, dialogConfig);
+  }
+  toggleButton(): void{
+    this.isCheckIn = !this.isCheckIn;
   }
 }

@@ -6,16 +6,16 @@
       <div class="example-rate-limit-reached" *ngIf="isRateLimitReached">
       </div>
     </div>
-
+    <button  mat-raised-button class="btn btn-primary" (click)="openRegisterModal()">
+      <i class="fa fa-plus" aria-hidden="true"></i>
+    </button>
     <div class="example-table-container">
       <!--    <mat-form-field>-->
       <!--      <mat-label>Filter</mat-label>-->
       <!--      <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>-->
       <!--    </mat-form-field>-->
 
-      <button  mat-raised-button class="btn btn-primary" (click)="openRegisterModal()">
-        <i class="fa fa-plus" aria-hidden="true"></i>
-      </button>
+
       <!--    <input mat-raised-button [routerLink]="['/register']" type="submit" class="fadeIn third" value="Add user">-->
       <table mat-table [dataSource]="employees" class="example-table"
              matSort matSortActive="Name" matSortDisableClear matSortDirection="asc">
@@ -32,13 +32,12 @@
         <ng-container matColumnDef="Actions">
           <th mat-header-cell *matHeaderCellDef></th>
           <td mat-cell *matCellDef="let row">
-            <div class="btn-group" role="group" aria-label="...">
+            <div class="btn-group mr-2" role="group" aria-label="First group">
               <button [routerLink]="['/employees',row.uuid]" type="button" class="btn btn-primary" title="Timesheet">
                 <i class="fa fa-calendar" aria-hidden="true"></i>
               </button>
-              <button type="button" class="btn btn-default" title="Edit">
-                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-              </button>
+            </div>
+            <div class="btn-group mr-2" role="group" aria-label="Second group">
               <button type="button" class="btn btn-danger" title="Delete"
                       (click)="openDeleteModal(row)">
                 <i class="fa fa-trash-o" aria-hidden="true"></i>

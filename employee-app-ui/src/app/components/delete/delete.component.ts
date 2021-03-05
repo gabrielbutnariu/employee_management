@@ -3,6 +3,7 @@ import {RegisterService} from '../../services/register.service';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {ModalActionsService} from '../../services/modal-actions.service';
 import {ModalComponent} from '../modal/modal.component';
+import {NgForm} from '@angular/forms';
 
 @Component({
   selector: 'app-delete',
@@ -22,8 +23,8 @@ export class DeleteComponent implements OnInit {
   ngOnInit(): void{ }
 
   actionFunction(): void {
-    console.log('in action functuio');
-    this.modalService.modalAction(this.modalData);
+    console.log('in action function delete');
+    this.modalService.modalAction(this.modalData, new NgForm([], []));
     this.closeModal();
   }
 

@@ -31,8 +31,8 @@ export class RegisterComponent implements OnInit {
     this.dialogRef.close();
   }
   onRegister(form: NgForm): void {
-    this.registerService.onRegister(form);
-    this.modalService.modalAction(this.modalData);
+    console.log('form from register: ' + JSON.stringify(form.value));
+    this.modalService.modalAction(this.modalData, form);
     this.router.navigate(['/employees']);
     this.closeModal();
   }

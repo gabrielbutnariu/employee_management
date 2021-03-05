@@ -1,0 +1,24 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<div class="modal-dialog modal-confirm">
+  <div class="modal-content fadeIn first">
+    <h2>Add {{modalData.name}}</h2>
+    <div class="modal-body">
+      <div class="wrapper" >
+        <div id="formContent">
+          <form #form='ngForm' (ngSubmit)=onSubmit(form)>
+            <label for="{{modalData.typeName}}" class="fadeIn second">Check-In (date and time):</label>
+            <input type="datetime-local" id="{{modalData.typeName}}" ngModel required #{{modalData.typeName}}="ngModel" name="{{modalData.typeName}}" class=" fadeIn third">
+            <div class="modal-footer justify-content-center fadeIn fourth">
+              <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancel</button>
+              <button [disabled]="form.invalid" type="submit" class="btn btn-primary">{{modalData.actionButtonText}}</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
