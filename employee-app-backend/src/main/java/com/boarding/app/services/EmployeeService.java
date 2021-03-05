@@ -5,6 +5,7 @@ import com.boarding.app.handler.EmployeeSameSSNException;
 import com.boarding.app.models.Employee;
 import com.boarding.app.models.EmployeeDTO;
 import com.boarding.app.repositories.EmployeeRepository;
+import com.boarding.app.repositories.TimesheetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,11 +18,13 @@ import java.util.stream.Collectors;
 public class EmployeeService implements IEmployeeService {
 
     EmployeeRepository employeeRepository;
+    TimesheetService timesheetService;
     EntityToDTOService entityToDTOService;
 
     @Autowired
-    public EmployeeService(EmployeeRepository employeeRepository,EntityToDTOService entityToDTOService) {
+    public EmployeeService(EmployeeRepository employeeRepository,EntityToDTOService entityToDTOService, TimesheetService timesheetService) {
         this.employeeRepository = employeeRepository;
+        this.timesheetService = timesheetService;
         this.entityToDTOService = entityToDTOService;
     }
 
@@ -76,7 +79,10 @@ public class EmployeeService implements IEmployeeService {
         if(employee == null){
             throw new EmployeeNotFoundException();
         }
-        else employeeRepository.deleteByUUID(UUID);
+        else {
+            timesheetService.deleteTimesheetByEmpUUID(UUID);
+            employeeRepository.deleteByUUID(UUID);
+        }
     }
 
 }
