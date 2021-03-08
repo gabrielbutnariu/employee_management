@@ -2,7 +2,7 @@ import {Inject, Injectable} from '@angular/core';
 import {RegisterService} from './register.service';
 import {Router} from '@angular/router';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {ModalComponent} from '../components/modal/modal.component';
+import {ModalComponent} from '../components/modals/modal/modal.component';
 import {ModalActionsService} from './modal-actions.service';
 import {NgForm} from '@angular/forms';
 import {HttpClient, HttpHeaders} from '@angular/common/http';

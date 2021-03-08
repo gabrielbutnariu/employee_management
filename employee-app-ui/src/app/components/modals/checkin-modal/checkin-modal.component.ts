@@ -1,11 +1,11 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {ModalActionsService} from '../../services/modal-actions.service';
-import {RegisterService} from '../../services/register.service';
+import {ModalActionsService} from '../../../services/modal-actions.service';
+import {RegisterService} from '../../../services/register.service';
 import {Router} from '@angular/router';
 import {NgForm} from '@angular/forms';
 import {ModalComponent} from '../modal/modal.component';
-import {CheckInService} from '../../services/check-in.service';
+import {CheckInService} from '../../../services/check-in.service';
 
 @Component({
   selector: 'app-checkin-modal',

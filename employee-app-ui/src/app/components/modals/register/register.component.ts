@@ -1,11 +1,11 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
-import {RegisterService} from '../../services/register.service';
+import {RegisterService} from '../../../services/register.service';
 import {Router} from '@angular/router';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {ModalComponent} from '../modal/modal.component';
-import {ModalActionsService} from '../../services/modal-actions.service';
+import {ModalActionsService} from '../../../services/modal-actions.service';
 
 @Component({
   selector: 'app-register',

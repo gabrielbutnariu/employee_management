@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {LoginComponent} from './components/login/login.component';
 import {HomeComponent} from './components/home/home.component';
-import {RegisterComponent} from './components/register/register.component';
+import {RegisterComponent} from './components/modals/register/register.component';
 import {EmployeesListComponent} from './components/employees-list/employees-list.component';
 import {EmployeeComponent} from './components/employee/employee.component';
 

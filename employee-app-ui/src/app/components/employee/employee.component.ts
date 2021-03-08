@@ -8,11 +8,11 @@ import {DeleteService} from '../../services/delete.service';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {merge, of as observableOf} from 'rxjs';
 import {catchError, map, startWith, switchMap} from 'rxjs/operators';
-import {RegisterComponent} from '../register/register.component';
-import {DeleteComponent} from '../delete/delete.component';
+import {RegisterComponent} from '../modals/register/register.component';
+import {DeleteComponent} from '../modals/delete/delete.component';
 import {ITimesheet} from '../../models/timesheet';
 import { ActivatedRoute } from '@angular/router';
-import {CheckinModalComponent} from '../checkin-modal/checkin-modal.component';
+import {CheckinModalComponent} from '../modals/checkin-modal/checkin-modal.component';
 import {MatTable} from '@angular/material/table';
 
 

@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {RegisterService} from '../../services/register.service';
+import {RegisterService} from '../../../services/register.service';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {ModalActionsService} from '../../services/modal-actions.service';
+import {ModalActionsService} from '../../../services/modal-actions.service';
 import {ModalComponent} from '../modal/modal.component';
 import {NgForm} from '@angular/forms';
 

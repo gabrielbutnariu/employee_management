@@ -6,27 +6,26 @@ import { AppComponent } from './app.component';
 import {LoginComponent} from './components/login/login.component';
 import {HomeComponent} from './components/home/home.component';
 import {LoginService} from './services/login.service';
-import { RegisterComponent } from './components/register/register.component';
+import { RegisterComponent } from './components/modals/register/register.component';
 import {FormsModule} from '@angular/forms';
 import { EmployeesListComponent } from './components/employees-list/employees-list.component';
 import { EmployeeComponent } from './components/employee/employee.component';
-import { ConcatPipe } from './shared/concat.pipe';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatFormFieldModule} from '@angular/material/form-field';
-import { DeleteComponent } from './components/delete/delete.component';
+import { DeleteComponent } from './components/modals/delete/delete.component';
 import {NgbModalOptions, NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDialogModule, MatDialogRef} from '@angular/material/dialog';
-import { CheckinModalComponent } from './components/checkin-modal/checkin-modal.component';
-import { TimestampToReadableTimePipe } from './shared/timestamp-to-readable-time.pipe';
+import { CheckinModalComponent } from './components/modals/checkin-modal/checkin-modal.component';
 import {MatInputModule} from '@angular/material/input';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatSelectModule} from '@angular/material/select';
+import {ModalComponent} from './components/modals/modal/modal.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,10 +34,9 @@ import {MatSelectModule} from '@angular/material/select';
     RegisterComponent,
     EmployeesListComponent,
     EmployeeComponent,
-    ConcatPipe,
     DeleteComponent,
     CheckinModalComponent,
-    TimestampToReadableTimePipe,
+    ModalComponent
   ],
   imports: [
     MatDialogModule,

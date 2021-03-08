@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import { MockServ1Service } from './mock-serv-1.service';
-import { MockServ2Service } from './mock-serv-2.service';
 import {HttpClient} from '@angular/common/http';
 import {CheckInService} from './check-in.service';
 import {RegisterService} from './register.service';
@@ -19,8 +17,6 @@ export class ModalActionsService {
     private checkInService: CheckInService,
     private checkOutService: CheckOutService,
     private registerService: RegisterService,
-    private serv1: MockServ1Service,
-    private serv2: MockServ2Service
   ) { }
 
   modalAction(modalData: any, form: NgForm): void {
