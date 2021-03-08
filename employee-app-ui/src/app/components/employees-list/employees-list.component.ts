@@ -113,7 +113,9 @@ export class EmployeesListComponent implements AfterViewInit  {
     if (!this.cancelPressed){
       console.log('IN SUBMIT');
       console.log('form from edit: ' + JSON.stringify(form.value));
-      this.dataSource.updateEmployee(form.value, this.editableEmployee.uuid).subscribe(() => this.populateTable());
+      this.dataSource.updateEmployee(form.value, this.editableEmployee.uuid)
+        .subscribe(() => this.populateTable(),
+            error => alert(error.error));
       this.finishEdit();
     }
   }
