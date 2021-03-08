@@ -24,6 +24,9 @@ import {MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import { CheckinModalComponent } from './components/checkin-modal/checkin-modal.component';
 import { TimestampToReadableTimePipe } from './shared/timestamp-to-readable-time.pipe';
 import {MatInputModule} from '@angular/material/input';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatSelectModule} from '@angular/material/select';
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,7 +54,10 @@ import {MatInputModule} from '@angular/material/input';
     NgbModule,
     MatProgressSpinnerModule,
     MatButtonModule,
-    MatInputModule
+    MatInputModule,
+    MatExpansionModule,
+    MatTabsModule,
+    MatSelectModule
   ],
   providers: [
     LoginService,

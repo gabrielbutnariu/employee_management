@@ -9,44 +9,109 @@
     <button  mat-raised-button class="btn btn-primary mr-2" (click)="openRegisterModal()">
       <i class="fa fa-plus" aria-hidden="true"></i>
     </button>
+
     <div class="table-container">
-          <mat-form-field>
-            <mat-label>Filter</mat-label>
-            <input matInput #input>
-          </mat-form-field>
+      <mat-form-field>
+        <mat-label>Filter</mat-label>
+        <input matInput #input>
+      </mat-form-field>
 
-      <table mat-table [dataSource]="employees" class="table"
-             matSort matSortActive="Name" matSortDisableClear matSortDirection="asc">
-        <ng-container matColumnDef="Name">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>Name</th>
-          <td mat-cell *matCellDef="let row">{{row.firstName}} {{row.lastName}}</td>
-        </ng-container>
+      <mat-accordion>
+        <mat-expansion-panel [expanded]='firstPanel' [disabled]='!firstPanel'>
+          <mat-expansion-panel-header>
+            <mat-panel-title>List of employees</mat-panel-title>
+          </mat-expansion-panel-header>
+          <table mat-table [dataSource]="employees" class="mat-elevation-z8"
+                 matSort matSortActive="Name" matSortDisableClear matSortDirection="asc">
+            <ng-container matColumnDef="Name">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Name </th>
+              <td mat-cell *matCellDef="let employee"> {{employee.firstName}} {{employee.lastName}} </td>
+            </ng-container>
+            <ng-container matColumnDef="Address">
+              <th mat-header-cell *matHeaderCellDef> Address </th>
+              <td mat-cell *matCellDef="let employee"> {{employee.address}} </td>
+            </ng-container>
+            <ng-container matColumnDef="Actions">
+              <th mat-header-cell *matHeaderCellDef> Actions </th>
+              <td mat-cell *matCellDef="let employee">
+                <div class="btn-group mr-2" role="group" aria-label="First group">
+                  <button [routerLink]="['/employees',employee.uuid]" type="button" class="btn btn-primary" title="Timesheet">
+                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                  </button>
+                </div>
+                <div class="btn-group mr-2" role="group" aria-label="Second group">
+                  <button type="button" class="btn btn-default" title="Edit"
+                          (click)='editEmployee(employee)'>
+                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                  </button>
+                </div>
+                <div class="btn-group mr-2" role="group" aria-label="Second group">
+                  <button type="button" class="btn btn-danger" title="Delete"
+                          (click)="openDeleteModal(employee)">
+                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                  </button>
+                </div>
+              </td>
+            </ng-container>
 
-        <ng-container matColumnDef="Address">
-          <th mat-header-cell *matHeaderCellDef>Address</th>
-          <td mat-cell *matCellDef="let row">{{row.address}}</td>
-        </ng-container>
+            <tr mat-header-row *matHeaderRowDef="tableHeader"></tr>
+            <tr mat-row *matRowDef="let row; columns: tableHeader;"></tr>
+          </table>
+        </mat-expansion-panel>
 
-        <ng-container matColumnDef="Actions">
-          <th mat-header-cell *matHeaderCellDef>Actions</th>
-          <td mat-cell *matCellDef="let row">
-            <div class="btn-group mr-2" role="group" aria-label="First group">
-              <button [routerLink]="['/employees',row.uuid]" type="button" class="btn btn-primary" title="Timesheet">
-                <i class="fa fa-calendar" aria-hidden="true"></i>
-              </button>
-            </div>
-            <div class="btn-group mr-2" role="group" aria-label="Second group">
-              <button type="button" class="btn btn-danger" title="Delete"
-                      (click)="openDeleteModal(row)">
-                <i class="fa fa-trash-o" aria-hidden="true"></i>
-              </button>
-            </div>
-          </td>
-        </ng-container>
+        <!--        Second pannel-->
 
-        <tr mat-header-row *matHeaderRowDef="tableHeader"></tr>
-        <tr mat-row *matRowDef="let row; columns: tableHeader;"></tr>
-      </table>
+        <mat-expansion-panel [expanded]='secondPanel' [disabled]='!secondPanel'>
+          <mat-expansion-panel-header>
+            <mat-panel-title>Editing the Employee</mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-tab-group>
+            <mat-tab label="Employee">
+              <br>
+                <form #form='ngForm' (ngSubmit)=onSubmit(form)>
+                    <div class="formInputContainer">
+                      <div>
+                        <mat-form-field class="example-full-width">
+                          <input matInput readonly name="uuid" placeholder="Uuid" value="{{editableEmployee.uuid}}">
+                        </mat-form-field>
+                      </div>
+                      <div>
+                        <mat-form-field class="example-full-width">
+                          <input matInput #firstName="ngModel" name="firstName" ngModel required
+                                 placeholder="First Name" list="suggestionFirstName">
+                          <datalist id="suggestionFirstName">
+                            <option value="{{editableEmployee.firstName}}">
+                          </datalist>
+                        </mat-form-field>
+                        <mat-form-field class="example-full-width">
+                          <input matInput #lastName="ngModel" name="lastName" ngModel required placeholder="Last Name" list="suggestionLastName">
+                          <datalist id="suggestionLastName">
+                            <option value="{{editableEmployee.lastName}}">
+                          </datalist>
+                        </mat-form-field>
+
+                        <mat-form-field class="example-full-width">
+                          <input matInput #address="ngModel" name="address" ngModel required placeholder="Address" list="suggestionAddress">
+                          <datalist id="suggestionAddress">
+                            <option value="{{editableEmployee.address}}">
+                          </datalist>
+                        </mat-form-field>
+
+                        <mat-form-field class="example-full-width">
+                          <input matInput #ssn="ngModel" name="ssn" ngModel required  placeholder="Ssn">
+                        </mat-form-field>
+                        <div style="margin: auto">
+                          <button [disabled]="form.invalid" mat-raised-button color="primary" type="submit" style="margin: 30px" >Submit</button>
+                          <button mat-raised-button color="primary" style="margin: 30px" (click)="cancelEdit()">Cancel</button>
+                        </div>
+                      </div>
+                  </div>
+                </form>
+            </mat-tab>
+          </mat-tab-group>
+          <br>
+        </mat-expansion-panel>
+      </mat-accordion>
     </div>
     <mat-paginator [length]="totalElements" [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
   </div>

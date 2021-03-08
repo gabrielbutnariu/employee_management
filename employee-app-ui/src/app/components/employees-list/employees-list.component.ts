@@ -13,6 +13,8 @@ import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {DeleteComponent} from '../delete/delete.component';
 import {RegisterComponent} from '../register/register.component';
 import { MatTable } from '@angular/material/table';
+import {animate, state, style, transition, trigger} from '@angular/animations';
+import {NgForm} from '@angular/forms';
 
 @Component({
   selector: 'app-employees-list',
@@ -22,20 +24,30 @@ import { MatTable } from '@angular/material/table';
 export class EmployeesListComponent implements AfterViewInit  {
   dataSource: EmployeeService;
   employees: IEmployee[] = [];
+  editableEmployee: IEmployee;
   totalElements = 0;
   isLoadingResults = true;
   isRateLimitReached = false;
   tableHeader = ['Name', 'Address', 'Actions'];
+  dcBadges: string[] = ['name', 'giver', 'description'];
+  expandedElement: IEmployee | null | undefined;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatFormField) filter!: MatFormField;
   @ViewChild('input') input!: ElementRef;
   @ViewChild(MatTable) table!: MatTable<any>;
+  firstPanel: boolean;
+  secondPanel: boolean;
+  cancelPressed: boolean;
   constructor(
     private httpClient: HttpClient,
     private deleteService: DeleteService,
     private matDialog: MatDialog) {
+    this.firstPanel = true;
+    this.secondPanel = false;
+    this.cancelPressed = false;
+    this.editableEmployee = {address: '', firstName: '', lastName: '', uuid: ''};
     this.dataSource = new EmployeeService(this.httpClient);
   }
 
@@ -81,7 +93,7 @@ export class EmployeesListComponent implements AfterViewInit  {
       actionButtonText: 'Add'
     };
     // https://material.angular.io/components/dialog/overview
-    const modalDialog = this.matDialog.open(RegisterComponent, dialogConfig).afterClosed().subscribe(data => this.populateTable());
+    const modalDialog = this.matDialog.open(RegisterComponent, dialogConfig).afterClosed().subscribe(() => this.populateTable());
   }
 
   openDeleteModal(row: any): void {
@@ -94,6 +106,41 @@ export class EmployeesListComponent implements AfterViewInit  {
       actionButtonText: 'Delete'
     };
     // https://material.angular.io/components/dialog/overview
-    const modalDialog = this.matDialog.open(DeleteComponent, dialogConfig).afterClosed().subscribe(data => this.populateTable());
+    const modalDialog = this.matDialog.open(DeleteComponent, dialogConfig).afterClosed().subscribe(() => this.populateTable());
+  }
+
+  onSubmit(form: NgForm): void {
+    if (!this.cancelPressed){
+      console.log('IN SUBMIT');
+      console.log('form from edit: ' + JSON.stringify(form.value));
+      this.dataSource.updateEmployee(form.value, this.editableEmployee.uuid).subscribe(() => this.populateTable());
+      this.finishEdit();
+    }
+  }
+
+  editEmployee(employee: any): void{
+    console.log('IN EDIT EMPLOYEE');
+
+    this.firstPanel = false;
+    this.secondPanel = true;
+    this.cancelPressed = false;
+    this.editableEmployee = employee;
+  }
+  cancelEdit(): void {
+    console.log('IN CANCEL');
+    this.firstPanel = true;
+    this.secondPanel = false;
+    this.editableEmployee = {address: '', firstName: '', lastName: '', uuid: ''};
+    this.cancelPressed = true;
+
+  }
+  finishEdit(): void{
+    console.log('IN FINISH');
+
+    this.firstPanel = true;
+    this.secondPanel = false;
+    this.cancelPressed = false;
+    this.editableEmployee = {address: '', firstName: '', lastName: '', uuid: ''};
+    // put request
   }
 }
