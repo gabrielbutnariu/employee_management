@@ -63,19 +63,19 @@ export class ModalActionsService {
   private deleteEmp(modalData: any): void {
     this.http.delete(this.urlEmployee + modalData.uuid).subscribe(
       data => console.log(data),
-      error => console.log(error)
+      error => alert(error.error)
     );
   }
   private deleteTimesheet(modalData: any): void {
     this.http.delete(this.urlTimesheet + modalData.timesheetId).subscribe(
       data => console.log(data),
-      error => console.log(error)
+      error => alert(error.error)
     );
   }
   private deleteEmployeeTimesheet(modalData: any): void {
     this.http.delete(this.urlTimesheet + 'all/' + modalData.uuid).subscribe(
       data => console.log(data),
-      error => console.log(error)
+      error => alert(error)
     );
   }
 }

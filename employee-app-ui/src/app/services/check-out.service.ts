@@ -24,7 +24,7 @@ export class CheckOutService {
     console.log(form.value, formData);
     this.http.put(url + modalData.uuid + '/checkout', formData, httpOptions).subscribe(
       data => console.log(data),
-      error => console.log(error)
+      error => alert(error.error)
     );
   }
 }

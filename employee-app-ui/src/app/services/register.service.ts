@@ -25,7 +25,7 @@ export class RegisterService {
     console.log(form.value, formData);
     this.http.post(url, formData, httpOptions).subscribe(
       data => console.log(data),
-      error => console.log(error)
+      error => alert(error.error)
     );
   }
 }

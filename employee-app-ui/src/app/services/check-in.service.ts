@@ -30,7 +30,7 @@ export class CheckInService {
     console.log('URL checkour:' + url + modalData.uuid + '/checkin');
     this.http.post(url + modalData.uuid + '/checkin', formData, httpOptions).subscribe(
       data => console.log(data),
-      error => console.log(error)
+      error => alert(error.error)
     );
   }
 }
