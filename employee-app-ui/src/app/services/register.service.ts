@@ -19,7 +19,6 @@ const httpOptions = {
 export class RegisterService {
 
   constructor(private http: HttpClient) { }
-
   onRegister(modalData: any, form: NgForm): void{
     const formData: string = JSON.stringify(form.value);
     console.log(form.value, formData);

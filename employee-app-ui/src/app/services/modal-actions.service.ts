@@ -4,6 +4,7 @@ import {CheckInService} from './check-in.service';
 import {RegisterService} from './register.service';
 import {NgForm} from '@angular/forms';
 import {CheckOutService} from './check-out.service';
+import {DeleteService} from './delete.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,7 @@ export class ModalActionsService {
     private checkInService: CheckInService,
     private checkOutService: CheckOutService,
     private registerService: RegisterService,
+    private deleteService: DeleteService
   ) { }
 
   modalAction(modalData: any, form: NgForm): void {
@@ -47,8 +49,7 @@ export class ModalActionsService {
 
   private register(modalData: any, ngForm: NgForm): void {
     this.registerService.onRegister(modalData, ngForm);
-    // Call an authentication service method to logout the user
-    console.log('merge !');
+
   }
 
   private checkIn(modalData: any, ngForm: NgForm): void {
@@ -61,21 +62,12 @@ export class ModalActionsService {
   }
 
   private deleteEmp(modalData: any): void {
-    this.http.delete(this.urlEmployee + modalData.uuid).subscribe(
-      data => console.log(data),
-      error => alert(error.error)
-    );
+    this.deleteService.deleteEmp(modalData);
   }
   private deleteTimesheet(modalData: any): void {
-    this.http.delete(this.urlTimesheet + modalData.timesheetId).subscribe(
-      data => console.log(data),
-      error => alert(error.error)
-    );
+    this.deleteService.deleteTimesheet(modalData);
   }
   private deleteEmployeeTimesheet(modalData: any): void {
-    this.http.delete(this.urlTimesheet + 'all/' + modalData.uuid).subscribe(
-      data => console.log(data),
-      error => alert(error)
-    );
+    this.deleteService.deleteEmployeeTimesheet(modalData);
   }
 }
