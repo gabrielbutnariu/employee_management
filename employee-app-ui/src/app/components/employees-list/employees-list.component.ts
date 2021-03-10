@@ -15,6 +15,7 @@ import {RegisterComponent} from '../modals/register/register.component';
 import { MatTable } from '@angular/material/table';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {NgForm} from '@angular/forms';
+import {MatTab, MatTabGroup} from '@angular/material/tabs';
 
 @Component({
   selector: 'app-employees-list',
@@ -37,6 +38,7 @@ export class EmployeesListComponent implements AfterViewInit  {
   @ViewChild(MatFormField) filter!: MatFormField;
   @ViewChild('input') input!: ElementRef;
   @ViewChild(MatTable) table!: MatTable<any>;
+  @ViewChild('matTabGroup', { static: false }) matTabGroup!: MatTabGroup;
   firstPanel: boolean;
   secondPanel: boolean;
   cancelPressed: boolean;
@@ -120,27 +122,31 @@ export class EmployeesListComponent implements AfterViewInit  {
     }
   }
 
-  editEmployee(employee: any): void{
-    console.log('IN EDIT EMPLOYEE');
-
+  openSecondPanel(): void{
     this.firstPanel = false;
     this.secondPanel = true;
+  }
+  openFirstPanel(): void{
+    this.firstPanel = true;
+    this.secondPanel = false;
+  }
+  editEmployee(employee: any): void{
+    console.log('IN EDIT EMPLOYEE');
+    this.matTabGroup.selectedIndex = 0;
+    this.openSecondPanel();
     this.cancelPressed = false;
     this.editableEmployee = employee;
   }
   cancelEdit(): void {
     console.log('IN CANCEL');
-    this.firstPanel = true;
-    this.secondPanel = false;
+    this.openFirstPanel();
     this.editableEmployee = {address: '', firstName: '', lastName: '', uuid: ''};
     this.cancelPressed = true;
 
   }
   finishEdit(): void{
     console.log('IN FINISH');
-
-    this.firstPanel = true;
-    this.secondPanel = false;
+    this.openFirstPanel();
     this.cancelPressed = false;
     this.editableEmployee = {address: '', firstName: '', lastName: '', uuid: ''};
     // put request

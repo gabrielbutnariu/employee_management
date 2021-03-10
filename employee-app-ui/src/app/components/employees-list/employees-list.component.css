@@ -160,7 +160,15 @@ mat-form-field{
 .formInputContainer{
   display: block;
  }
-
-
-
-
+fieldset {
+  clear: both;
+  border: 1px dashed #5fbae9;
+}
+legend {
+  color: #fff;
+  width: auto;
+  font-size: 14px;
+  padding: 5px 10px;
+  background: #5fbae9;
+  margin: 0 0 10px 15px;
+}
