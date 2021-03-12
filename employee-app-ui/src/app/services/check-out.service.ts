@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Observable, Subject} from 'rxjs';
 
 const url = '/server/timesheet/';
 const headerDict = {
@@ -16,6 +17,12 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class CheckOutService {
+  get checkOutOperationSuccessfulEvent$(): Observable<boolean> {
+    return this._checkOutOperationSuccessfulEvent$.asObservable();
+  }
+  // tslint:disable-next-line:variable-name
+  private _checkOutOperationSuccessfulEvent$: Subject<boolean> = new Subject();
+
   constructor(private http: HttpClient) {
   }
 
@@ -23,7 +30,7 @@ export class CheckOutService {
     const formData: string = JSON.stringify(form.value);
     console.log(form.value, formData);
     this.http.put(url + modalData.uuid + '/checkout', formData, httpOptions).subscribe(
-      data => console.log(data),
+      data => this._checkOutOperationSuccessfulEvent$.next(true),
       error => alert(error.error)
     );
   }

@@ -4,7 +4,7 @@ import {IEmployee} from '../../models/employee';
 import {MatPaginator} from '@angular/material/paginator';
 
 import {MatSort} from '@angular/material/sort';
-import {fromEvent, merge, Observable, of as observableOf} from 'rxjs';
+import {fromEvent, merge, Observable, of as observableOf, Subscription} from 'rxjs';
 import {catchError, debounceTime, distinctUntilChanged, map, startWith, switchMap, tap} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
 import {MatFormField} from '@angular/material/form-field';
@@ -15,6 +15,9 @@ import {RegisterComponent} from '../modals/register/register.component';
 import { MatTable } from '@angular/material/table';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {NgForm} from '@angular/forms';
+import {MatTab, MatTabGroup} from '@angular/material/tabs';
+import {MessageDataSource} from '../../services/MessageDataSource.datasource';
+import {RegisterService} from '../../services/register.service';
 
 @Component({
   selector: 'app-employees-list',
@@ -22,10 +25,13 @@ import {NgForm} from '@angular/forms';
   styleUrls: ['./employees-list.component.css']
 })
 export class EmployeesListComponent implements AfterViewInit  {
+  // dataSource: MessageDataSource;
+  registerOperationSuccessfulSubscription: Observable<boolean>;
+  deleteOperationSuccessfulSubscription: Observable<boolean>;
   dataSource: EmployeeService;
   employees: IEmployee[] = [];
   editableEmployee: IEmployee;
-  totalElements = 0;
+  totalElements = 9;
   isLoadingResults = true;
   isRateLimitReached = false;
   tableHeader = ['Name', 'Address', 'Actions'];
@@ -37,13 +43,18 @@ export class EmployeesListComponent implements AfterViewInit  {
   @ViewChild(MatFormField) filter!: MatFormField;
   @ViewChild('input') input!: ElementRef;
   @ViewChild(MatTable) table!: MatTable<any>;
+  @ViewChild('matTabGroup', { static: false }) matTabGroup!: MatTabGroup;
   firstPanel: boolean;
   secondPanel: boolean;
   cancelPressed: boolean;
   constructor(
     private httpClient: HttpClient,
+    private employeeService: EmployeeService,
     private deleteService: DeleteService,
+    private registerService: RegisterService,
     private matDialog: MatDialog) {
+    this.registerOperationSuccessfulSubscription = this.registerService.registerOperationSuccessfulEvent$;
+    this.deleteOperationSuccessfulSubscription = this.deleteService.deleteOperationSuccessfulEvent$;
     this.firstPanel = true;
     this.secondPanel = false;
     this.cancelPressed = false;
@@ -52,9 +63,32 @@ export class EmployeesListComponent implements AfterViewInit  {
   }
 
   ngAfterViewInit(): void {
+    this.registerOperationSuccessfulSubscription.subscribe(
+      isSuccessful => {
+        if (isSuccessful){
+          this.populateTable();
+        }
+      }
+    );
+    this.deleteOperationSuccessfulSubscription.subscribe(
+      isSuccessful => {
+        if (isSuccessful){
+          this.populateTable();
+        }
+      }
+    );
     this.populateTable();
   }
 
+  // loadEmployee(): void{
+  //   console.log('Load emp');
+  //   this.dataSource.(
+  //     this.paginator.pageIndex,
+  //     this.paginator.pageSize,
+  //     this.input.nativeElement.value,
+  //     this.sort.direction
+  //   );
+  // }
   populateTable(): void{
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
     merge(this.sort.sortChange, this.paginator.page, fromEvent(this.input.nativeElement, 'keyup'))
@@ -93,7 +127,7 @@ export class EmployeesListComponent implements AfterViewInit  {
       actionButtonText: 'Add'
     };
     // https://material.angular.io/components/dialog/overview
-    const modalDialog = this.matDialog.open(RegisterComponent, dialogConfig).afterClosed().subscribe(() => this.populateTable());
+    const modalDialog = this.matDialog.open(RegisterComponent, dialogConfig);
   }
 
   openDeleteModal(row: any): void {
@@ -106,39 +140,45 @@ export class EmployeesListComponent implements AfterViewInit  {
       actionButtonText: 'Delete'
     };
     // https://material.angular.io/components/dialog/overview
-    const modalDialog = this.matDialog.open(DeleteComponent, dialogConfig).afterClosed().subscribe(() => this.populateTable());
+    const modalDialog = this.matDialog.open(DeleteComponent, dialogConfig);
   }
 
   onSubmit(form: NgForm): void {
     if (!this.cancelPressed){
       console.log('IN SUBMIT');
       console.log('form from edit: ' + JSON.stringify(form.value));
-      this.dataSource.updateEmployee(form.value, this.editableEmployee.uuid).subscribe(() => this.populateTable());
+      this.dataSource.updateEmployee(form.value, this.editableEmployee.uuid)
+        .subscribe(() => this.populateTable(),
+            error => alert(error.error));
       this.finishEdit();
     }
   }
 
-  editEmployee(employee: any): void{
-    console.log('IN EDIT EMPLOYEE');
-
+  openSecondPanel(): void{
     this.firstPanel = false;
     this.secondPanel = true;
+  }
+  openFirstPanel(): void{
+    this.firstPanel = true;
+    this.secondPanel = false;
+  }
+  editEmployee(employee: any): void{
+    console.log('IN EDIT EMPLOYEE');
+    this.matTabGroup.selectedIndex = 0;
+    this.openSecondPanel();
     this.cancelPressed = false;
     this.editableEmployee = employee;
   }
   cancelEdit(): void {
     console.log('IN CANCEL');
-    this.firstPanel = true;
-    this.secondPanel = false;
+    this.openFirstPanel();
     this.editableEmployee = {address: '', firstName: '', lastName: '', uuid: ''};
     this.cancelPressed = true;
 
   }
   finishEdit(): void{
     console.log('IN FINISH');
-
-    this.firstPanel = true;
-    this.secondPanel = false;
+    this.openFirstPanel();
     this.cancelPressed = false;
     this.editableEmployee = {address: '', firstName: '', lastName: '', uuid: ''};
     // put request

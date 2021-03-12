@@ -6,6 +6,7 @@ import {Router} from '@angular/router';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {ModalComponent} from '../modal/modal.component';
 import {ModalActionsService} from '../../../services/modal-actions.service';
+import {Subject} from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -13,7 +14,6 @@ import {ModalActionsService} from '../../../services/modal-actions.service';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-
 
   constructor(
     private registerService: RegisterService,

@@ -6,6 +6,7 @@ import {ModalComponent} from '../components/modals/modal/modal.component';
 import {ModalActionsService} from './modal-actions.service';
 import {NgForm} from '@angular/forms';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Observable, Subject} from 'rxjs';
 
 const url = '/server/timesheet/';
 const headerDict = {
@@ -22,6 +23,12 @@ const httpOptions = {
 })
 export class CheckInService {
 
+  get checkinOperationSuccessfulEvent$(): Observable<boolean> {
+    return this._checkinOperationSuccessfulEvent$.asObservable();
+  }
+  // tslint:disable-next-line:variable-name
+  private _checkinOperationSuccessfulEvent$: Subject<boolean> = new Subject();
+
   constructor(private http: HttpClient) { }
 
   onCheckIn(modalData: any, form: NgForm): void{
@@ -29,7 +36,7 @@ export class CheckInService {
     console.log(form.value, formData);
     console.log('URL checkour:' + url + modalData.uuid + '/checkin');
     this.http.post(url + modalData.uuid + '/checkin', formData, httpOptions).subscribe(
-      data => console.log(data),
+      data => this._checkinOperationSuccessfulEvent$.next(true),
       error => alert(error.error)
     );
   }

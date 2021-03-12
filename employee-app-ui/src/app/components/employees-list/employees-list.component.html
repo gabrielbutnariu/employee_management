@@ -25,7 +25,7 @@
                  matSort matSortActive="Name" matSortDisableClear matSortDirection="asc">
             <ng-container matColumnDef="Name">
               <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Name </th>
-              <td mat-cell *matCellDef="let employee"> {{employee.firstName}} {{employee.lastName}} </td>
+              <td mat-cell *matCellDef="let employee">{{employee.firstName}} {{employee.lastName}}</td>
             </ng-container>
             <ng-container matColumnDef="Address">
               <th mat-header-cell *matHeaderCellDef> Address </th>
@@ -63,54 +63,89 @@
 
         <mat-expansion-panel [expanded]='secondPanel' [disabled]='!secondPanel'>
           <mat-expansion-panel-header>
-            <mat-panel-title>Editing the Employee</mat-panel-title>
+            <mat-panel-title>Employee</mat-panel-title>
           </mat-expansion-panel-header>
-          <mat-tab-group>
-            <mat-tab label="Employee">
+          <mat-tab-group #matTabGroup>
+            <mat-tab label="Quick Info and Edit">
               <br>
                 <form #form='ngForm' (ngSubmit)=onSubmit(form)>
                     <div class="formInputContainer">
-                      <div>
-                        <mat-form-field class="example-full-width">
-                          <input matInput readonly name="uuid" placeholder="Uuid" value="{{editableEmployee.uuid}}">
-                        </mat-form-field>
-                      </div>
-                      <div>
-                        <mat-form-field class="example-full-width">
-                          <input matInput #firstName="ngModel" name="firstName" ngModel required
-                                 placeholder="First Name" list="suggestionFirstName">
-                          <datalist id="suggestionFirstName">
-                            <option value="{{editableEmployee.firstName}}">
-                          </datalist>
-                        </mat-form-field>
-                        <mat-form-field class="example-full-width">
-                          <input matInput #lastName="ngModel" name="lastName" ngModel required placeholder="Last Name" list="suggestionLastName">
-                          <datalist id="suggestionLastName">
-                            <option value="{{editableEmployee.lastName}}">
-                          </datalist>
-                        </mat-form-field>
+                      <div class="container-fluid">
+                        <div class="card">
+                          <div class="card-header">
+                            <h1>{{editableEmployee.firstName}} {{editableEmployee.lastName}}</h1>
+                          </div>
+                          <div class="card-body">
+                            <fieldset>
+                              <legend>Personal Information</legend>
+                              <mat-form-field class="example-full-width">
+                                <input matInput readonly name="uuid" placeholder="Uuid" value="{{editableEmployee.uuid}}">
+                              </mat-form-field>
+                              <mat-form-field class="example-full-width">
+                                <input matInput readonly name="firstName" placeholder="First Name" value="{{editableEmployee.firstName}}">
+                              </mat-form-field>
+                              <mat-form-field class="example-full-width">
+                                <input matInput readonly name="lastName" placeholder="Last Name" value="{{editableEmployee.lastName}}">
+                              </mat-form-field>
+                              <mat-form-field class="example-full-width">
+                                <input matInput readonly name="address" placeholder="Address" value="{{editableEmployee.address}}">
+                              </mat-form-field>
+                            </fieldset>
+                            <br>
+                            <fieldset>
+                              <legend>Edit Information</legend>
+                              <div>
+                                <mat-form-field class="example-full-width">
+                                  <input matInput #firstName="ngModel" name="firstName" ngModel required
+                                         placeholder="First Name" list="suggestionFirstName">
+                                  <datalist id="suggestionFirstName">
+                                    <option value="{{editableEmployee.firstName}}">
+                                  </datalist>
+                                </mat-form-field>
+                                <mat-form-field class="example-full-width">
+                                  <input matInput #lastName="ngModel" name="lastName" ngModel required placeholder="Last Name" list="suggestionLastName">
+                                  <datalist id="suggestionLastName">
+                                    <option value="{{editableEmployee.lastName}}">
+                                  </datalist>
+                                </mat-form-field>
 
-                        <mat-form-field class="example-full-width">
-                          <input matInput #address="ngModel" name="address" ngModel required placeholder="Address" list="suggestionAddress">
-                          <datalist id="suggestionAddress">
-                            <option value="{{editableEmployee.address}}">
-                          </datalist>
-                        </mat-form-field>
+                                <mat-form-field class="example-full-width">
+                                  <input matInput #address="ngModel" name="address" ngModel required placeholder="Address" list="suggestionAddress">
+                                  <datalist id="suggestionAddress">
+                                    <option value="{{editableEmployee.address}}">
+                                  </datalist>
+                                </mat-form-field>
 
-                        <mat-form-field class="example-full-width">
-                          <input matInput #ssn="ngModel" name="ssn" ngModel required  placeholder="Ssn">
-                        </mat-form-field>
-                        <div style="margin: auto">
-                          <button [disabled]="form.invalid" mat-raised-button color="primary" type="submit" style="margin: 30px" >Submit</button>
-                          <button mat-raised-button color="primary" style="margin: 30px" (click)="cancelEdit()">Cancel</button>
+                                <mat-form-field class="example-full-width">
+                                  <input matInput #ssn="ngModel" name="ssn" ngModel required  placeholder="Ssn">
+                                </mat-form-field>
+                                  <button [disabled]="form.invalid" mat-raised-button color="primary" type="submit" style="margin: 30px" >Submit</button>
+                              </div>
+                            </fieldset>
+                            <div align="right" style="margin: auto">
+                              <button mat-raised-button class="btn btn-outline-secondary"  style="margin: 30px" (click)="cancelEdit()">
+                                <i class="fa fa-chevron-left"></i>
+                                Back</button>
+                            </div>
+
+                          </div>
                         </div>
                       </div>
                   </div>
                 </form>
             </mat-tab>
+<!--            <mat-tab label="Quick Info">-->
+<!--              <br>-->
+
+<!--              <button mat-raised-button class="btn btn-outline-secondary" color="primary" style="margin: 30px" (click)="openFirstPanel()"><i class="fa fa-chevron-left"></i> Back</button>-->
+
+<!--            </mat-tab>-->
           </mat-tab-group>
           <br>
         </mat-expansion-panel>
+
+<!--        Third panel-->
+
       </mat-accordion>
     </div>
     <mat-paginator [length]="totalElements" [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>

@@ -6,7 +6,7 @@ import {MatFormField} from '@angular/material/form-field';
 import {HttpClient} from '@angular/common/http';
 import {DeleteService} from '../../services/delete.service';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
-import {merge, of as observableOf} from 'rxjs';
+import {merge, Observable, of as observableOf} from 'rxjs';
 import {catchError, map, startWith, switchMap} from 'rxjs/operators';
 import {RegisterComponent} from '../modals/register/register.component';
 import {DeleteComponent} from '../modals/delete/delete.component';
@@ -14,6 +14,8 @@ import {ITimesheet} from '../../models/timesheet';
 import { ActivatedRoute } from '@angular/router';
 import {CheckinModalComponent} from '../modals/checkin-modal/checkin-modal.component';
 import {MatTable} from '@angular/material/table';
+import {CheckOutService} from '../../services/check-out.service';
+import {CheckInService} from '../../services/check-in.service';
 
 
 @Component({
@@ -22,6 +24,9 @@ import {MatTable} from '@angular/material/table';
   styleUrls: ['./employee.component.css']
 })
 export class EmployeeComponent implements AfterViewInit, OnInit {
+  deleteOperationSuccessfulSubscription: Observable<boolean>;
+  checkOutOperationSuccessfulSubscription: Observable<boolean>;
+  checkInOperationSuccessfulSubscription: Observable<boolean>;
   dataSource: EmployeeService;
   employeeTimesheet: ITimesheet[] = [];
   employeeUUID: string;
@@ -40,7 +45,12 @@ export class EmployeeComponent implements AfterViewInit, OnInit {
     private route: ActivatedRoute,
     private httpClient: HttpClient,
     private deleteService: DeleteService,
+    private checkOutService: CheckOutService,
+    private checkInService: CheckInService,
     private matDialog: MatDialog) {
+    this.deleteOperationSuccessfulSubscription = this.deleteService.deleteOperationSuccessfulEvent$;
+    this.checkOutOperationSuccessfulSubscription = this.checkOutService.checkOutOperationSuccessfulEvent$;
+    this.checkInOperationSuccessfulSubscription = this.checkInService.checkinOperationSuccessfulEvent$;
     this.employeeUUID = '';
     this.dataSource = new EmployeeService(this.httpClient);
   }
@@ -50,6 +60,27 @@ export class EmployeeComponent implements AfterViewInit, OnInit {
   }
 
   ngAfterViewInit(): void {
+    this.deleteOperationSuccessfulSubscription.subscribe(
+      isSuccessful => {
+        if (isSuccessful){
+          this.populateTable();
+        }
+      }
+    );
+    this.checkOutOperationSuccessfulSubscription.subscribe(
+      isSuccessful => {
+        if (isSuccessful){
+          this.populateTable();
+        }
+      }
+    );
+    this.checkInOperationSuccessfulSubscription.subscribe(
+      isSuccessful => {
+        if (isSuccessful){
+          this.populateTable();
+        }
+      }
+    );
     this.populateTable();
   }
 
@@ -63,7 +94,6 @@ export class EmployeeComponent implements AfterViewInit, OnInit {
       };
     // https://material.angular.io/components/dialog/overview
     const modalDialog = this.matDialog.open(CheckinModalComponent, dialogConfig);
-    modalDialog.afterClosed().subscribe(data => this.populateTable());
   }
   openCheckOutModal(): void {
     const dialogConfig = new MatDialogConfig();
@@ -75,7 +105,6 @@ export class EmployeeComponent implements AfterViewInit, OnInit {
       };
     // https://material.angular.io/components/dialog/overview
     const modalDialog = this.matDialog.open(CheckinModalComponent, dialogConfig);
-    modalDialog.afterClosed().subscribe(data => this.populateTable());
   }
 
   openDeleteModal(row: any): void {
@@ -89,7 +118,6 @@ export class EmployeeComponent implements AfterViewInit, OnInit {
     };
     // https://material.angular.io/components/dialog/overview
     const modalDialog = this.matDialog.open(DeleteComponent, dialogConfig);
-    modalDialog.afterClosed().subscribe(data => this.populateTable());
   }
 
 
