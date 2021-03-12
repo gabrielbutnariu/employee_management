@@ -20,18 +20,22 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.sql.Timestamp;
+import java.util.*;
 import java.util.stream.Collectors;
 
-@Service
+@Service("timesheetService")
 public class TimesheetService implements ITimesheetService{
 
     private final TimesheetRepository timesheetRepository;
     private final EmployeeRepository employeeRepository;
     private final EntityToDTOService entityToDTOService;
+
+    private final String foo = "foo";
+
+    public String getFoo(){
+        return  "foo";
+    }
 
     @Autowired
     public TimesheetService(TimesheetRepository timesheetRepository, EmployeeRepository employeeRepository, EntityToDTOService entityToDTOService) {
@@ -49,6 +53,10 @@ public class TimesheetService implements ITimesheetService{
 
     public Page<TimesheetDTO> getByEmpUUID(@PathVariable String UUID, Pageable pageable){
         return timesheetRepository.findAllByEmployeeUUID(UUID, pageable).map(TimesheetDTO::new);
+    }
+
+    public List<TimesheetDTO> getBetweenTimestamps(Timestamp todayTimestamp, Timestamp tomorrowTimestamp){
+        return timesheetRepository.findAllByCheckinDateBetween(todayTimestamp, tomorrowTimestamp).stream().map(this::mapEntityToDTO).collect(Collectors.toList());
     }
 
     public Timesheet addCheckinDate(@RequestBody final Timesheet timesheet,@PathVariable String UUID){

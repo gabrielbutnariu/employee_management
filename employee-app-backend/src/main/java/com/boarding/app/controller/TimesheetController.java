@@ -10,9 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.sql.Timestamp;
+import java.util.*;
 
 @RestController
 @RequestMapping("/timesheet")
@@ -46,6 +45,12 @@ public class TimesheetController {
         response.put("totalElements", pagedTimesheet.getTotalElements());
 
         return response;
+    }
+
+    @GetMapping
+    @RequestMapping("test")
+    public List<TimesheetDTO> listBetweenDates(Timestamp todayTimestamp, Timestamp tomorrowTimestamp){
+        return timesheetService.getBetweenTimestamps(todayTimestamp, tomorrowTimestamp);
     }
 
     //this one can be used to add checkin and checkout or just checkin
