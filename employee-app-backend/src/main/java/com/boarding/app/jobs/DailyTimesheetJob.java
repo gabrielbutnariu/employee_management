@@ -36,7 +36,7 @@ public class DailyTimesheetJob implements Job{
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
 
-        calendar.add(Calendar.DATE, -10);
+        calendar.add(Calendar.DATE, 0);
         date = calendar.getTime();
         Timestamp todayTimestamp = new Timestamp(date.getTime());
 
