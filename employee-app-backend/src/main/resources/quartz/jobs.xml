@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<job-scheduling-data xmlns="http://www.quartz-scheduler.org/xml/JobSchedulingData"
+                     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                     xsi:schemaLocation="http://www.quartz-scheduler.org/xml/JobSchedulingData http://www.quartz-scheduler.org/xml/job_scheduling_data_1_8.xsd"
+                     version="1.8">
+
+    <pre-processing-commands>
+            <delete-jobs-in-group>REPORT_GROUP</delete-jobs-in-group>
+            <delete-triggers-in-group>REPORT_TRIGGER_GROUP</delete-triggers-in-group>
+    </pre-processing-commands>
+
+	<schedule>
+         <job>
+             <name>DailyTimesheetJob</name>
+             <group>TimesheetJob_Group</group>
+             <description>This job will trigger mail service for every minute</description>
+             <job-class>com.boarding.app.jobs.DailyTimesheetJob</job-class>
+         </job>
+
+        <trigger>
+             <cron>
+                 <name>dailyTimesheetTrigger</name>
+                 <group>TimesheetTrigger_Group</group>
+                 <job-name>DailyTimesheetJob</job-name>
+                 <job-group>TimesheetJob_Group</job-group>
+                 <!-- trigger every -->
+                 <cron-expression>0/20 * * ? * * *</cron-expression>
+             </cron>
+        </trigger>
+    </schedule>
+    </job-scheduling-data>

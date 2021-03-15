@@ -1,7 +1,6 @@
 package com.boarding.app.controller;
 
 import com.boarding.app.models.EmployeeDTO;
-import com.boarding.app.repositories.EmployeeRepository;
 import com.boarding.app.services.EmployeeService;
 import com.boarding.app.models.Employee;
 import org.springframework.beans.factory.annotation.Autowired;

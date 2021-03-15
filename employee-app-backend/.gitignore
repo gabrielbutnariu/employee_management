@@ -31,3 +31,4 @@ build/
 
 ### VS Code ###
 .vscode/
+/src/main/java/com/boarding/app/awss3/AWSCredentials.java
