@@ -4,7 +4,7 @@ import {HttpClientModule} from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {LoginComponent} from './components/login/login.component';
-import {HomeComponent} from './components/home/home.component';
+import {ReportsComponent} from './components/reports/reports.component';
 import {LoginService} from './services/login.service';
 import { RegisterComponent } from './components/modals/register/register.component';
 import {FormsModule} from '@angular/forms';
@@ -17,7 +17,6 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { DeleteComponent } from './components/modals/delete/delete.component';
-import {NgbModalOptions, NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import { CheckinModalComponent } from './components/modals/checkin-modal/checkin-modal.component';
@@ -30,7 +29,7 @@ import {ModalComponent} from './components/modals/modal/modal.component';
   declarations: [
     AppComponent,
     LoginComponent,
-    HomeComponent,
+    ReportsComponent,
     RegisterComponent,
     EmployeesListComponent,
     EmployeeComponent,
