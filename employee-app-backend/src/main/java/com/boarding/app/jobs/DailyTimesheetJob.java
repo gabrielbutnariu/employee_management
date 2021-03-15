@@ -47,7 +47,7 @@ public class DailyTimesheetJob implements Job{
         List<TimesheetDTO> list = timesheetService.getBetweenTimestamps(todayTimestamp,tomorrowTimestamp);
 
         PDFManager pdfManager = new PDFManager();
-        String pdfPath = "GeneratedPDFS\\DailyTimesheet_" + todayTimestamp.toString().substring(0,10) + ".pdf";
+        String pdfPath = "DailyTimesheet_" + todayTimestamp.toString().substring(0,10) + ".pdf";
         String s3Path = "dailyTimesheetPDFS/DailyTimesheet_" + todayTimestamp.toString().substring(0,10) + ".pdf";
         pdfManager.createTablePDF(list, pdfPath);
         logger.info(pdfPath);

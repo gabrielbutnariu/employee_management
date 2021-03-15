@@ -26,6 +26,9 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatSelectModule} from '@angular/material/select';
 import {ModalComponent} from './components/modals/modal/modal.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { DetailsUploadComponent } from './details-upload/details-upload.component';
+import {MatListModule} from '@angular/material/list';
+import {MatIconModule} from '@angular/material/icon';
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,7 +39,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     EmployeeComponent,
     DeleteComponent,
     CheckinModalComponent,
-    ModalComponent
+    ModalComponent,
+    DetailsUploadComponent
   ],
   imports: [
     MatDialogModule,
@@ -55,7 +59,9 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     MatInputModule,
     MatExpansionModule,
     MatTabsModule,
-    MatSelectModule
+    MatSelectModule,
+    MatListModule,
+    MatIconModule
   ],
   providers: [
     LoginService,

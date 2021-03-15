@@ -9,11 +9,11 @@ import {EmployeeComponent} from './components/employee/employee.component';
 const routes: Routes = [
   {path: 'employees/:UUID', component: EmployeeComponent},
   {path: 'employees', component: EmployeesListComponent},
-  {path: 'home', component: ReportsComponent},
+  {path: 'reports', component: ReportsComponent},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
-  {path: '', redirectTo: 'home', pathMatch: 'full'},
-  {path: '**', redirectTo: 'home', pathMatch: 'full'}
+  {path: '', redirectTo: 'employees', pathMatch: 'full'},
+  {path: '**', redirectTo: 'employees', pathMatch: 'full'}
 ];
 
 @NgModule({

@@ -1,4 +1,14 @@
-<h3>
-  welcome,
-  home page is working!!
-</h3>
+
+<br><br>
+<div class="container">
+  <div class="container mat-elevation-z2">
+    <mat-list>
+      <div mat-subheader>Files</div>
+      <mat-list-item *ngFor="let file of fileUploads | async">
+        <mat-icon>cloud_download</mat-icon>
+        <app-details-upload [fileUpload]='file' mat-line></app-details-upload>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+    </mat-list>
+  </div>
+</div>

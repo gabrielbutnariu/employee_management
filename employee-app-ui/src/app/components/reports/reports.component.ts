@@ -15,13 +15,10 @@ export class ReportsComponent implements OnInit{
   constructor(private reportsService: ReportsService) { }
 
   ngOnInit(): void{
+    this.showFiles();
   }
 
-  showFiles(enable: boolean): void {
-    this.showFile = enable;
-
-    if (enable) {
-      this.fileUploads = this.reportsService.getFiles();
-    }
+  showFiles(): void {
+    this.fileUploads = this.reportsService.getFiles();
   }
 }
