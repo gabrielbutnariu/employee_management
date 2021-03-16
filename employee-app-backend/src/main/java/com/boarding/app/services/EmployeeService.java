@@ -70,11 +70,8 @@ public class EmployeeService implements IEmployeeService {
 
     public EmployeeDTO updateEmployee(Employee existingEmployee, Employee employee){
         EntityToDTOService.copyNonNullProperties(existingEmployee,employee);
-        if(employeeRepository.findBySsn(employee.getSsn()) == null){
-            employeeRepository.saveAndFlush(existingEmployee);
-            return mapEntityToDTO(existingEmployee);
-        }
-        else throw new EmployeeSameSSNException();
+        employeeRepository.saveAndFlush(existingEmployee);
+        return mapEntityToDTO(existingEmployee);
     }
 
     public void deleteByUUID(String UUID){
