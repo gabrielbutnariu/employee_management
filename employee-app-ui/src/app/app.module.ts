@@ -4,7 +4,7 @@ import {HttpClientModule} from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {LoginComponent} from './components/login/login.component';
-import {HomeComponent} from './components/home/home.component';
+import {ReportsComponent} from './components/reports/reports.component';
 import {LoginService} from './services/login.service';
 import { RegisterComponent } from './components/modals/register/register.component';
 import {FormsModule} from '@angular/forms';
@@ -17,7 +17,6 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { DeleteComponent } from './components/modals/delete/delete.component';
-import {NgbModalOptions, NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import { CheckinModalComponent } from './components/modals/checkin-modal/checkin-modal.component';
@@ -26,17 +25,22 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatSelectModule} from '@angular/material/select';
 import {ModalComponent} from './components/modals/modal/modal.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { DetailsUploadComponent } from './details-upload/details-upload.component';
+import {MatListModule} from '@angular/material/list';
+import {MatIconModule} from '@angular/material/icon';
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    HomeComponent,
+    ReportsComponent,
     RegisterComponent,
     EmployeesListComponent,
     EmployeeComponent,
     DeleteComponent,
     CheckinModalComponent,
-    ModalComponent
+    ModalComponent,
+    DetailsUploadComponent
   ],
   imports: [
     MatDialogModule,
@@ -55,7 +59,9 @@ import {ModalComponent} from './components/modals/modal/modal.component';
     MatInputModule,
     MatExpansionModule,
     MatTabsModule,
-    MatSelectModule
+    MatSelectModule,
+    MatListModule,
+    MatIconModule
   ],
   providers: [
     LoginService,
