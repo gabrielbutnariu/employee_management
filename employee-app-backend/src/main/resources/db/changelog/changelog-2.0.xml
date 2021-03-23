@@ -10,13 +10,6 @@
         </addColumn>
     </changeSet>
 
-    <changeSet id="changelog-2.3-deleted_WorkType" author="ralic">
-        <dropColumn columnName="work_type"
-                    schemaName="public"
-                    tableName="timesheet">
-        </dropColumn>
-    </changeSet>
-
     <changeSet id="changelog-2.4-altered_emp_id" author="ralic">
         <dropTable tableName="timesheet"/>
 

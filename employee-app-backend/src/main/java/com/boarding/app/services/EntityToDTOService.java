@@ -1,9 +1,6 @@
 package com.boarding.app.services;
 
-import com.boarding.app.models.Employee;
-import com.boarding.app.models.EmployeeDTO;
-import com.boarding.app.models.Timesheet;
-import com.boarding.app.models.TimesheetDTO;
+import com.boarding.app.models.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
@@ -18,7 +15,7 @@ public class EntityToDTOService {
     public EmployeeDTO toEmployeeDTO(Employee employee){
         return new EmployeeDTO(employee);
     }
-
+    public EmployeeEditDTO toEmployeeEditDTO(Employee employee) {return new EmployeeEditDTO(employee);}
     public TimesheetDTO toTimesheetDTO(Timesheet timesheet){
         return new TimesheetDTO(timesheet);
     }

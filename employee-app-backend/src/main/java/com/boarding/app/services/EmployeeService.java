@@ -4,6 +4,7 @@ import com.boarding.app.handler.EmployeeNotFoundException;
 import com.boarding.app.handler.EmployeeSameSSNException;
 import com.boarding.app.models.Employee;
 import com.boarding.app.models.EmployeeDTO;
+import com.boarding.app.models.EmployeeEditDTO;
 import com.boarding.app.repositories.EmployeeRepository;
 import com.boarding.app.repositories.TimesheetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,10 @@ public class EmployeeService implements IEmployeeService {
 
     public EmployeeDTO mapEntityToDTO(Employee employee){
         return entityToDTOService.toEmployeeDTO(employee);
+    }
+
+    public EmployeeEditDTO mapEntityToEmployeeEditDTO(Employee employee){
+        return entityToDTOService.toEmployeeEditDTO(employee);
     }
 
     public Page<EmployeeDTO> employeesPageable(Pageable pageable) {

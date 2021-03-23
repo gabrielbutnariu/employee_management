@@ -1,6 +1,7 @@
 package com.boarding.app.controller;
 
 import com.boarding.app.models.EmployeeDTO;
+import com.boarding.app.models.EmployeeEditDTO;
 import com.boarding.app.services.EmployeeService;
 import com.boarding.app.models.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,8 +50,8 @@ public class EmployeeController {
     }
 
     @GetMapping("/uuid/{UUID}")
-    public EmployeeDTO getEmployee(@PathVariable String UUID){
-        return employeeService.mapEntityToDTO(employeeService.findByUUID(UUID));
+    public EmployeeEditDTO getEmployee(@PathVariable String UUID){
+        return employeeService.mapEntityToEmployeeEditDTO(employeeService.findByUUID(UUID));
     }
 
     @PostMapping
