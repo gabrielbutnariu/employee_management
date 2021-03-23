@@ -6,6 +6,7 @@ import {IMessage} from '../models/employeeMessage';
 import {ITimesheetMessage} from '../models/timesheetMessage';
 import {IEmployee} from '../models/employee';
 import {NgForm} from '@angular/forms';
+import {IEditableEmployee} from '../models/editableEmployee';
 
 @Injectable({
   providedIn: 'root'
@@ -36,6 +37,9 @@ export class EmployeeService {
     return this.http.get<IMessage>(this.employeesUrl, options); // .pipe(
       // tap(data => console.log('All: ' + JSON.stringify(data)))
     // );
+  }
+  getEditableEmployee(uuid: string): Observable<IEditableEmployee>{
+    return this.http.get<IEditableEmployee>(this.employeesUrl + '/uuid/' + uuid);
   }
 
   getEmployeeTimesheet(uuid: string,

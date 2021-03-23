@@ -7,7 +7,7 @@ import {LoginComponent} from './components/login/login.component';
 import {ReportsComponent} from './components/reports/reports.component';
 import {LoginService} from './services/login.service';
 import { RegisterComponent } from './components/modals/register/register.component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { EmployeesListComponent } from './components/employees-list/employees-list.component';
 import { EmployeeComponent } from './components/employee/employee.component';
 import {MatPaginatorModule} from '@angular/material/paginator';
@@ -61,7 +61,8 @@ import {MatIconModule} from '@angular/material/icon';
     MatTabsModule,
     MatSelectModule,
     MatListModule,
-    MatIconModule
+    MatIconModule,
+    ReactiveFormsModule
   ],
   providers: [
     LoginService,

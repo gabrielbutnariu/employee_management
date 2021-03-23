@@ -14,10 +14,11 @@ import {DeleteComponent} from '../modals/delete/delete.component';
 import {RegisterComponent} from '../modals/register/register.component';
 import { MatTable } from '@angular/material/table';
 import {animate, state, style, transition, trigger} from '@angular/animations';
-import {NgForm} from '@angular/forms';
+import {FormControl, FormGroup, NgForm} from '@angular/forms';
 import {MatTab, MatTabGroup} from '@angular/material/tabs';
 import {MessageDataSource} from '../../services/MessageDataSource.datasource';
 import {RegisterService} from '../../services/register.service';
+import {IEditableEmployee} from '../../models/editableEmployee';
 
 @Component({
   selector: 'app-employees-list',
@@ -25,28 +26,6 @@ import {RegisterService} from '../../services/register.service';
   styleUrls: ['./employees-list.component.css']
 })
 export class EmployeesListComponent implements AfterViewInit  {
-  // dataSource: MessageDataSource;
-  registerOperationSuccessfulSubscription: Observable<boolean>;
-  deleteOperationSuccessfulSubscription: Observable<boolean>;
-  dataSource: EmployeeService;
-  employees: IEmployee[] = [];
-  editableEmployee: IEmployee;
-  totalElements = 9;
-  isLoadingResults = true;
-  isRateLimitReached = false;
-  tableHeader = ['Name', 'Address', 'Actions'];
-  dcBadges: string[] = ['name', 'giver', 'description'];
-  expandedElement: IEmployee | null | undefined;
-
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
-  @ViewChild(MatFormField) filter!: MatFormField;
-  @ViewChild('input') input!: ElementRef;
-  @ViewChild(MatTable) table!: MatTable<any>;
-  @ViewChild('matTabGroup', { static: false }) matTabGroup!: MatTabGroup;
-  firstPanel: boolean;
-  secondPanel: boolean;
-  cancelPressed: boolean;
   constructor(
     private httpClient: HttpClient,
     private employeeService: EmployeeService,
@@ -58,9 +37,45 @@ export class EmployeesListComponent implements AfterViewInit  {
     this.firstPanel = true;
     this.secondPanel = false;
     this.cancelPressed = false;
-    this.editableEmployee = {address: '', firstName: '', lastName: '', uuid: ''};
+    this.editableEmployee = {address: '', firstName: '', lastName: '', ssn: '', uuid: ''};
     this.dataSource = new EmployeeService(this.httpClient);
+
   }
+  // dataSource: MessageDataSource;
+  registerOperationSuccessfulSubscription: Observable<boolean>;
+  deleteOperationSuccessfulSubscription: Observable<boolean>;
+  dataSource: EmployeeService;
+  employees: IEmployee[] = [];
+  editableEmployee: IEditableEmployee;
+  totalElements = 9;
+  isLoadingResults = true;
+  isRateLimitReached = false;
+  tableHeader = ['Name', 'Address', 'Actions'];
+  dcBadges: string[] = ['name', 'giver', 'description'];
+  expandedElement: IEmployee | null | undefined;
+  projectEditForm: any;
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatFormField) filter!: MatFormField;
+  @ViewChild('input') input!: ElementRef;
+  @ViewChild(MatTable) table!: MatTable<any>;
+  @ViewChild('matTabGroup', { static: false }) matTabGroup!: MatTabGroup;
+  firstPanel: boolean;
+  secondPanel: boolean;
+  cancelPressed: boolean;
+
+  // loadEmployee(): void{
+  //   console.log('Load emp');
+  //   this.dataSource.(
+  //     this.paginator.pageIndex,
+  //     this.paginator.pageSize,
+  //     this.input.nativeElement.value,
+  //     this.sort.direction
+  //   );
+  // }
+  registerForm: any;
+
 
   ngAfterViewInit(): void {
     this.registerOperationSuccessfulSubscription.subscribe(
@@ -78,17 +93,9 @@ export class EmployeesListComponent implements AfterViewInit  {
       }
     );
     this.populateTable();
+    this.validateForm();
   }
 
-  // loadEmployee(): void{
-  //   console.log('Load emp');
-  //   this.dataSource.(
-  //     this.paginator.pageIndex,
-  //     this.paginator.pageSize,
-  //     this.input.nativeElement.value,
-  //     this.sort.direction
-  //   );
-  // }
   populateTable(): void{
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
     merge(this.sort.sortChange, this.paginator.page, fromEvent(this.input.nativeElement, 'keyup'))
@@ -153,7 +160,9 @@ export class EmployeesListComponent implements AfterViewInit  {
       this.finishEdit();
     }
   }
+  validateForm(): void{
 
+  }
   openSecondPanel(): void{
     this.firstPanel = false;
     this.secondPanel = true;
@@ -162,17 +171,17 @@ export class EmployeesListComponent implements AfterViewInit  {
     this.firstPanel = true;
     this.secondPanel = false;
   }
-  editEmployee(employee: any): void{
+  editEmployee(uuid: string): void{
     console.log('IN EDIT EMPLOYEE');
     this.matTabGroup.selectedIndex = 0;
     this.openSecondPanel();
     this.cancelPressed = false;
-    this.editableEmployee = employee;
+    this.employeeService.getEditableEmployee(uuid).subscribe(data => this.editableEmployee = data);
   }
   cancelEdit(): void {
     console.log('IN CANCEL');
     this.openFirstPanel();
-    this.editableEmployee = {address: '', firstName: '', lastName: '', uuid: ''};
+    this.editableEmployee = {ssn: '', address: '', firstName: '', lastName: '', uuid: ''};
     this.cancelPressed = true;
 
   }
@@ -180,7 +189,7 @@ export class EmployeesListComponent implements AfterViewInit  {
     console.log('IN FINISH');
     this.openFirstPanel();
     this.cancelPressed = false;
-    this.editableEmployee = {address: '', firstName: '', lastName: '', uuid: ''};
+    this.editableEmployee = {ssn: '', address: '', firstName: '', lastName: '', uuid: ''};
     // put request
   }
 }
